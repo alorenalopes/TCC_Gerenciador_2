@@ -1,0 +1,17 @@
+#image{
+    width: 40px;
+    height: 75px;
+}
+
+#Navbar{
+    background-color: #fafafa;
+    border-bottom-style:solid;
+    border-bottom-width: 1px;
+    border-bottom-color:#ef9a9a;
+}
+
+#Position{
+    text-align: left;
+}
+
+
