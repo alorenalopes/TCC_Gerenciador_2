@@ -1,17 +1,18 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate');
 
-const PersonSchema = new mongoose.Schema({
+const PessoaSchema = new mongoose.Schema({
 
     matricula:{
-        type: Number,
+        type: String,
         required: true,
     },
     tipo:{
-        type: Number,
+        type: String,
         required: true,
     },
     cpf:{
-        type: Number,
+        type: String,
         required: true,
     },
     senha:{
@@ -28,4 +29,5 @@ const PersonSchema = new mongoose.Schema({
     },
 });
 
-mongoose.model('Person', PersonSchema);
+PessoaSchema.plugin(mongoosePaginate);
+mongoose.model('Pessoa', PessoaSchema);
