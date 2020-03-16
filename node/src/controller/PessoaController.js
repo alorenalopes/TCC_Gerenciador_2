@@ -5,7 +5,7 @@ const Pessoa = mongoose.model('Pessoa');
 module.exports = {
     async index(req, res){
         const { page = 1 } = req.query;
-        const Pessoas = await Pessoa.paginate({}, { pagenpm, limit: 3})
+        const Pessoas = await Pessoa.paginate({}, { page, limit: 3})
 
         return res.json(Pessoas);
     },
