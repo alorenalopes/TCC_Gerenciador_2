@@ -1,69 +1,75 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Card from 'react-bootstrap/Card';
 import CardDeck from 'react-bootstrap/CardDeck';
 import Button from 'react-bootstrap/Button';
-import Pagination from 'react-bootstrap/Pagination'
+import Pagination from 'react-bootstrap/Pagination';
+import { Link } from 'react-router-dom';
 import './styles.css'
 
-const Cards = () => {
-    return (
-        <div id="border">
-            <CardDeck>
-                <Card border="danger">
-                    <Card.Body>
-                        <Card.Title>Nome do Professor</Card.Title>
-                        <Card.Text>
-                            Área de atuação
-                            Disponibilidade
-                            </Card.Text>
-                        <Button variant="outline-danger" size="lg" block> Propostas de temas </Button>
-                        <Button variant="danger" size="lg" block> TCCs orientados </Button>
-                    </Card.Body>
-                </Card>
-                <Card border="danger">
-                    <Card.Body>
-                        <Card.Title>Nome do Professor</Card.Title>
-                        <Card.Text>
-                            This card has supporting text below as a natural.{' '}
-                        </Card.Text>
-                        <Button variant="outline-danger" size="lg" block> Propostas de temas </Button>
-                        <Button variant="danger" size="lg" block> TCCs orientados </Button>
-                    </Card.Body>
-                </Card>
-                <Card border="danger">
-                    <Card.Body>
-                        <Card.Title>Nome do Professor</Card.Title>
-                        <Card.Text>
-                            This is a wider card with supporting text below.
-      </Card.Text>
-                        <Button variant="outline-danger" size="lg" block > Propostas de temas </Button>
-                        <Button variant="danger" size="lg" block> TCCs orientados </Button>
-                    </Card.Body>
-                </Card>
-            </CardDeck>
+export default class Cards extends Component {
 
+    teste() {
+       return <Link to='/area'/>;
+    }
+
+    render() {
+        return (
             <div id="border">
-                <Pagination className="pagination justify-content-center"> 
-                    <Pagination.First />
-                    <Pagination.Prev />
-                    <Pagination.Item>{1}</Pagination.Item>
-                    <Pagination.Ellipsis />
+                <CardDeck>
+                    <Card border="danger">
+                        <Card.Body>
+                            <Card.Title>Nome do Professor</Card.Title>
+                            <Card.Text>
+                                Área de atuação
+                                Disponibilidade
+                            </Card.Text>
+                            <Button variant="outline-danger" size="lg" block> Propostas de temas </Button>
+                            <Button variant="danger" size="lg" block> TCCs orientados </Button>
+                        </Card.Body>
+                    </Card>
+                    <Card border="danger">
+                        <Card.Body>
+                            <Card.Title>Nome do Professor</Card.Title>
+                            <Card.Text>
+                                This card has supporting text below as a natural.{' '}
+                            </Card.Text>
+                            <Button variant="outline-danger" size="lg" block> Propostas de temas </Button>
+                            <Button variant="danger" size="lg" block> TCCs orientados </Button>
+                        </Card.Body>
+                    </Card>
+                    <Card border="danger">
+                        <Card.Body>
+                            <Card.Title>Nome do Professor</Card.Title>
+                            <Card.Text>
+                                This is a wider card with supporting text below.
+      </Card.Text>
+                            <Button onClick={this.teste} variant="outline-danger" size="lg" block > Propostas de temas </Button>
+                            <Button variant="danger" size="lg" block> TCCs orientados </Button>
+                        </Card.Body>
+                    </Card>
+                </CardDeck>
 
-                    <Pagination.Item>{10}</Pagination.Item>
-                    <Pagination.Item>{11}</Pagination.Item>
-                    <Pagination.Item active>{12}</Pagination.Item>
-                    <Pagination.Item>{13}</Pagination.Item>
-                    <Pagination.Item disabled>{14}</Pagination.Item>
+                <div id="border">
+                    <Pagination className="pagination justify-content-center">
+                        <Pagination.First />
+                        <Pagination.Prev />
+                        <Pagination.Item>{1}</Pagination.Item>
+                        <Pagination.Ellipsis />
 
-                    <Pagination.Ellipsis />
-                    <Pagination.Item>{20}</Pagination.Item>
-                    <Pagination.Next />
-                    <Pagination.Last />
-                </Pagination>
+                        <Pagination.Item>{10}</Pagination.Item>
+                        <Pagination.Item>{11}</Pagination.Item>
+                        <Pagination.Item active>{12}</Pagination.Item>
+                        <Pagination.Item>{13}</Pagination.Item>
+                        <Pagination.Item disabled>{14}</Pagination.Item>
+
+                        <Pagination.Ellipsis />
+                        <Pagination.Item>{20}</Pagination.Item>
+                        <Pagination.Next />
+                        <Pagination.Last />
+                    </Pagination>
+                </div>
+
             </div>
-
-        </div>
-    );
+        );
+    }
 }
-
-export default Cards;
