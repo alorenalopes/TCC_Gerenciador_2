@@ -17,7 +17,7 @@ const ProfessorSchema = new mongoose.Schema({
     },
     propostas:{
         type:String,
-        required:true,
+        required:false,
     }
 });
 

@@ -16,8 +16,8 @@ const BarraNav = () =>{
                 </Navbar.Brand>
                 <Navbar.Collapse>
                     <Nav className="mr-auto">
-                        <Nav.Link href="#home">Home</Nav.Link>
-                        <Nav.Link href="#login">Login</Nav.Link>
+                        <Nav.Link href="/">Home</Nav.Link>
+                        <Nav.Link href="/login">Login</Nav.Link>
                     </Nav>
                     <Form inline>
                         <FormControl type="text" placeholder="Nome" className="mr-sm-2" />

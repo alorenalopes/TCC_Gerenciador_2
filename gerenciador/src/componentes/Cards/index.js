@@ -3,16 +3,37 @@ import Card from 'react-bootstrap/Card';
 import CardDeck from 'react-bootstrap/CardDeck';
 import Button from 'react-bootstrap/Button';
 import Pagination from 'react-bootstrap/Pagination';
-import { Link } from 'react-router-dom';
 import './styles.css'
+import api from '../../servicos/api';
+
 
 export default class Cards extends Component {
 
-    teste() {
-       return <Link to='/area'/>;
+    state = {
+        pessoas: [],
+    }
+    componentDidMount() {
+        this.loadProducts();
+    }
+
+    loadProducts = async () => {
+        const response = await api.get('/Pessoa');
+
+        this.setState({ pessoas: response.data.docs });
+    }
+                                                                                              
+    constructor(props) {
+        super(props);
+        this.propostas = this.propostas.bind(this);
+    }
+
+    propostas(e) {
+        e.preventDefault()
+        window.location.href = "/area"
     }
 
     render() {
+        const {pessoas} = this.state;
         return (
             <div id="border">
                 <CardDeck>
@@ -29,7 +50,7 @@ export default class Cards extends Component {
                     </Card>
                     <Card border="danger">
                         <Card.Body>
-                            <Card.Title>Nome do Professor</Card.Title>
+                              {pessoas.map(Pessoa => <Card.Title key = {Pessoa._id}> ({Pessoa.nome})</Card.Title>)} 
                             <Card.Text>
                                 This card has supporting text below as a natural.{' '}
                             </Card.Text>
@@ -39,11 +60,11 @@ export default class Cards extends Component {
                     </Card>
                     <Card border="danger">
                         <Card.Body>
-                            <Card.Title>Nome do Professor</Card.Title>
+                        {pessoas.map(Pessoa => <Card.Title key = {Pessoa._id}> ({Pessoa.nome})</Card.Title>)} 
                             <Card.Text>
                                 This is a wider card with supporting text below.
       </Card.Text>
-                            <Button onClick={this.teste} variant="outline-danger" size="lg" block > Propostas de temas </Button>
+                            <Button onClick={this.propostas} variant="outline-danger" size="lg" block >Propostas de temas</Button>
                             <Button variant="danger" size="lg" block> TCCs orientados </Button>
                         </Card.Body>
                     </Card>
