@@ -1,5 +1,15 @@
 #border{
 margin: 40px;
+margin-top: 0px;
+margin-bottom: 0px;
 
 }
 
+#botoes{
+    margin-top: 0px;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 32px;
+    margin-bottom: 0px;
+
+}

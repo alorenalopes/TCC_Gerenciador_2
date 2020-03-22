@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Card from 'react-bootstrap/Card';
 import CardDeck from 'react-bootstrap/CardDeck';
 import Button from 'react-bootstrap/Button';
-import Pagination from 'react-bootstrap/Pagination';
 import './styles.css'
 import api from '../../servicos/api';
 
@@ -11,17 +10,24 @@ export default class Cards extends Component {
 
     state = {
         pessoas: [],
-    }
+        pessoasInfo: {},
+        page: 1,
+    };
+
     componentDidMount() {
-        this.loadProducts();
+        this.loadPessoas();
     }
 
-    loadProducts = async () => {
-        const response = await api.get('/Pessoa');
+    loadPessoas = async (page = 1) => {
+        const response = await api.get(`/Pessoa?page=${page}`);
+        console.log("page recebida =" + page);
 
-        this.setState({ pessoas: response.data.docs });
-    }
-                                                                                              
+        const {docs, ...pessoasInfo} = response.data;
+        console.log(pessoasInfo.page);
+        this.setState({ pessoas: docs, pessoasInfo, page:page});
+        console.log(pessoasInfo);
+    };
+
     constructor(props) {
         super(props);
         this.propostas = this.propostas.bind(this);
@@ -32,8 +38,29 @@ export default class Cards extends Component {
         window.location.href = "/area"
     }
 
+    PagAnterior = () => {
+        const {page, pessoasInfo} = this.state;
+        
+        if(page === 1) return;
+
+        const pageNumber = page - 1;
+        
+        this.loadPessoas(pageNumber);
+
+    };
+
+    PagProxima = () => {
+        const {page, pessoasInfo} = this.state;
+        
+        if(page === pessoasInfo.pages) return;
+
+        const pageNumber = page + 1;
+        
+        this.loadPessoas(pageNumber);
+    };
+
     render() {
-        const {pessoas} = this.state;
+        const { pessoas } = this.state;
         return (
             <div id="border">
                 <CardDeck>
@@ -50,7 +77,7 @@ export default class Cards extends Component {
                     </Card>
                     <Card border="danger">
                         <Card.Body>
-                              {pessoas.map(Pessoa => <Card.Title key = {Pessoa._id}> ({Pessoa.nome})</Card.Title>)} 
+                            {pessoas.map(Pessoa => <Card.Title key={Pessoa._id}> ({Pessoa.nome})</Card.Title>)}
                             <Card.Text>
                                 This card has supporting text below as a natural.{' '}
                             </Card.Text>
@@ -60,7 +87,7 @@ export default class Cards extends Component {
                     </Card>
                     <Card border="danger">
                         <Card.Body>
-                        {pessoas.map(Pessoa => <Card.Title key = {Pessoa._id}> ({Pessoa.nome})</Card.Title>)} 
+                            {pessoas.map(Pessoa => <Card.Title key={Pessoa._id}> ({Pessoa.nome})</Card.Title>)}
                             <Card.Text>
                                 This is a wider card with supporting text below.
       </Card.Text>
@@ -69,27 +96,10 @@ export default class Cards extends Component {
                         </Card.Body>
                     </Card>
                 </CardDeck>
-
-                <div id="border">
-                    <Pagination className="pagination justify-content-center">
-                        <Pagination.First />
-                        <Pagination.Prev />
-                        <Pagination.Item>{1}</Pagination.Item>
-                        <Pagination.Ellipsis />
-
-                        <Pagination.Item>{10}</Pagination.Item>
-                        <Pagination.Item>{11}</Pagination.Item>
-                        <Pagination.Item active>{12}</Pagination.Item>
-                        <Pagination.Item>{13}</Pagination.Item>
-                        <Pagination.Item disabled>{14}</Pagination.Item>
-
-                        <Pagination.Ellipsis />
-                        <Pagination.Item>{20}</Pagination.Item>
-                        <Pagination.Next />
-                        <Pagination.Last />
-                    </Pagination>
+                <div id="botoes">
+                <Button variant="outline-danger" onClick={this.PagAnterior}>Anterior</Button>
+                <Button variant="outline-danger" onClick={this.PagProxima}>Próximo</Button>
                 </div>
-
             </div>
         );
     }
