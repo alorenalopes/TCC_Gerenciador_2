@@ -9,49 +9,40 @@ import api from '../../servicos/api';
 export default function Cards() {
     const [Profs, setProfs] = useState([]);
     const [Page, setPage] = useState(1);
-    const [Total, setTotals] = useState(0);
+    const [TotalPage, setTotals] = useState(0);
 
-    
+
     useEffect(() => {
         api.get(`Professor?page=${Page}`).then(response => {
             setProfs(response.data);
+            setTotals(response.headers['x-total-page']);
         })
-    });
+    }, [Page]);
 
 
-    async function ProxPag(){
-
-        
-
-        if(Total > 0 && Profs.length === Total){
+    function ProxPag() {
+        console.log(Page)
+        if (Page === (TotalPage - 1)) {
             return;
-          }
-      
+        }       
         setPage(Page + 1);
-            api.get(`Professor?page=${Page}`).then(response => {
-            setProfs(response.data);
-            console.log(response.headers)
-        });
     }
 
-    async function PrevPag() {
-
-        if(Page === 1){
+    function PrevPag() {
+        console.log(Page);
+        if (Page === 1) {
             return;
         }
 
         setPage(Page - 1);
-        api.get(`Professor?page=${Page}`, {}).then(response => {
-            setProfs(response.data);
-        });
     }
 
     return (
         <div className="border">
             <CardDeck>
                 {Profs.map(prof => (
-                    <Card className="division" border="danger">
-                        <Card.Body key={prof.matricula}>
+                    <Card className="division" border="danger" key={prof.matricula}>
+                        <Card.Body >
                             <Card.Title>{prof.nome}</Card.Title>
                             <Card.Text>
                                 Área de atuação: {prof.area}.

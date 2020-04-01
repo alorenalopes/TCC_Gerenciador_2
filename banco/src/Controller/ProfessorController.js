@@ -15,6 +15,7 @@ module.exports = {
         .offset((page - 1)* 3);
 
         response.header('X-Total-Count',count['count(*)']);
+        response.header('X-Total-Page',Math.ceil(count['count(*)']/3));
         
         return response.json(profs);
         
