@@ -6,9 +6,9 @@ import "./styles.css"
 
 const Titulo = () => {
 return(
-<Container maxWidth="sm">
-<Typography component="h2" variant="overline" id="Titulo" gutterBottom>
- <font id="Fonte">E</font>ncontre seu  <font id="Fonte">O</font>rientador
+<Container className="container_titulo" maxWidth="sm">
+<Typography className= "titulo" component="h2" variant="overline"  gutterBottom>
+ <font className="fonte">E</font>ncontre seu  <font className="fonte">O</font>rientador
 </Typography>
 </Container>
 );

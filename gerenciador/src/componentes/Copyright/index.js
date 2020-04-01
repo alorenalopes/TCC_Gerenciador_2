@@ -6,16 +6,16 @@ import './styles.css';
 const Copyright = () => {
     return (
         <div>
-      <Typography variant="body2" id="Copyright">
+      <Typography className="typography" variant="body2">
         {'Copyright © '}
-        <Link id="Link">
+        <Link className="link">
           Lorena Silveira Lopes
         </Link>{' '}
         {new Date().getFullYear()}
         {'.'}
       </Typography>
-      <Typography variant="body2" id="Copyright">
-        <Link id="Link">
+      <Typography variant="body2" className="typography">
+        <Link className="Link">
           Desenvolvido para trabalho de conclusão de curso para Universidade Federal de Ouro Preto
         </Link>{' '}
       </Typography>
