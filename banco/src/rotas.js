@@ -36,4 +36,10 @@ rotas.post('/Proposta', PropostasController.create);
 // rotas.put('/Tcc/:id', PropostasController.update);
 // rotas.delete('/Tcc/:id', PropostasController.delete);
 
+const PesquisarController = require('./Controller/PesquisarController');
+rotas.get('/Pesquisar/:nome', PesquisarController.exibir);
+
+const LoginController = require('./Controller/LoginController');
+rotas.get('/Login', LoginController.login);
+
 module.exports = rotas;

@@ -6,7 +6,8 @@ import './styles.css'
 import api from '../../servicos/api';
 
 
-export default function Cards() {
+export default function Cards(props) {
+
     const [Profs, setProfs] = useState([]);
     const [Page, setPage] = useState(1);
     const [TotalPage, setTotals] = useState(0);
@@ -19,10 +20,11 @@ export default function Cards() {
         })
     }, [Page]);
 
-
+    
     function ProxPag() {
         console.log(Page)
-        if (Page === (TotalPage - 1)) {
+        console.log(TotalPage)
+        if (Page === Number(TotalPage)) {
             return;
         }       
         setPage(Page + 1);
@@ -39,9 +41,9 @@ export default function Cards() {
 
     return (
         <div className="border">
-            <CardDeck>
+            <CardDeck className="division">
                 {Profs.map(prof => (
-                    <Card className="division" border="danger" key={prof.matricula}>
+                    <Card  border="danger" key={prof.matricula}>
                         <Card.Body >
                             <Card.Title>{prof.nome}</Card.Title>
                             <Card.Text>

@@ -15,5 +15,8 @@ margin-bottom: 0px;
 }
 
 .border .division{
- 
+    grid-template-columns: repeat(3, 1fr);
+    display: grid;
+    grid-gap: 24px;
+    list-style: none;
 }
