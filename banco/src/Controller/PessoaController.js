@@ -21,5 +21,14 @@ module.exports = {
         })
 
         return response.status(204).send();
-    }
+    },
+
+    async delete(request, response){
+
+        const{ matricula } = request.params;
+   
+        await connection('Pessoa').where('matricula', matricula).delete();
+        return response.status(204).send();
+           
+   },
 };

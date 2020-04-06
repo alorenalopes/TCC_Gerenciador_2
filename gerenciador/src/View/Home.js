@@ -10,9 +10,9 @@ export default function Home() {
 
     return (
         <div>
-            <BarraNav verificacao={true} />
-            <Titulo />
-            <Cards  />
+            <BarraNav verificacao={true} profile={true}/>
+            <Titulo titulo = {true} />
+            <Cards />
             <Copyright />
         </div>
     );

@@ -21,9 +21,6 @@ export default function Autenticacao() {
     async function login(e) {
         e.preventDefault();
 
-        console.log(Matricula);
-        console.log(Senha);
-
         try{
          const response = await api.get('Login', {
             headers: {
@@ -33,8 +30,10 @@ export default function Autenticacao() {
             });
             console.log(response.data.nome)
           localStorage.setItem('matricula', Matricula);
-          history.push('/profile');
-         
+          if(response.data.tipo === 1){
+          history.push('/profileAluno');
+          }else{
+          history.push('/profileProfessor');}
         }catch(err){
           alert('Erro no login, tente novamente');
         }

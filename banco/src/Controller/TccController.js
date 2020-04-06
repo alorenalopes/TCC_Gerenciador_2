@@ -11,16 +11,25 @@ module.exports = {
         },
     
     async create(request,response){
-        const {nome, matricula_prof, matricula_aluno} = request.body;
+        const {nome_tcc, matricula_prof, matricula_aluno} = request.body;
         const id = generateId();
 
         await connection('Tcc').insert({
             id,
-            nome,
+            nome_tcc,
             matricula_prof,
             matricula_aluno,
         })
 
         return response.status(204).send();
-    }
+    },
+
+    async delete(request, response){
+
+        const{ id } = request.params;
+   
+        await connection('Tcc').where('id', id).delete();
+        return response.status(204).send();
+           
+   },
 };

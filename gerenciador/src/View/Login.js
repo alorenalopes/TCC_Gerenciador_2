@@ -7,7 +7,7 @@ export default function Login() {
     
     return (
         <div>
-            <BarraNav verificacao= {false}/>
+            <BarraNav verificacao= {false} profile={true}/>
             <Autenticacao />
             <Copyright />
         </div>

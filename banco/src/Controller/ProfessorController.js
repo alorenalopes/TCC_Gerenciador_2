@@ -31,5 +31,14 @@ module.exports = {
         })
 
         return response.status(204).send();
-    }
+    },
+
+    async delete(request, response){
+
+        const{ matricula_prof } = request.params;
+   
+        await connection('Professor').where('matricula_prof', matricula_prof).delete();
+        return response.status(204).send();
+           
+   },
 };

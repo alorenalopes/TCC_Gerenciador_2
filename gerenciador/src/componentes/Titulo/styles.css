@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Anaheim&display=swap');
+
+
 .container_titulo .titulo{
     font-size:200%;
     text-align: center;
@@ -10,3 +13,9 @@
     font-size:120%; 
     color:#e53935;
 }
+
+.container_titulo .titulo .nome{
+    font-size:65%;
+    
+}
+
