@@ -4,16 +4,23 @@ import CardDeck from 'react-bootstrap/CardDeck';
 import Button from 'react-bootstrap/Button';
 import './styles.css'
 import api from '../../servicos/api';
+import { useHistory } from 'react-router-dom';
+
 
 export default function Alunos() {
 
     const[Alunos, setAlunos] = useState([]);
+    const history = useHistory();
 
     useEffect(() => {
         api.get(`Alunos/${localStorage.matricula}`).then(response => {
           setAlunos(response.data);
       })
       },[Alunos]);
+
+    function atv(id){
+        history.push(`/atividades/${id}`)
+    }
 
     return (
         <div>
@@ -26,7 +33,7 @@ export default function Alunos() {
                             <Card.Text>
                                 Aluno: {aluno.nome}
                             </Card.Text>
-                            <Button variant="danger" size="lg" block> Atividades </Button>
+                            <Button variant="danger" size="lg" onClick = {() => atv(aluno.id)} block> Atividades </Button>
                         </Card.Body>
                     </Card>
                 ))}

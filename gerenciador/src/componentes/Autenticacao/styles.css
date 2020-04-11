@@ -1,13 +1,15 @@
-#paper{
+.paper{
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-#avatar{
-    margin-top: 50px;
-    background-color:     #e0293d    ;    
+.avatar{
+    border: 0;
+    left: 175px;
+    position: relative;
+    margin-top: 20px;  
 }
 
-#submit{
+.submit{
     margin-top: 12px;
 }

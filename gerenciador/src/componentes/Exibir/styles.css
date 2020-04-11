@@ -1,0 +1,48 @@
+.borderAluno{
+    margin: 40px;
+    margin-top: 40px;
+    margin-bottom: 0px;
+    
+    }
+     
+    .division{
+        grid-template-columns: repeat(4, 1fr);
+        display: grid;
+        grid-gap: 24px;
+        list-style: none;
+        margin-bottom: 100px;
+        margin-left: 10px;
+        margin-bottom: 30px;
+    }
+
+    .container-form{
+        margin-bottom: 70px;
+        margin-top: 20px;
+    }
+
+    .container-form .form{
+        margin-top: 30px;
+        color: gray;
+    }
+    
+    .container-form .button{
+        margin-top: 30px;
+    }
+  
+    .container-form .form .description{
+        width: 100%;
+    
+    }
+    
+    .container-form .avatar{
+        border: 0;
+        left: 150px;
+        position: relative;
+    }
+
+    .division .button {
+        border: 0;
+        position: absolute;
+        right: 24px;
+        top: 24px;
+    }

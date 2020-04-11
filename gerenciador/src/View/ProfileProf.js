@@ -9,7 +9,7 @@ export default function ProfileProf() {
     return (
         <div>
             <BarraNav profile={false} verificacao={false} perfilprof={true} perfil={true}/>
-            <Titulo />
+            <Titulo titulo={false} />
             <Alunos />
             <Copyright/>
         </div>

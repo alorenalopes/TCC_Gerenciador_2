@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import Avatar from '@material-ui/core/Avatar';
 import Button from 'react-bootstrap/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Container from '@material-ui/core/Container';
 import '../Autenticacao/styles.css';
 import api from '../../servicos/api';
 import {useHistory} from 'react-router-dom';
+import {FiUser} from 'react-icons/fi'
 
 
 export default function Autenticacao() {
@@ -44,9 +43,7 @@ export default function Autenticacao() {
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div id="paper">
-                <Avatar id="avatar">
-                    <LockOutlinedIcon />
-                </Avatar>
+            <FiUser className="avatar" size={40} color="#e0293d" />
                 <form onSubmit={login}>
                     <TextField
                         variant="outlined"

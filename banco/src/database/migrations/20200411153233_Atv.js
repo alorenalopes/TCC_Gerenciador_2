@@ -5,6 +5,7 @@ exports.up = function(knex) {
         table.string('nome').notNullable();
         table.string('descricao').notNullable();
         table.string('data').notNullable();
+        table.string('status').notNullable();
         table.string('codigo_tcc').notNullable();
 
         table.foreign('codigo_tcc').references('id').inTable('Tcc');

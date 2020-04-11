@@ -1,9 +1,9 @@
-#image{
+.Navbar .image{
     width: 40px;
     height: 75px;
 }
 
-#Navbar{
+.Navbar{
     background-color: #fafafa;
     border-bottom-style:solid;
     border-bottom-width: 1px;
@@ -13,8 +13,7 @@
     margin-bottom: 0px;
 }
 
-#Position{
-    text-align: left;
+.simbolos{
+    border: 0; 
 }
-
 

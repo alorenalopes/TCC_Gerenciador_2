@@ -1,15 +1,15 @@
 import React from 'react';
 import BarraNav from '../componentes/BarraNav/index';
 import Titulo from '../componentes/Titulo/index';
-import AtvAluno from '../componentes/AtvAluno/index';
+import Exibir from '../componentes/Exibir/index';
 
-export default function Profile() {
+export default function ProfileAluno() {
     
     return (
        <div>
             <BarraNav profile={false} verificacao={false} perfil={true}/>
-            <Titulo />
-            <AtvAluno />
+            <Titulo titulo={false} />
+            <Exibir progresso={true} />
        </div>
     );
 }

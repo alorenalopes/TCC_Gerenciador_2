@@ -21,11 +21,13 @@ export default function Titulo(props) {
             {props.titulo && <Typography className="titulo" component="h2" variant="overline" gutterBottom>
                 <font className="fonte">E</font>ncontre seu  <font className="fonte">O</font>rientador
             </Typography>}
-            {Nome.map(nomes => (
-            <Typography className="titulo" component="h2" variant="overline" gutterBottom>
+            {!props.titulo &&
+            Nome.map(nomes => (
+            <Typography className="titulo" component="h2" variant="overline" gutterBottom key={nomes.matricula}>
                  <font className="nome"> Bem-vindo</font>  {nomes.nome} 
             </Typography>
             ))}
+
         </Container>
 
     );

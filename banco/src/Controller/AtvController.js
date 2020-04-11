@@ -5,32 +5,38 @@ module.exports = {
 
     async exibir(request, response) {
 
-        const atvs = await connection('Atv').select('*');
+        const {codigo_tcc} = request.params
 
-        return response.json(atvs);
+        const atvs = await connection('Atv')
+        .where('codigo_tcc', codigo_tcc)
+        .select('*')
+
+        return response.json(atvs)
 
     },
 
     async delete(request, response) {
 
-        const { id } = request.params;
+        const { id } = request.params
 
-        await connection('Atv').where('id', id).delete();
-        return response.status(204).send();
+        await connection('Atv').where('id', id).delete()
+        return response.status(204).send()
 
     },
 
     async create(request, response) {
-        const { nome, descricao, data } = request.body;
-        const codigo_tcc = request.headers.authorization;
-        const id = generateId();
+        const { nome, descricao, data} = request.body
+        const {codigo_tcc} = request.params
+        const status = "A fazer"
+        const id = generateId()
 
         await connection('Atv').insert({
             id,
             nome,
             descricao,
             data,
-            codigo_tcc,
+            status,
+            codigo_tcc, 
         })
 
         return response.status(204).send();

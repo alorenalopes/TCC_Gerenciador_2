@@ -8,7 +8,9 @@ module.exports = {
 
         const nomes = await connection('Pessoa')
         .where('matricula', matricula)
-        .select('nome')
+        .select(['Pessoa.nome',
+        'Pessoa.matricula',
+        ]);
 
         return response.json(nomes);
 

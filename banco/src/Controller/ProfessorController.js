@@ -1,28 +1,42 @@
 const connection = require('../database/connection');
 
 module.exports = {
-    async exibir(request, response){
+    async exibir(request, response) {
 
-        const {page = 1} = request.query; 
+        const { page = 1 } = request.query;
 
         const [count] = await connection('Professor')
-        .count();
-        
-        const profs = await connection('Professor')
-        .limit(3)
-        .select('*')
-        .join('Pessoa', 'matricula_prof', '=', 'Pessoa.matricula')
-        .offset((page - 1)* 3);
+            .count();
 
-        response.header('X-Total-Count',count['count(*)']);
-        response.header('X-Total-Page',Math.ceil(count['count(*)']/3));
-        
-        return response.json(profs);
-        
-        },
-    
-    async create(request,response){
-        const {matricula_prof, area, disponibilidade} = request.body;
+        const profs = await connection('Professor')
+            .limit(3)
+            .select('*')
+            .join('Pessoa', 'matricula_prof', '=', 'Pessoa.matricula')
+            .offset((page - 1) * 3);
+
+        response.header('X-Total-Count', count['count(*)']);
+        response.header('X-Total-Page', Math.ceil(count['count(*)'] / 3));
+
+        return response.json(profs);
+
+    },
+
+    async exibirProf(request, response) {
+
+        const { matricula_prof } = request.params;
+
+
+        const nomes = await connection('Pessoa')
+            .where('matricula', matricula_prof)
+            .select('*')
+            .join('Professor','matricula', '=', 'matricula_prof');
+
+        return response.json(nomes);
+
+    },
+
+    async create(request, response) {
+        const { matricula_prof, area, disponibilidade } = request.body;
 
         await connection('Professor').insert({
             matricula_prof,
@@ -33,12 +47,27 @@ module.exports = {
         return response.status(204).send();
     },
 
-    async delete(request, response){
+    async update(request, response) {
+        const { area, disponibilidade } = request.body;
+        const {matricula_prof} = request.headers;
 
-        const{ matricula_prof } = request.params;
-   
+        await connection('Professor')
+        .where('matricula_prof', matricula_prof)
+        .update({
+            matricula_prof : matricula_prof,
+            area : area,
+            disponibilidade : disponibilidade,
+        })
+
+        return response.status(204).send();
+    },
+
+    async delete(request, response) {
+
+        const { matricula_prof } = request.params;
+
         await connection('Professor').where('matricula_prof', matricula_prof).delete();
         return response.status(204).send();
-           
-   },
+
+    },
 };
