@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import '../Autenticacao/styles.css'
 import api from '../../servicos/api';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './styles.css'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
@@ -15,7 +15,7 @@ export default function Perfil() {
   const [Profs, setProfs] = useState([]);
   const [area, setArea] = useState("");
   const [disponibilidade, setDisponibilidade] = useState("");
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     api.get(`Professor/${localStorage.matricula}`).then(response => {
@@ -35,23 +35,23 @@ export default function Perfil() {
     };
 
     try {
-      const response = await api.put('Professor', data, {
+      await api.put('Professor', data, {
         headers: {
           matricula_prof: localStorage.matricula,
         }
       });
-      history.push('/profileProfessor');
+      navigate('/profileProfessor');
     } catch (err) {
       alert('Erro no cadastro, tente novamente');
     }
   }
 
   async function Propostas() {
-    history.push('/propostas');
+    navigate('/perfil/propostas');
   }
 
   async function Tccs() {
-    history.push('/tccs');
+    navigate('/perfil/tccs');
   }
 
   return (

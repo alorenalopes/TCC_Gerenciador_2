@@ -4,18 +4,35 @@ import api from '../../servicos/api';
 import './styles.css'
 import Card from 'react-bootstrap/Card';
 import CardDeck from 'react-bootstrap/CardDeck';
-import {FiTrash2} from 'react-icons/fi';
+import { FiTrash2 } from 'react-icons/fi';
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import Table from 'react-bootstrap/Table'
+import { useParams } from 'react-router-dom'
+import { format, parseISO, isAfter} from 'date-fns'
 
 
 export default function Exibir(props) {
 
+
+  const codigo_tcc = useParams().id;
   const now = 30;
-  const id_atv = route.params.id;
   const [Propostas, setPropostas] = useState([]);
   const [Tccs, setTccs] = useState([]);
   const [Atvs, setAtvs] = useState([]);
+  const [AtvAluno, setAtvAluno] = useState([]);
+
+
+  useEffect(() => {
+    api.get(`Atv/${codigo_tcc}`).then(response => {
+      var data = new Date();
+      for (const a in response.data) {
+        if (isAfter(data, parseISO(response.data[a].dataEntrega)) === true) {
+          response.data[a].status = "Atrasado"
+        }
+      }
+      setAtvs(response.data);
+    })
+  }, [Atvs, codigo_tcc]);
 
 
   useEffect(() => {
@@ -24,6 +41,7 @@ export default function Exibir(props) {
     })
   }, [Propostas]);
 
+
   useEffect(() => {
     api.get(`TccOrientado/${localStorage.matricula}`).then(response => {
       setTccs(response.data);
@@ -31,10 +49,16 @@ export default function Exibir(props) {
   }, [Tccs]);
 
   useEffect(() => {
-    api.get(`Atv/${id_atv}`).then(response => {
-      setAtvs(response.data);
+    api.get(`AlunoAtividades/${localStorage.matricula}`).then(response => {
+      var data = new Date();
+      for (const a in response.data) {
+        if (isAfter(data, parseISO(response.data[a].dataEntrega)) === true) {
+          response.data[a].status = "Atrasado"
+        }
+      }
+      setAtvAluno(response.data);
     })
-  }, [Atvs]);
+  }, [AtvAluno]);
 
 
   async function delete_proposta(id) {
@@ -66,7 +90,7 @@ export default function Exibir(props) {
 
   return (
     <div >
-      { props.proposta && <div>
+      {props.proposta && <div>
         <CardDeck className="division">
           {Propostas.map(propostas => (
             <Card border="danger" key={propostas.id}>
@@ -84,7 +108,7 @@ export default function Exibir(props) {
         </CardDeck>
       </div>}
 
-     {props.tcc && <div>
+      {props.tcc && <div>
         <CardDeck className="division">
           {Tccs.map(tcc => (
             <Card border="danger" key={tcc.id}>
@@ -103,34 +127,69 @@ export default function Exibir(props) {
             </Card>
           ))}
         </CardDeck>
-      </div> }
+      </div>}
 
-      {props.atv &&  <div>
-           {props.progresso && <div >
-                <ProgressBar className="justify-content-center" animated variant="danger" now={now} label={`${now}%`} />
-            </div>}
-            <br></br>
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-                        <th>Atividade</th>
-                        <th>Descrição</th>
-                        <th>Data de Entrega</th>
-                        <th>Status</th>
-                        <th>Envio</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr>
-                </tbody>
-            </Table>
-        </div> }
+      {props.aluno && <div>
+        <ProgressBar className="justify-content-center progresso" animated variant="danger" now={now} label={`${now}%`} />
+        <Table striped bordered hover >
+          <thead>
+            <tr>
+              <th>Atividade</th>
+              <th>Descrição</th>
+              <th>Data de Entrega</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          {AtvAluno.map(atv => (
+            <tbody key={atv.id}>
+              <tr>
+                <td>{atv.nome}</td>
+                <td>{atv.descricao}</td>
+                <td>
+                  {format(parseISO(atv.dataEntrega), "dd/MM/yyyy")}
+                </td>
+                <td>
+                  {atv.status}
+                </td>
+              </tr>
+             
+            </tbody>
+          ))}
+        </Table>
+      </div>}
+      
 
+      {props.atv &&
+      <div>
+        <Table striped bordered hover >
+          <thead>
+            <tr>
+              <th>Atividade</th>
+              <th>Descrição</th>
+              <th>Data de Entrega</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          {Atvs.map(atv => (
+            <tbody key={atv.id}>
+              <tr>
+                <td>{atv.nome}</td>
+                <td>{atv.descricao}</td>
+                <td>
+                  {format(parseISO(atv.dataEntrega), "dd/MM/yyyy")}
+                </td>
+                <td>
+                  {atv.status}
+                  <button type="button" className="buttontable" onClick={() => delete_atv(atv.id)}>
+                    <FiTrash2 size={20} color="#e0293d" />
+                  </button>
+                </td>
+              </tr>
+
+            </tbody>
+          ))}
+        </Table>
+        </div>}
 
     </div>
   );

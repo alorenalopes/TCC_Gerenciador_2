@@ -10,7 +10,7 @@ export default function Atividades() {
         <div>
             <BarraNav voltar={true} caminho={"/profileProfessor"}/>
             <Cadastro proposta={false} tcc={false} atv={true} />
-            <Exibir proposta={false} tcc={false} atv={true} progresso={false}/>
+            <Exibir proposta={false} tcc={false} atv={true} aluno={false}/>
             <Copyright />
         </div>
     );

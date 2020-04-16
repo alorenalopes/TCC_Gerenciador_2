@@ -4,9 +4,11 @@ const generateId = require('../../src/generateId');
 module.exports = {
     async exibir(request, response){
 
-        const tccs = await connection('Tcc').select('*');
+
+        const tcc = await connection('Tcc').select('*')
         
-        return response.json(tccs);
+        
+        return response.json(tcc);
         
         },
     

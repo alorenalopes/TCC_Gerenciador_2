@@ -25,7 +25,7 @@ module.exports = {
     },
 
     async create(request, response) {
-        const { nome, descricao, data} = request.body
+        const { nome, descricao, dataEntrega} = request.body
         const {codigo_tcc} = request.params
         const status = "A fazer"
         const id = generateId()
@@ -34,7 +34,7 @@ module.exports = {
             id,
             nome,
             descricao,
-            data,
+            dataEntrega,
             status,
             codigo_tcc, 
         })

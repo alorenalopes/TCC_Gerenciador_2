@@ -6,13 +6,13 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import '../Autenticacao/styles.css';
 import api from '../../servicos/api';
-import {useHistory} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {FiUser} from 'react-icons/fi'
 
 
 export default function Autenticacao() {
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const [Matricula, setMatricula] = useState('');
     const [Senha, setSenha] = useState('');
@@ -27,12 +27,14 @@ export default function Autenticacao() {
                 senha: Senha,
               }
             });
-            console.log(response.data.nome)
           localStorage.setItem('matricula', Matricula);
-          if(response.data.tipo === 1){
-          history.push('/profileAluno');
-          }else{
-          history.push('/profileProfessor');}
+          if(response.data.tipo === "1"){
+          navigate('/profileAluno');
+          }else if(response.data.tipo === "2"){
+          navigate('/profileProfessor');}
+          else{
+            alert('Erro no login, tente novamente');
+          }
         }catch(err){
           alert('Erro no login, tente novamente');
         }

@@ -9,9 +9,9 @@ export default function PropostasProf() {
 
     return (
         <div>
-            <BarraNav voltar={true} caminho={"/Perfil"}/>
+            <BarraNav voltar={true} caminho={"/profileProfessor/perfil"}/>
             <Cadastro proposta={true} tcc={false} atv={false} />
-            <Exibir proposta={true} tcc={false} atv={false} />
+            <Exibir proposta={true} tcc={false} atv={false} aluno={false}/>
             <Copyright />
         </div>
     );

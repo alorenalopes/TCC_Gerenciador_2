@@ -1,7 +1,8 @@
 import React from 'react';
-import BarraNav from '../componentes/BarraNav/index';
-import Titulo from '../componentes/Titulo/index';
-import Exibir from '../componentes/Exibir/index';
+import BarraNav from '../componentes/BarraNav';
+import Titulo from '../componentes/Titulo';
+import Exibir from '../componentes/Exibir';
+import Copyright from '../componentes/Copyright'
 
 export default function ProfileAluno() {
     
@@ -9,7 +10,8 @@ export default function ProfileAluno() {
        <div>
             <BarraNav profile={false} verificacao={false} perfil={true}/>
             <Titulo titulo={false} />
-            <Exibir progresso={true} />
+            <Exibir proposta={false} tcc={false} atv={false} aluno={true} />
+            <Copyright />
        </div>
-    );
+    )
 }

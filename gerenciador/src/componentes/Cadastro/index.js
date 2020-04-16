@@ -5,24 +5,22 @@ import './styles.css'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Container from 'react-bootstrap/Container'
-import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import { FiFileText } from 'react-icons/fi'
-import { useHistory } from 'react-router-dom'
-
+import { useParams } from 'react-router-dom'
+import { isPast , parseISO} from 'date-fns'
 
 export default function Cadastro(props) {
 
-  const id_atv = route.params.id;
+  const codigo_tcc = useParams().id;
   const [Propostas, setPropostas] = useState([]);
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
   const [Tccs, setTccs] = useState([]);
   const [nome_aluno, setNomeAluno] = useState("");
   const [link, setLink] = useState("");
-  const [data, setData] = useState("");
+  const [dataEntrega, setDataEntrega] = useState("");
   const [Atvs, setAtvs] = useState([]);
-  const history = useHistory();
 
 
   useEffect(() => {
@@ -38,14 +36,15 @@ export default function Cadastro(props) {
   }, [Tccs]);
 
   useEffect(() => {
-    api.get(`Atv/${id_atv}`).then(response => {
+    api.get(`Atv/${codigo_tcc}`).then(response => {
       setAtvs(response.data);
     })
-  }, [Atvs]);
+  }, [Atvs, codigo_tcc]);
 
 
   async function create_proposta(e) {
     e.preventDefault();
+
 
     const data = {
       nome,
@@ -53,7 +52,7 @@ export default function Cadastro(props) {
     };
 
     try {
-      const response = await api.post(`Proposta/${localStorage.matricula}`, data, {});
+      await api.post(`Proposta/${localStorage.matricula}`, data, {});
     } catch (err) {
       alert('Erro no cadastro, tente novamente');
     }
@@ -69,7 +68,7 @@ export default function Cadastro(props) {
     };
 
     try {
-      const response = await api.post(`TccOrientado/${localStorage.matricula}`, data, {});
+      await api.post(`TccOrientado/${localStorage.matricula}`, data, {});
     } catch (err) {
       alert('Erro no cadastro, tente novamente');
     }
@@ -78,18 +77,24 @@ export default function Cadastro(props) {
   async function create_atv(e) {
     e.preventDefault();
 
-    const data = {
-      nome,
-      descricao,
-      data,
-    };
+    if(isPast(parseISO(dataEntrega)) === true){
+      alert('Data incoerente, tente novamente');
+    } else{
 
-    try {
-      const response = await api.post(`Atv/${id_atv}`, data, {});
-    } catch (err) {
-      alert('Erro no cadastro, tente novamente');
+        const data = {
+          nome,
+          descricao,
+          dataEntrega,
+        };
+
+        try {
+          await api.post(`Atv/${codigo_tcc}`, data, {});
+        } catch (err) {
+          alert('Erro no cadastro, tente novamente');
+        }
+      } 
     }
-  }
+  
 
   return (
     <div >
@@ -99,10 +104,10 @@ export default function Cadastro(props) {
             <Col md={{ span: 4, offset: 4 }}>
               <FiFileText className="avatar" size={40} color="#e0293d" />
               <form onSubmit={create_proposta}>
-                <div class="form-group">
+                <div className="form-group">
                   <label className="form"> Nome da Proposta: </label>
                   <input
-                    class="form-control"
+                    className="form-control"
                     size="lg"
                     type="text"
                     value={nome}
@@ -110,7 +115,7 @@ export default function Cadastro(props) {
                   />
                   <label className="form"> Descrição: </label>
                   <textarea
-                    class="form-control"
+                    className="form-control"
                     style={{ height: '100px' }}
                     size="lg"
                     type="text"
@@ -131,10 +136,10 @@ export default function Cadastro(props) {
             <Col md={{ span: 4, offset: 4 }}>
               <FiFileText className="avatar" size={40} color="#e0293d" />
               <form onSubmit={create_tcc}>
-                <div class="form-group">
+                <div className="form-group">
                   <label className="form"> Nome do tcc: </label>
                   <input
-                    class="form-control"
+                    className="form-control"
                     size="lg"
                     type="text"
                     value={nome}
@@ -142,7 +147,7 @@ export default function Cadastro(props) {
                   />
                   <label className="form"> Nome do Aluno: </label>
                   <input
-                    class="form-control"
+                    className="form-control"
                     size="lg"
                     type="text"
                     value={nome_aluno}
@@ -150,7 +155,7 @@ export default function Cadastro(props) {
                   />
                   <label className="form"> Link: </label>
                   <input
-                    class="form-control"
+                    className="form-control"
                     size="lg"
                     type="text"
                     value={link}
@@ -170,10 +175,10 @@ export default function Cadastro(props) {
             <Col md={{ span: 4, offset: 4 }}>
               <FiFileText className="avatar" size={40} color="#e0293d" />
               <form onSubmit={create_atv}>
-                <div class="form-group">
+                <div className="form-group">
                   <label className="form"> Atividade: </label>
                   <input
-                    class="form-control"
+                    className="form-control"
                     size="lg"
                     type="text"
                     value={nome}
@@ -181,7 +186,7 @@ export default function Cadastro(props) {
                   />
                   <label className="form"> Descrição: </label>
                   <textarea
-                    class="form-control"
+                    className="form-control"
                     style={{ height: '100px' }}
                     size="lg"
                     type="text"
@@ -190,11 +195,11 @@ export default function Cadastro(props) {
                   />
                   <label className="form"> Data de Entrega: </label>
                   <input
-                    class="form-control"
+                    className="form-control"
                     size="lg"
                     type="date"
-                    value={data}
-                    onChange={e => setData(e.target.value)}
+                    value={(dataEntrega)}
+                    onChange={e => setDataEntrega(e.target.value)}
                   />
                   <Button className="button" type="submit" variant="danger" size="lg" block> Cadastrar </Button>
                 </div>

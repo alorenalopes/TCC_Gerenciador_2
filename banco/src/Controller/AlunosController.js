@@ -4,14 +4,16 @@ module.exports = {
 
     async exibir(request, response) {
 
-        const { matricula } = request.params;
+        const { matricula_aluno } = request.params;
 
         const alunos = await connection('Tcc')
             .select('*')
-            .where('matricula_prof', matricula)
+            .where('matricula_prof', matricula_aluno)
             .join('Pessoa', 'matricula_aluno', '=', 'Pessoa.matricula')
 
         return response.json(alunos);
 
     },
+
+    
 };

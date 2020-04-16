@@ -42,7 +42,10 @@ rotas.get('/Login', LoginController.login);
 const NomeController = require('./Controller/NomeController');
 rotas.get('/Nome/:matricula', NomeController.exibir);
 
+const AlunoAtvController = require('./Controller/AlunoAtvController');
+rotas.get('/AlunoAtividades/:matricula_aluno', AlunoAtvController.exibir);
+
 const AlunosController = require('./Controller/AlunosController');
-rotas.get('/Alunos/:matricula', AlunosController.exibir);
+rotas.get('/Alunos/:matricula_aluno', AlunosController.exibir);
 
 module.exports = rotas;

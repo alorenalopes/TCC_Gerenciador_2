@@ -4,7 +4,7 @@ exports.up = function(knex) {
         table.string('id').primary();
         table.string('nome').notNullable();
         table.string('descricao').notNullable();
-        table.string('data').notNullable();
+        table.date('dataEntrega').notNullable();
         table.string('status').notNullable();
         table.string('codigo_tcc').notNullable();
 

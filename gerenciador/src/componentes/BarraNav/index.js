@@ -6,25 +6,27 @@ import Form from 'react-bootstrap/Form'
 import Nav from 'react-bootstrap/Nav'
 import logo from '../../../src/logo.png'
 import './styles.css'
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FiArrowLeft, FiLogOut, FiUserCheck } from 'react-icons/fi'
+import { FaUserCircle } from 'react-icons/fa'
+import Dropdown from 'react-bootstrap/Dropdown'
 
 
 export default function BarraNav(props) {
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   function Sair() {
     localStorage.clear();
-    history.push('/');
+    navigate('/');
   }
 
   function Voltar() {
-    history.push(props.caminho);
+    navigate(props.caminho);
   }
 
   function Perfil() {
-    history.push('/perfil');
+    navigate('/profileProfessor/perfil');
   }
 
   return (
@@ -39,14 +41,25 @@ export default function BarraNav(props) {
             {props.profile && props.verificacao && <Nav.Link href="/login">Login</Nav.Link>}
           </Nav>
 
-          <Nav>
-            {props.perfilprof && <button type="button" className="simbolos" onClick={() => Perfil()} >
+          {/* <Nav>
+            {props.perfilprof && <button type="button" className="simbolos" >
               <FiUserCheck size={30} color="#e0293d"  style={{marginRight:'25px'}}/>
             </button>}
             {props.perfil && <button type="button" className="simbolos" onClick={() => Sair()} >
               <FiLogOut size={30} color="#e0293d" />
             </button>}
-          </Nav>
+          </Nav> */}
+
+          {props.perfilprof && <Dropdown style={{ marginRight: '25px', color: '#ef9a9a' }}>
+            <Dropdown.Toggle as="symbol" id="dropdown-basic">
+              <FaUserCircle size={30} color="#e0293d"  />
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={() => Perfil()} >Perfil</Dropdown.Item>
+              <Dropdown.Item onClick={() => Sair()} >Sair</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+          }
 
           {props.voltar &&
             <button type="button" className="simbolos" onClick={() => Voltar()} >

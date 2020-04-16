@@ -22,8 +22,6 @@ export default function Cards(props) {
 
     
     function ProxPag() {
-        console.log(Page)
-        console.log(TotalPage)
         if (Page === Number(TotalPage)) {
             return;
         }       
@@ -53,9 +51,11 @@ export default function Cards(props) {
                             </Card.Text>
                             <Button variant="outline-danger" size="lg" block> Propostas de temas </Button>
                             <Button variant="danger" size="lg" block> TCCs orientados </Button>
+                            <Button variant="outline-danger" size="lg" block> Contato </Button>
                         </Card.Body>
                     </Card>
                 ))}
+              
             </CardDeck>
 
             <div className="botoes">

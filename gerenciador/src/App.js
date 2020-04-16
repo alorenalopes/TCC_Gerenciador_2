@@ -1,5 +1,9 @@
 import React from 'react'
-import {BrowserRouter, Switch, Route} from 'react-router-dom'
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route
+} from 'react-router-dom';
 import Home from './View/Home'
 import Login from './View/Login'
 import ProfileAluno from './View/ProfileAluno'
@@ -13,18 +17,22 @@ import Atividades from './View/Atividades'
 
 function App() {
   return (
-   <BrowserRouter>
-     <Switch>
-       <Route exact path= "/" component={Home} />
-       <Route path = "/login" component = {Login} />
-       <Route path = "/profileAluno" component = {ProfileAluno} />
-       <Route path = "/profileProfessor" component = {ProfileProf} />
-       <Route path = "/perfil" component = {PerfilProf} />
-       <Route path = "/propostas" component = {PropostasProf} />
-       <Route path = "/tccs" component = {TccsOrientados} />
-       <Route path = "/atividades/:id" component = {Atividades} />
-     </Switch>
-   </BrowserRouter>
+   <Router>
+     <Routes>
+       <Route path= "/" element={<Home/>} />
+       <Route path = "/login" element = {<Login/>} />
+       
+       <Route path = "/profileAluno" element = {<ProfileAluno/>} />
+
+       <Route path = "/profileProfessor" element = {<ProfileProf/>}/>
+       <Route path = "/profileProfessor/atividades/:id" element = {<Atividades/>} />
+       <Route path = "/profileProfessor/perfil" element = {<PerfilProf/>} />
+       <Route path = "/perfil/propostas" element = {<PropostasProf/>} />
+       <Route path = "/perfil/tccs" element = {<TccsOrientados/>} />
+
+       <Route path = "*" element ={<h1>Não encontrado!!</h1>}/>
+       </Routes>
+   </Router>
   );
 }
 

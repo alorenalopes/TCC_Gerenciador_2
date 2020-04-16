@@ -4,13 +4,13 @@ import CardDeck from 'react-bootstrap/CardDeck';
 import Button from 'react-bootstrap/Button';
 import './styles.css'
 import api from '../../servicos/api';
-import { useHistory } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 
 
 export default function Alunos() {
 
     const[Alunos, setAlunos] = useState([]);
-    const history = useHistory();
+    const navigate = useNavigate();
 
     useEffect(() => {
         api.get(`Alunos/${localStorage.matricula}`).then(response => {
@@ -19,7 +19,7 @@ export default function Alunos() {
       },[Alunos]);
 
     function atv(id){
-        history.push(`/atividades/${id}`)
+        navigate(`/profileProfessor/atividades/${id}`)
     }
 
     return (

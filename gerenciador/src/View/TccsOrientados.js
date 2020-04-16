@@ -8,9 +8,9 @@ export default function TccsOrientados() {
 
     return (
         <div>
-            <BarraNav voltar={true} caminho={"/Perfil"}/>
+            <BarraNav voltar={true} caminho={"/profileProfessor/perfil"}/>
             <Cadastro proposta={false} tcc={true} atv={false} />
-            <Exibir proposta={false} tcc={true} atv={false} />
+            <Exibir proposta={false} tcc={true} atv={false}  aluno={false}/>
             <Copyright />
         </div>
     );
