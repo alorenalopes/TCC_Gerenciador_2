@@ -2,12 +2,12 @@ import React from 'react';
 import BarraNav from '../componentes/BarraNav/index';
 import Perfil from '../componentes/Perfil/index';
 
-export default function Professor() {
+export default function Perfil_Aluno() {
 
     return (
         <div>
-            <BarraNav voltar={true} caminho={"/profileProfessor"}/>
-            <Perfil perfilAluno={false} perfilProf={true}/>
+            <BarraNav voltar={true} caminho={"/profileAluno"}/>
+            <Perfil perfilAluno={true} perfilProf={false}/>
         </div>
     );
 }

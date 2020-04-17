@@ -4,7 +4,7 @@ import Cadastro from '../componentes/Cadastro/index'
 import Exibir from '../componentes/Exibir/index'
 
 
-export default function PropostasProf() {
+export default function Propostas_Cadastro() {
 
     return (
         <div>

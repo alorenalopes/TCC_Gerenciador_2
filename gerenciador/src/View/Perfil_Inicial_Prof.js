@@ -3,7 +3,7 @@ import BarraNav from '../componentes/BarraNav/index';
 import Alunos from '../componentes/Alunos/index';
 import Titulo from '../componentes/Titulo/index'
 
-export default function ProfileProf() {
+export default function Perfil_Inicial_Prof() {
 
     return (
         <div>

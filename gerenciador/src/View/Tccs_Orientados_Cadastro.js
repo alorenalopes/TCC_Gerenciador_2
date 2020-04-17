@@ -3,7 +3,7 @@ import BarraNav from '../componentes/BarraNav/index'
 import Cadastro from '../componentes/Cadastro/index'
 import Exibir from '../componentes/Exibir/index'
 
-export default function TccsOrientados() {
+export default function Tccs_Orientados_Cadastro() {
 
     return (
         <div>
