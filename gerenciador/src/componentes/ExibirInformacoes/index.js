@@ -11,7 +11,7 @@ import { format, parseISO, isAfter} from 'date-fns'
 import {FaRegCheckSquare} from "react-icons/fa"
 
 
-export default function Exibir(props) {
+export default function ExibirInformacoes(props) {
 
 
   const codigo_tcc = useParams().id;

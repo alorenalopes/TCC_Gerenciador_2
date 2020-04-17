@@ -7,7 +7,7 @@ import api from '../../servicos/api'
 import '../LoginUsuarios/styles.css'
 
 
-export default function Cards() {
+export default function CardsHome() {
 
     const [Profs, setProfs] = useState([]);
     const [Page, setPage] = useState(1);

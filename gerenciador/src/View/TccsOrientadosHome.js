@@ -1,13 +1,13 @@
 import React from 'react'
 import BarraNavegacao from '../componentes/BarraNavegacao/'
-import ExibirInformaçoes from '../componentes/ExibirInformaçoes/'
+import ExibirInformacoes from '../componentes/ExibirInformacoes/'
 
 export default function TccsOrientadosHome() {
 
     return (
         <div>
             <BarraNavegacao voltarHabilitado={true} voltarCaminho={"/"}/>
-            <ExibirInformaçoes propostas={false} TccOrientado={true} atividadesProfessor={false}  atividadesAluno={false}/>
+            <ExibirInformacoes propostas={false} TccOrientado={true} atividadesProfessor={false}  atividadesAluno={false}/>
         </div>
     );
 }

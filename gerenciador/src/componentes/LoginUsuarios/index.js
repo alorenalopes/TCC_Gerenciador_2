@@ -10,7 +10,7 @@ import {FiUser} from 'react-icons/fi'
 import './styles.css'
 
 
-export default function Autenticacao() {
+export default function LoginUsuarios() {
 
     const navigate = useNavigate();
 

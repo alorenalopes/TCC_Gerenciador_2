@@ -13,7 +13,7 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import '../LoginUsuarios/styles.css'
 
 
-export default function BarraNav(props) {
+export default function BarraNavegacao(props) {
 
   const navigate = useNavigate();
 

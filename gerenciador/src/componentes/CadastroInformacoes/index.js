@@ -9,7 +9,7 @@ import { FiFileText } from 'react-icons/fi'
 import { useParams } from 'react-router-dom'
 import { isPast , parseISO} from 'date-fns'
 
-export default function Cadastro(props) {
+export default function CadastroInformacoes(props) {
 
   const codigo_tcc = useParams().id;
   const [Propostas, setPropostas] = useState([]);

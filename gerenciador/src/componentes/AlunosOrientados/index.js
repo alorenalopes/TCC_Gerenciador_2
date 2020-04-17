@@ -8,7 +8,7 @@ import { useNavigate} from 'react-router-dom'
 import '../LoginUsuarios/styles.css'
 
 
-export default function Alunos() {
+export default function AlunosOrientados() {
 
     const[Alunos, setAlunos] = useState([]);
     const navigate = useNavigate();

@@ -3,7 +3,7 @@ import Typography from '@material-ui/core/Typography'
 import Link from '@material-ui/core/Link'
 import './styles.css'
 
-const Copyright = () => {
+export default function Copyright() {
     return (
         <div>
       <Typography className="typography" variant="body2">
@@ -23,4 +23,3 @@ const Copyright = () => {
     );
   }
 
-  export default Copyright;

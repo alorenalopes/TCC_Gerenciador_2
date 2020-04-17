@@ -1,7 +1,7 @@
 import React from 'react'
 import BarraNavegacao from '../componentes/BarraNavegacao/'
-import CadastroInformaçoes from '../componentes/CadastroInformaçoes/'
-import ExibirInformaçoes from '../componentes/ExibirInformaçoes/'
+import CadastroInformacoes from '../componentes/CadastroInformacoes/'
+import ExibirInformacoes from '../componentes/ExibirInformacoes/'
 
 
 export default function PropostasCadastro() {
@@ -9,8 +9,8 @@ export default function PropostasCadastro() {
     return (
         <div>
             <BarraNavegacao voltarHabilitado={true} voltarCaminho={"/perfil_Inicial_Professor/perfil"}/>
-            <CadastroInformaçoes propostas={true} tccOrientado={false} atividades={false} />
-            <ExibirInformaçoes propostas={true} tccOrientado={false} atividadesProfessor={false} atividadesAluno={false}/>
+            <CadastroInformacoes propostas={true} tccOrientado={false} atividades={false} />
+            <ExibirInformacoes propostas={true} tccOrientado={false} atividadesProfessor={false} atividadesAluno={false}/>
         </div>
     );
 }
