@@ -1,8 +1,9 @@
-import React, {useState, useEffect} from 'react';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
+import React, {useState, useEffect} from 'react'
+import Container from '@material-ui/core/Container'
+import Typography from '@material-ui/core/Typography'
 import "./styles.css"
-import api from '../../servicos/api';
+import api from '../../servicos/api'
+import '../LoginUsuarios/styles.css'
 
 export default function Titulo(props) {
 
@@ -18,13 +19,13 @@ export default function Titulo(props) {
 
 
         <Container className="container_titulo" maxWidth="sm">
-            {props.titulo && <Typography className="titulo" component="h2" variant="overline" gutterBottom>
+            {props.tituloHome && <Typography className="titulo" component="h2" variant="overline" gutterBottom>
                 <font className="fonte">E</font>ncontre seu  <font className="fonte">O</font>rientador
             </Typography>}
-            {!props.titulo &&
+            {!props.tituloHome &&
             Nome.map(nomes => (
             <Typography className="titulo" component="h2" variant="overline" gutterBottom key={nomes.matricula}>
-                 <font className="nome"> Bem-vindo</font>  {nomes.nome} 
+                 <font className="nome"> Bem-vindo</font>  {(nomes.nome).split(' ')[0]} {(nomes.nome).split(' ')[1]} 
             </Typography>
             ))}
 

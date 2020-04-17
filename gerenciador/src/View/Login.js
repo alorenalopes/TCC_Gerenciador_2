@@ -1,13 +1,13 @@
 import React from 'react';
-import Autenticacao from '../componentes/Autenticacao/index';
-import BarraNav from '../componentes/BarraNav/index';
+import LoginUsuarios from '../componentes/LoginUsuarios';
+import BarraNavegacao from '../componentes/BarraNavegacao';
 
 export default function Login() {
     
     return (
         <div>
-            <BarraNav verificacao= {false} profile={true}/>
-            <Autenticacao />
+            <BarraNavegacao loginHabilitado= {false} homeHabilitado={true}/>
+            <LoginUsuarios/>
         </div>
     );
 }

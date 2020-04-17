@@ -1,7 +1,7 @@
 import React from 'react';
-import BarraNav from '../componentes/BarraNav/index';
-import Titulo from '../componentes/Titulo/index';
-import Cards from '../componentes/Cards/index';
+import BarraNavegacao from '../componentes/BarraNavegacao';
+import Titulo from '../componentes/Titulo/';
+import CardsHome from '../componentes/CardsHome';
 
 
 
@@ -9,9 +9,9 @@ export default function Home() {
 
     return (
         <div>
-            <BarraNav verificacao={true} profile={true}/>
-            <Titulo titulo = {true} />
-            <Cards />
+            <BarraNavegacao loginHabilitado={true} homeHabilitado={true}/>
+            <Titulo tituloHome = {true} />
+            <CardsHome />
         </div>
     );
 

@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import '../Autenticacao/styles.css'
-import api from '../../servicos/api';
-import { useNavigate } from 'react-router-dom';
+import api from '../../servicos/api'
+import { useNavigate } from 'react-router-dom'
 import './styles.css'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Container from 'react-bootstrap/Container'
 import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button';
+import Button from 'react-bootstrap/Button'
 
 
 export default function Perfil(props) {
@@ -47,23 +46,23 @@ export default function Perfil(props) {
           matricula_prof: localStorage.matricula,
         }
       });
-      navigate('/profileProfessor');
+      navigate('/perfil_Inicial_Professor');
     } catch (err) {
       alert('Erro no cadastro, tente novamente');
     }
   }
 
   async function Propostas() {
-    navigate('/perfil/propostas');
+    navigate('/perfil_Inicial_Professor/propostas');
   }
 
   async function Tccs() {
-    navigate('/perfil/tccs');
+    navigate('/perfil_Inicial_Professor/tccs');
   }
 
   return (
     <div >
-      {props.perfilAluno && <Container className="container-form" >
+      {!props.perfilProfessor && <Container className="container-form" >
         {aluno.map(aluno => (
           <Row key={aluno.matricula}>
             <Col md={{ span: 4, offset: 1 }} >
@@ -86,7 +85,7 @@ export default function Perfil(props) {
         ))}
       </Container>}
 
-      {props.perfilProf &&
+      {props.perfilProfessor &&
         <Container className="container-form" >
           {Profs.map(prof => (
             <Row key={prof.matricula}>

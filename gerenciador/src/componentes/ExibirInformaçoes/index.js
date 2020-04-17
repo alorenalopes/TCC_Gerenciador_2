@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import '../Autenticacao/styles.css'
-import api from '../../servicos/api';
+import api from '../../servicos/api'
 import './styles.css'
-import Card from 'react-bootstrap/Card';
+import Card from 'react-bootstrap/Card'
 import CardDeck from 'react-bootstrap/CardDeck';
-import { FiTrash2 } from 'react-icons/fi';
+import { FiTrash2 } from 'react-icons/fi'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import Table from 'react-bootstrap/Table'
 import { useParams } from 'react-router-dom'
 import { format, parseISO, isAfter} from 'date-fns'
-import {FaRegCheckSquare} from "react-icons/fa";
+import {FaRegCheckSquare} from "react-icons/fa"
 
 
 export default function Exibir(props) {
@@ -102,7 +101,7 @@ export default function Exibir(props) {
 
   return (
     <div >
-      {props.proposta && <div>
+      {props.propostas && <div>
         <CardDeck className="division">
           {Propostas.map(propostas => (
             <Card border="danger" key={propostas.id}>
@@ -120,7 +119,7 @@ export default function Exibir(props) {
         </CardDeck>
       </div>}
 
-      {props.tcc && <div>
+      {props.tccOrientado && <div>
         <CardDeck className="division">
           {Tccs.map(tcc => (
             <Card border="danger" key={tcc.id}>
@@ -141,7 +140,7 @@ export default function Exibir(props) {
         </CardDeck>
       </div>}
 
-      {props.aluno && <div>
+      {props.atividadesAluno && <div>
         <div  className="progresso">
         <ProgressBar 
           block
@@ -181,7 +180,7 @@ export default function Exibir(props) {
       </div>}
       
 
-      {props.atv &&
+      {props.atividadesProfessor &&
       <div>
         <Table striped bordered hover >
           <thead>

@@ -6,10 +6,11 @@ import Form from 'react-bootstrap/Form'
 import Nav from 'react-bootstrap/Nav'
 import logo from '../../../src/logo.png'
 import './styles.css'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 import { FiArrowLeft } from 'react-icons/fi'
 import { FaUserCircle } from 'react-icons/fa'
 import Dropdown from 'react-bootstrap/Dropdown'
+import '../LoginUsuarios/styles.css'
 
 
 export default function BarraNav(props) {
@@ -22,15 +23,15 @@ export default function BarraNav(props) {
   }
 
   function Voltar() {
-    navigate(props.caminho);
+    navigate(props.voltarCaminho);
   }
 
   function PerfilProf() {
-    navigate('/profileProfessor/perfil');
+    navigate('/perfil_Inicial_Professor/perfil');
   }
 
   function PerfilAluno() {
-    navigate('/profileAluno/perfil');
+    navigate('/perfil_Inicial_Aluno/perfil');
   }
 
   return (
@@ -41,8 +42,8 @@ export default function BarraNav(props) {
         </Navbar.Brand>
         <Navbar.Collapse>
           <Nav className="mr-auto">
-            {props.profile && <Nav.Link href="/">Home</Nav.Link>}
-            {props.profile && props.verificacao && <Nav.Link href="/login">Login</Nav.Link>}
+            {props.homeHabilitado && <Nav.Link href="/">Home</Nav.Link>}
+            {props.homeHabilitado && props.loginHabilitado && <Nav.Link href="/login">Login</Nav.Link>}
           </Nav>
 
           {props.perfil && <Dropdown style={{ marginRight: '25px', color: '#fafafa' }}>
@@ -50,20 +51,20 @@ export default function BarraNav(props) {
               <FaUserCircle size={30} color="#e0293d"  />
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              {props.perfilProf &&<Dropdown.Item onClick={() => PerfilProf()} >Perfil</Dropdown.Item>}
-              {props.perfilAluno &&<Dropdown.Item onClick={() => PerfilAluno()} >Perfil</Dropdown.Item>}
+              {props.perfilProfessor &&<Dropdown.Item onClick={() => PerfilProf()} >Perfil</Dropdown.Item>}
+              {!props.perfilProfessor &&<Dropdown.Item onClick={() => PerfilAluno()} >Perfil</Dropdown.Item>}
               <Dropdown.Item onClick={() => Sair()} >Sair</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
           }
 
-          {props.voltar &&
+          {props.voltarHabilitado &&
             <button type="button" className="simbolos" onClick={() => Voltar()} >
               <FiArrowLeft size={20} color="#e0293d" />
             </button>}
 
 
-          {props.profile && props.verificacao && (
+          {props.homeHabilitado && props.loginHabilitado && (
             <Form inline>
               <FormControl
                 type="text"

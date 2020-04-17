@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import Card from 'react-bootstrap/Card';
-import CardDeck from 'react-bootstrap/CardDeck';
-import Button from 'react-bootstrap/Button';
+import React, { useState, useEffect } from 'react'
+import Card from 'react-bootstrap/Card'
+import CardDeck from 'react-bootstrap/CardDeck'
+import Button from 'react-bootstrap/Button'
 import './styles.css'
-import api from '../../servicos/api';
-import { useNavigate} from 'react-router-dom';
+import api from '../../servicos/api'
+import { useNavigate} from 'react-router-dom'
+import '../LoginUsuarios/styles.css'
 
 
 export default function Alunos() {
@@ -19,7 +20,7 @@ export default function Alunos() {
       },[Alunos]);
 
     function atv(id){
-        navigate(`/profileProfessor/atividades/${id}`)
+        navigate(`/perfil_Inicial_Professor/atividades/${id}`)
     }
 
     return (

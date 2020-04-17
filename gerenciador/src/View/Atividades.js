@@ -1,15 +1,15 @@
 import React from 'react'
-import BarraNav from '../componentes/BarraNav/index'
-import Cadastro from '../componentes/Cadastro/index'
-import Exibir from '../componentes/Exibir/index'
+import BarraNavegacao from '../componentes/BarraNavegacao/'
+import CadastroInformaçoes from '../componentes/CadastroInformaçoes/'
+import ExibirInformaçoes from '../componentes/ExibirInformaçoes/'
 
 export default function Atividades() {
 
     return (
         <div>
-            <BarraNav voltar={true} caminho={"/profileProfessor"}/>
-            <Cadastro proposta={false} tcc={false} atv={true} />
-            <Exibir proposta={false} tcc={false} atv={true} aluno={false}/>
+            <BarraNavegacao voltarHabilitado={true} voltarCaminho={"/perfil_Inicial_Professor"}/>
+            <CadastroInformaçoes propostas={false} tccOrientado={false} atividades={true} />
+            <ExibirInformaçoes propostas={false} tccOrientado={false} atividadesProfessor={true} atividadesAluno={false}/>
         </div>
     );
 }

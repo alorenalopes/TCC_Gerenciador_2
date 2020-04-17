@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import '../Autenticacao/styles.css'
 import api from '../../servicos/api'
 import './styles.css'
 import Col from 'react-bootstrap/Col'
@@ -98,7 +97,7 @@ export default function Cadastro(props) {
 
   return (
     <div >
-      {props.proposta && <div>
+      {props.propostas && <div>
         <Container className="container-form" >
           <Row>
             <Col md={{ span: 4, offset: 4 }}>
@@ -130,7 +129,7 @@ export default function Cadastro(props) {
         </Container>
       </div>}
 
-      {props.tcc && <div>
+      {props.tccOrientado && <div>
         <Container className="container-form" >
           <Row>
             <Col md={{ span: 4, offset: 4 }}>
@@ -169,7 +168,7 @@ export default function Cadastro(props) {
         </Container>
       </div>}
 
-      {props.atv && <div>
+      {props.atividades && <div>
         <Container className="container-form" >
           <Row>
             <Col md={{ span: 4, offset: 4 }}>

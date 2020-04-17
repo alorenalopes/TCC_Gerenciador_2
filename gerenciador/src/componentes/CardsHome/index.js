@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import Card from 'react-bootstrap/Card';
-import CardDeck from 'react-bootstrap/CardDeck';
-import Button from 'react-bootstrap/Button';
+import React, { useState, useEffect } from 'react'
+import Card from 'react-bootstrap/Card'
+import CardDeck from 'react-bootstrap/CardDeck'
+import Button from 'react-bootstrap/Button'
 import './styles.css'
-import api from '../../servicos/api';
+import api from '../../servicos/api'
+import '../LoginUsuarios/styles.css'
 
 
-export default function Cards(props) {
+export default function Cards() {
 
     const [Profs, setProfs] = useState([]);
     const [Page, setPage] = useState(1);

@@ -8,14 +8,14 @@ import {
 
 import Home from './View/Home'
 import Login from './View/Login'
-import Perfil_Aluno from './View/Perfil_Aluno'
-import Perfil_Inicial_Aluno from './View/Perfil_Inicial_Aluno'
-import Perfil_Professor from './View/Perfil_Professor'
-import Perfil_Inicial_Prof from './View/Perfil_Inicial_Prof'
-import Propostas_Cadastro from './View/Propostas_Cadastro'
-import Propostas_Home from './View/Propostas_Home'
-import Tccs_Orientados_Cadastro from './View/Tccs_Orientados_Cadastro';
-import Tccs_Orientados_Home from './View/Tccs_Orientados_Home';
+import PerfilAluno from './View/PerfilAluno'
+import PerfilInicialAluno from './View/PerfilInicialAluno'
+import PerfilProfessor from './View/PerfilProfessor'
+import PerfilInicialProf from './View/PerfilInicialProf'
+import PropostasCadastro from './View/PropostasCadastro'
+import PropostasHome from './View/PropostasHome'
+import TccsOrientadosCadastro from './View/TccsOrientadosCadastro';
+import TccsOrientadosHome from './View/TccsOrientadosHome';
 import Atividades from './View/Atividades'
 
 import Copyright from './componentes/Copyright'
@@ -28,17 +28,17 @@ function App() {
        <Route path= "/" element={<Home/>} />
        <Route path = "/login" element = {<Login/>} />
        
-       <Route path = "/perfil_Inicial_Aluno" element = {<Perfil_Inicial_Aluno/>} />
-       <Route path = "/perfil_Inicial_Aluno/perfil" element = {<Perfil_Aluno/>} />
+       <Route path = "/perfil_Inicial_Aluno" element = {<PerfilInicialAluno/>} />
+       <Route path = "/perfil_Inicial_Aluno/perfil" element = {<PerfilAluno/>} />
 
-       <Route path = "/perfil_Inicial_Professor" element = {<Perfil_Inicial_Prof/>}/>
-       <Route path = "/perfil_Inicial_Professorr/atividades/:id" element = {<Atividades/>} />
-       <Route path = "/perfil_Inicial_Professor/perfil" element = {<Perfil_Professor/>} />
-       <Route path = "/perfil_Inicial_Professor/propostas" element = {<Propostas_Cadastro/>} />
-       <Route path = "/perfil_Inicial_Professor/tccs" element = {<Tccs_Orientados_Cadastro/>} />
+       <Route path = "/perfil_Inicial_Professor" element = {<PerfilInicialProf/>}/>
+       <Route path = "/perfil_Inicial_Professor/atividades/:id" element = {<Atividades/>} />
+       <Route path = "/perfil_Inicial_Professor/perfil" element = {<PerfilProfessor/>} />
+       <Route path = "/perfil_Inicial_Professor/propostas" element = {<PropostasCadastro/>} />
+       <Route path = "/perfil_Inicial_Professor/tccs" element = {<TccsOrientadosCadastro/>} />
 
-       <Route path = "/home/tccs_Orientados/:matricula_prof" element = {<Tccs_Orientados_Home/>} />
-       <Route path = "/home/propostas/:matricula_prof" element = {<Propostas_Home/>} />
+       <Route path = "/home/tccs_Orientados/:matricula_prof" element = {<TccsOrientadosHome/>} />
+       <Route path = "/home/propostas/:matricula_prof" element = {<PropostasHome/>} />
 
        <Route path = "*" element ={<h1>Não encontrado!!</h1>}/>
        </Routes>

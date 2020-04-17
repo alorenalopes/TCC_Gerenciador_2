@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Box from '@material-ui/core/Box';
-import Container from '@material-ui/core/Container';
-import '../Autenticacao/styles.css';
-import api from '../../servicos/api';
-import {useNavigate} from 'react-router-dom';
+import React, { useState } from 'react'
+import Button from 'react-bootstrap/Button'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import TextField from '@material-ui/core/TextField'
+import Box from '@material-ui/core/Box'
+import Container from '@material-ui/core/Container'
+import api from '../../servicos/api'
+import {useNavigate} from 'react-router-dom'
 import {FiUser} from 'react-icons/fi'
+import './styles.css'
 
 
 export default function Autenticacao() {
@@ -29,9 +29,9 @@ export default function Autenticacao() {
             });
           localStorage.setItem('matricula', Matricula);
           if(response.data.tipo === "1"){
-          navigate('/profileAluno');
+          navigate('/perfil_Inicial_Aluno');
           }else if(response.data.tipo === "2"){
-          navigate('/profileProfessor');}
+          navigate('/perfil_Inicial_Professor');}
           else{
             alert('Erro no login, tente novamente');
           }
