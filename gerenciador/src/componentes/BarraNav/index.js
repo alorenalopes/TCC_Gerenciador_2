@@ -7,7 +7,7 @@ import Nav from 'react-bootstrap/Nav'
 import logo from '../../../src/logo.png'
 import './styles.css'
 import { useNavigate } from 'react-router-dom';
-import { FiArrowLeft, FiLogOut, FiUserCheck } from 'react-icons/fi'
+import { FiArrowLeft } from 'react-icons/fi'
 import { FaUserCircle } from 'react-icons/fa'
 import Dropdown from 'react-bootstrap/Dropdown'
 
@@ -25,8 +25,12 @@ export default function BarraNav(props) {
     navigate(props.caminho);
   }
 
-  function Perfil() {
+  function PerfilProf() {
     navigate('/profileProfessor/perfil');
+  }
+
+  function PerfilAluno() {
+    navigate('/profileAluno/perfil');
   }
 
   return (
@@ -41,21 +45,13 @@ export default function BarraNav(props) {
             {props.profile && props.verificacao && <Nav.Link href="/login">Login</Nav.Link>}
           </Nav>
 
-          {/* <Nav>
-            {props.perfilprof && <button type="button" className="simbolos" >
-              <FiUserCheck size={30} color="#e0293d"  style={{marginRight:'25px'}}/>
-            </button>}
-            {props.perfil && <button type="button" className="simbolos" onClick={() => Sair()} >
-              <FiLogOut size={30} color="#e0293d" />
-            </button>}
-          </Nav> */}
-
-          {props.perfilprof && <Dropdown style={{ marginRight: '25px', color: '#ef9a9a' }}>
+          {props.perfil && <Dropdown style={{ marginRight: '25px', color: '#fafafa' }}>
             <Dropdown.Toggle as="symbol" id="dropdown-basic">
               <FaUserCircle size={30} color="#e0293d"  />
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item onClick={() => Perfil()} >Perfil</Dropdown.Item>
+              {props.perfilProf &&<Dropdown.Item onClick={() => PerfilProf()} >Perfil</Dropdown.Item>}
+              {props.perfilAluno &&<Dropdown.Item onClick={() => PerfilAluno()} >Perfil</Dropdown.Item>}
               <Dropdown.Item onClick={() => Sair()} >Sair</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>

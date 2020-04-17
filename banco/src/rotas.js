@@ -2,7 +2,7 @@ const express = require('express');
 const rotas = express.Router();
 
 const PessoaController = require('./controller/PessoaController');
-rotas.get('/Pessoa', PessoaController.exibir);
+rotas.get('/Pessoa/:matricula_aluno', PessoaController.exibir);
 rotas.post('/Pessoa', PessoaController.create);
 rotas.delete('/Pessoa/:matricula', PessoaController.delete);
 
@@ -10,6 +10,7 @@ const AtvController = require('./controller/AtvController');
 rotas.get('/Atv/:codigo_tcc', AtvController.exibir);
 rotas.post('/Atv/:codigo_tcc', AtvController.create);
 rotas.delete('/Atv/:id', AtvController.delete);
+rotas.put('/Atv/:id', AtvController.update);
 
 const ProfessorController = require('./controller/ProfessorController');
 rotas.get('/Professor', ProfessorController.exibir);

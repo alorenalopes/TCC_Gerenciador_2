@@ -10,12 +10,13 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 
 
-export default function Perfil() {
+export default function Perfil(props) {
 
   const [Profs, setProfs] = useState([]);
   const [area, setArea] = useState("");
   const [disponibilidade, setDisponibilidade] = useState("");
   const navigate = useNavigate();
+  const [aluno, setAluno] = useState([]);
 
   useEffect(() => {
     api.get(`Professor/${localStorage.matricula}`).then(response => {
@@ -25,10 +26,16 @@ export default function Perfil() {
     })
   }, []);
 
+  useEffect(() => {
+    api.get(`Pessoa/${localStorage.matricula}`).then(response => {
+      setAluno(response.data);
+    })
+  }, [aluno]);
+
 
   async function updateInfo(e) {
     e.preventDefault();
-   
+
     const data = {
       area,
       disponibilidade,
@@ -56,45 +63,70 @@ export default function Perfil() {
 
   return (
     <div >
-      <Container className="container-form" >
-        {Profs.map(prof => ( 
-          <Row key={prof.matricula}>
+      {props.perfilAluno && <Container className="container-form" >
+        {aluno.map(aluno => (
+          <Row key={aluno.matricula}>
             <Col md={{ span: 4, offset: 1 }} >
               <Form.Label className="form"> Nome: </Form.Label>
-              <Form.Control size="lg" type="text" disabled placeholder={prof.nome} />
+              <Form.Control size="lg" type="text" disabled placeholder={aluno.nome_aluno} />
               <Form.Label className="form"> Matrícula: </Form.Label>
-              <Form.Control size="lg" type="text" disabled placeholder={prof.matricula} />
+              <Form.Control size="lg" type="text" disabled placeholder={localStorage.matricula} />
               <Form.Label className="form"> Email: </Form.Label>
-              <Form.Control size="lg" type="text" disabled placeholder={prof.email} />
+              <Form.Control size="lg" type="text" disabled placeholder={aluno.email} />
               <Form.Label className="form"> CPF: </Form.Label>
-              <Form.Control size="lg" type="text" disabled placeholder={prof.cpf} />
+              <Form.Control size="lg" type="text" disabled placeholder={aluno.cpf} />
             </Col>
             <Col md={{ span: 4, offset: 2 }}>
-              <Form onSubmit={updateInfo}>
-                <Form.Label className="form"> Área de atuação: </Form.Label>
-                <Form.Control
-                  size="lg"
-                  type="text"
-                  placeholder={prof.area}
-                  value={area}
-                  onChange={e => setArea(e.target.value)}
-                />
-                <Form.Label className="form"> Disponibilidade: </Form.Label>
-                <Form.Control
-                  size="lg"
-                  type="number"
-                  placeholder={prof.disponibilidade}
-                  value={disponibilidade}
-                  onChange={e => setDisponibilidade(e.target.value)}
-                />
-                <Button className="button" onClick={Propostas} variant="outline-danger" size="lg" block> Adicionar propostas </Button>
-                <Button className="button" onClick={Tccs} variant="outline-danger" size="lg" block> Adicionar Tcc's orientados </Button>
-                <Button className="button" type="submit" variant="danger" size="lg" block> Salvar informações </Button>
-              </Form>
+              <Form.Label className="form"> Trabalho de Conclusão de Curso: </Form.Label>
+              <Form.Control size="lg" type="text" disabled placeholder={aluno.nome_tcc} />
+              <Form.Label className="form"> Orientador: </Form.Label>
+              <Form.Control size="lg" type="text" disabled placeholder={aluno.nome_prof} />
             </Col>
           </Row>
         ))}
-      </Container>
+      </Container>}
+
+      {props.perfilProf &&
+        <Container className="container-form" >
+          {Profs.map(prof => (
+            <Row key={prof.matricula}>
+              <Col md={{ span: 4, offset: 1 }} >
+                <Form.Label className="form"> Nome: </Form.Label>
+                <Form.Control size="lg" type="text" disabled placeholder={prof.nome} />
+                <Form.Label className="form"> Matrícula: </Form.Label>
+                <Form.Control size="lg" type="text" disabled placeholder={prof.matricula} />
+                <Form.Label className="form"> Email: </Form.Label>
+                <Form.Control size="lg" type="text" disabled placeholder={prof.email} />
+                <Form.Label className="form"> CPF: </Form.Label>
+                <Form.Control size="lg" type="text" disabled placeholder={prof.cpf} />
+              </Col>
+              <Col md={{ span: 4, offset: 2 }}>
+                <Form onSubmit={updateInfo}>
+                  <Form.Label className="form"> Área de atuação: </Form.Label>
+                  <Form.Control
+                    size="lg"
+                    type="text"
+                    placeholder={prof.area}
+                    value={area}
+                    onChange={e => setArea(e.target.value)}
+                  />
+                  <Form.Label className="form"> Disponibilidade: </Form.Label>
+                  <Form.Control
+                    size="lg"
+                    type="number"
+                    placeholder={prof.disponibilidade}
+                    value={disponibilidade}
+                    onChange={e => setDisponibilidade(e.target.value)}
+                  />
+                  <Button className="button" onClick={Propostas} variant="outline-danger" size="lg" block> Adicionar propostas </Button>
+                  <Button className="button" onClick={Tccs} variant="outline-danger" size="lg" block> Adicionar Tcc's orientados </Button>
+                  <Button className="button" type="submit" variant="danger" size="lg" block> Salvar informações </Button>
+                </Form>
+              </Col>
+            </Row>
+          ))}
+        </Container>
+      }
     </div>
   );
 }

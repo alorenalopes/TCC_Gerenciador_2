@@ -9,24 +9,25 @@ import ProgressBar from 'react-bootstrap/ProgressBar'
 import Table from 'react-bootstrap/Table'
 import { useParams } from 'react-router-dom'
 import { format, parseISO, isAfter} from 'date-fns'
+import {FaRegCheckSquare} from "react-icons/fa";
 
 
 export default function Exibir(props) {
 
 
   const codigo_tcc = useParams().id;
-  const now = 30;
   const [Propostas, setPropostas] = useState([]);
   const [Tccs, setTccs] = useState([]);
   const [Atvs, setAtvs] = useState([]);
   const [AtvAluno, setAtvAluno] = useState([]);
+  const [now, setNow] = useState('');
 
 
   useEffect(() => {
     api.get(`Atv/${codigo_tcc}`).then(response => {
       var data = new Date();
       for (const a in response.data) {
-        if (isAfter(data, parseISO(response.data[a].dataEntrega)) === true) {
+        if (isAfter(data, parseISO(response.data[a].dataEntrega)) === true && response.data[a].status !== "Concluído") {
           response.data[a].status = "Atrasado"
         }
       }
@@ -52,11 +53,12 @@ export default function Exibir(props) {
     api.get(`AlunoAtividades/${localStorage.matricula}`).then(response => {
       var data = new Date();
       for (const a in response.data) {
-        if (isAfter(data, parseISO(response.data[a].dataEntrega)) === true) {
+        if (isAfter(data, parseISO(response.data[a].dataEntrega)) === true && response.data[a].status !== "Concluído") {
           response.data[a].status = "Atrasado"
         }
       }
       setAtvAluno(response.data);
+      setNow(response.headers['x-porcentagem'])
     })
   }, [AtvAluno]);
 
@@ -87,6 +89,16 @@ export default function Exibir(props) {
       alert('Erro ao deletar o caso, tente novamente');
     }
   }
+
+  async function confirma_atv(id) {
+    try {
+      await api.put(`Atv/${id}`, {});
+      setTccs(Atvs.filter(atv => atv.id !== id));
+    } catch (err) {
+      alert('Erro ao deletar o caso, tente novamente');
+    }
+  }
+
 
   return (
     <div >
@@ -130,8 +142,15 @@ export default function Exibir(props) {
       </div>}
 
       {props.aluno && <div>
-        <ProgressBar className="justify-content-center progresso" animated variant="danger" now={now} label={`${now}%`} />
-        <Table striped bordered hover >
+        <div  className="progresso">
+        <ProgressBar 
+          block
+          animated variant="danger" 
+          now={now} 
+          label={`${now}%`}
+          style={{ height: '30px', width:'700px'}} />
+          </div>
+        <Table striped hover >
           <thead>
             <tr>
               <th>Atividade</th>
@@ -150,7 +169,10 @@ export default function Exibir(props) {
                 </td>
                 <td>
                   {atv.status}
-                </td>
+                  <button type="button" className="buttontable" onClick={() => confirma_atv(atv.id)}>
+                    <FaRegCheckSquare size={20} color="#e0293d" />
+                  </button>
+                  </td>
               </tr>
              
             </tbody>

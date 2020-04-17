@@ -22,12 +22,15 @@
         top: 24px;
     }
 
-    .progresso{
-        margin-bottom: 35px;
-    }
-
     .buttontable{
         border: 0;
         position: absolute;
         right: 24px;
+    }
+
+    .progresso{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 40px; 
     }
