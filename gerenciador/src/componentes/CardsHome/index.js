@@ -5,17 +5,17 @@ import Button from 'react-bootstrap/Button'
 import './styles.css'
 import api from '../../servicos/api'
 import '../LoginUsuarios/styles.css'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { FiMail } from 'react-icons/fi'
 
-
-
-export default function CardsHome() {
+export default function CardsHome(props) {
 
     const [Profs, setProfs] = useState([]);
+    const [ProfsPesquisa, setProfsPesquisa] = useState([]);
     const [Page, setPage] = useState(1);
     const [TotalPage, setTotals] = useState(0);
     const navigate = useNavigate();
+    const nome= useParams().nome;
 
 
     useEffect(() => {
@@ -24,6 +24,12 @@ export default function CardsHome() {
             setTotals(response.headers['x-total-page']);
         })
     }, [Page]);
+
+    useEffect(() => {
+        api.get(`pesquisar/${nome}`).then(response => {
+            setProfsPesquisa(response.data);
+        })
+    }, [nome]);
 
 
     function ProxPag() {
@@ -52,34 +58,68 @@ export default function CardsHome() {
     }
 
     return (
+
+
         <div className="border">
-            <CardDeck className="division">
-                {Profs.map(prof => (
-                    <Card border="danger" key={prof.matricula}>
-                        <Card.Body >
-                            <Card.Title>{prof.nome}</Card.Title>
-                            <Card.Text>
-                                Área de atuação: {prof.area}.
+            {!props.pesquisarHome &&
+            <div>
+                <CardDeck className="division">
+                    {Profs.map(prof => (
+                        <Card border="danger" key={prof.matricula}>
+                            <Card.Body >
+                                <Card.Title>{prof.nome}</Card.Title>
+                                <Card.Text>
+                                    Área de atuação: {prof.area}.
                                 <br></br>
                                 Disponibilidade para {prof.disponibilidade} orientandos.
                             </Card.Text>
-                            <Button variant="outline-danger" size="lg" block onClick={() => PropostasProf(prof.matricula)}> Propostas de temas </Button>
-                            <Button variant="danger" size="lg" block onClick={() => TccsOrientadosProf(prof.matricula)}> TCCs orientados </Button>
-                            <button type="button" className="button">
-                                <FiMail size={30} color="#e0293d" />
-                            </button>
-                           
-                        </Card.Body>
-                    </Card>
-                ))}
+                                <Button variant="outline-danger" size="lg" block onClick={() => PropostasProf(prof.matricula)}> Propostas de temas </Button>
+                                <Button variant="danger" size="lg" block onClick={() => TccsOrientadosProf(prof.matricula)}> TCCs orientados </Button>
+                                <button type="button" className="button">
+                                    <FiMail size={30} color="#e0293d" />
+                                </button>
 
-            </CardDeck>
+                            </Card.Body>
+                        </Card>
+                    ))}
 
-            <div className="botoes">
-                <Button variant="outline-danger" onClick={PrevPag}>Anterior</Button>
-                <Button variant="outline-danger" onClick={ProxPag}>Próximo</Button>
-            </div>
+                </CardDeck>
+
+                 <div className="botoes">
+                 <Button variant="outline-danger" onClick={PrevPag}>Anterior</Button>
+                 <Button variant="outline-danger" onClick={ProxPag}>Próximo</Button>
+                </div>
+                </div>
+            }
+
+            {props.pesquisarHome &&
+                <CardDeck className="divisionPesquisar">
+                    {ProfsPesquisa.map(prof => (
+                        <Card border="danger" key={prof.matricula}>
+                            <Card.Body >
+                                <Card.Title>{prof.nome}</Card.Title>
+                                <Card.Text>
+                                    Área de atuação: {prof.area}.
+                                <br></br>
+                                Disponibilidade para {prof.disponibilidade} orientandos.
+                            </Card.Text>
+                                <Button variant="outline-danger" size="lg" block onClick={() => PropostasProf(prof.matricula)}> Propostas de temas </Button>
+                                <Button variant="danger" size="lg" block onClick={() => TccsOrientadosProf(prof.matricula)}> TCCs orientados </Button>
+                                <button type="button" className="button">
+                                    <FiMail size={30} color="#e0293d" />
+                                </button>
+
+                            </Card.Body>
+                        </Card>
+                    ))}
+
+                </CardDeck>
+            }
+
+           
+
         </div>
+
     );
 }
 

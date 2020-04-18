@@ -11,7 +11,7 @@ export default function Home() {
         <div>
             <BarraNavegacao loginHabilitado={true} homeHabilitado={true}/>
             <Titulo tituloHome={true} tituloProposta={false} tituloPerfil={false} tituloTcc={false}/>
-            <CardsHome pesquisarHome={false} />
+            <CardsHome pesquisarHome={true} />
         </div>
     );
 

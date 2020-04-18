@@ -9,7 +9,6 @@ import Table from 'react-bootstrap/Table'
 import { useParams } from 'react-router-dom'
 import { format, parseISO, isAfter } from 'date-fns'
 import { FaRegCheckSquare } from "react-icons/fa"
-import Button from 'react-bootstrap/Button'
 
 
 export default function ExibirInformacoes(props) {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Navbar from 'react-bootstrap/Navbar'
 import Button from 'react-bootstrap/Button'
 import FormControl from 'react-bootstrap/FormControl'
@@ -16,6 +16,7 @@ import '../LoginUsuarios/styles.css'
 export default function BarraNavegacao(props) {
 
   const navigate = useNavigate();
+  const [nome, setNome] = useState("");
 
   function Sair() {
     localStorage.clear();
@@ -24,6 +25,10 @@ export default function BarraNavegacao(props) {
 
   function Voltar() {
     navigate(props.voltarCaminho);
+  }
+
+  function Search(nome) {
+    navigate(`/home/pesquisa/${nome}`);
   }
 
   function PerfilProf() {
@@ -70,8 +75,10 @@ export default function BarraNavegacao(props) {
                 type="text"
                 placeholder="Nome"
                 className="mr-sm-2"
+                value={nome}
+                onChange={e => setNome(e.target.value)}
               />
-              <Button type="submit" variant="outline-danger">Pesquisar</Button>
+              <Button type="submit" variant="outline-danger"onClick={() => Search(nome)}>Pesquisar</Button>
             </Form>
           )
           }

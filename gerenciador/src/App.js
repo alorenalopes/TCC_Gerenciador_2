@@ -17,6 +17,7 @@ import PropostasHome from './View/PropostasHome'
 import TccsOrientadosCadastro from './View/TccsOrientadosCadastro';
 import TccsOrientadosHome from './View/TccsOrientadosHome';
 import Atividades from './View/Atividades'
+import PesquisarHome from './View/PesquisarHome'
 
 import Copyright from './componentes/Copyright'
 
@@ -39,6 +40,7 @@ function App() {
 
        <Route path = "/home/tccs_Orientados/:matricula_prof" element = {<TccsOrientadosHome/>} />
        <Route path = "/home/propostas/:matricula_prof" element = {<PropostasHome/>} />
+       <Route path = "/home/pesquisa/:nome" element = {<PesquisarHome/>} />
 
        <Route path = "*" element ={<h1>Não encontrado!!</h1>}/>
        </Routes>
