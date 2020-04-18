@@ -9,13 +9,30 @@
         grid-template-columns: repeat(4, 1fr);
         display: grid;
         grid-gap: 24px;
-        list-style: none;
         margin-bottom: 100px;
         margin-left: 10px;
         margin-bottom: 30px;
+        margin-right: 10px;
+    }
+
+    .divisionHome{
+        grid-template-columns: repeat(3, 1fr);
+        display: grid;
+        grid-gap: 20px;
+        margin-bottom: 100px;
+        margin-left: 10px;
+        margin-bottom: 30px;
+        margin-right: 10px;
     }
 
     .division .button {
+        border: 0;
+        position: absolute;
+        right: 24px;
+        top: 24px;
+    }
+
+    .divisionHome .button {
         border: 0;
         position: absolute;
         right: 24px;

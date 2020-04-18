@@ -20,3 +20,10 @@ margin-bottom: 0px;
     grid-gap: 24px;
     list-style: none;
 }
+
+.border .division .button{
+    border: 0;
+    position: absolute;
+    right: 24px;
+    top: 24px;
+}

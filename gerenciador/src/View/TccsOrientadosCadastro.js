@@ -9,7 +9,9 @@ export default function TccsOrientadosCadastro() {
         <div>
             <BarraNavegacao voltarHabilitado={true} voltarCaminho={"/perfil_Inicial_Professor/perfil"}/>
             <CadastroInformacoes propostas={false} tccOrientado={true} atividades={false} />
-            <ExibirInformacoes propostas={false} tccOrientado={true} atividadesProfessor={false}  atividadesAluno={false}/>
+            <ExibirInformacoes propostas={false} tccOrientado={true} 
+            propostasHome={false} atividadesProfessor={false}  atividadesAluno={false}
+            tccOrientadoHome={false}/>
         </div>
     );
 }

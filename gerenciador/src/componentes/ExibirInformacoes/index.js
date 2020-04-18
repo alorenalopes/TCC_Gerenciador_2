@@ -3,20 +3,24 @@ import api from '../../servicos/api'
 import './styles.css'
 import Card from 'react-bootstrap/Card'
 import CardDeck from 'react-bootstrap/CardDeck';
-import { FiTrash2 } from 'react-icons/fi'
+import { FiTrash2, FiExternalLink, FiMail } from 'react-icons/fi'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import Table from 'react-bootstrap/Table'
 import { useParams } from 'react-router-dom'
-import { format, parseISO, isAfter} from 'date-fns'
-import {FaRegCheckSquare} from "react-icons/fa"
+import { format, parseISO, isAfter } from 'date-fns'
+import { FaRegCheckSquare } from "react-icons/fa"
+import Button from 'react-bootstrap/Button'
 
 
 export default function ExibirInformacoes(props) {
 
 
   const codigo_tcc = useParams().id;
+  const matricula_prof = useParams().matricula_prof;
   const [Propostas, setPropostas] = useState([]);
+  const [PropostasHome, setPropostasHome] = useState([]);
   const [Tccs, setTccs] = useState([]);
+  const [TccsHome, setTccsHome] = useState([]);
   const [Atvs, setAtvs] = useState([]);
   const [AtvAluno, setAtvAluno] = useState([]);
   const [now, setNow] = useState('');
@@ -41,12 +45,24 @@ export default function ExibirInformacoes(props) {
     })
   }, [Propostas]);
 
+  useEffect(() => {
+    api.get(`Proposta/${matricula_prof}`).then(response => {
+      setPropostasHome(response.data);
+    })
+  }, [PropostasHome]);
+
 
   useEffect(() => {
     api.get(`TccOrientado/${localStorage.matricula}`).then(response => {
       setTccs(response.data);
     })
   }, [Tccs]);
+
+  useEffect(() => {
+    api.get(`TccOrientado/${matricula_prof}`).then(response => {
+      setTccsHome(response.data);
+    })
+  }, [TccsHome]);
 
   useEffect(() => {
     api.get(`AlunoAtividades/${localStorage.matricula}`).then(response => {
@@ -111,13 +127,32 @@ export default function ExibirInformacoes(props) {
                   {propostas.descricao}
                 </Card.Text>
                 <button type="button" className="button" onClick={() => delete_proposta(propostas.id)}>
-                  <FiTrash2 size={20} color="#e0293d" />
+                  <FiTrash2 size={25} color="#e0293d" />
                 </button>
               </Card.Body>
             </Card>
           ))}
         </CardDeck>
       </div>}
+
+      {props.propostasHome && <div>
+        <CardDeck className="divisionHome">
+          {PropostasHome.map(propostas => (
+            <Card border="danger" key={propostas.id}>
+              <Card.Body >
+              <Card.Header className="text-center"><b>{propostas.nome}</b> </Card.Header>
+                <Card.Text className="text-black-50">
+                  {propostas.descricao}
+                </Card.Text>
+                <button type="button" className="button">
+                  <FiMail size={25} color="#e0293d" />
+                </button>
+              </Card.Body>
+            </Card>
+          ))}
+        </CardDeck>
+      </div>}
+
 
       {props.tccOrientado && <div>
         <CardDeck className="division">
@@ -132,7 +167,7 @@ export default function ExibirInformacoes(props) {
                   {tcc.link}
                 </Card.Text>
                 <button type="button" className="button" onClick={() => delete_tcc(tcc.id)}>
-                  <FiTrash2 size={20} color="#e0293d" />
+                  <FiTrash2 size={25} color="#e0293d" />
                 </button>
               </Card.Body>
             </Card>
@@ -140,15 +175,38 @@ export default function ExibirInformacoes(props) {
         </CardDeck>
       </div>}
 
+      {props.tccOrientadoHome && <div>
+        <CardDeck className="divisionHome">
+          {TccsHome.map(tcc => (
+            <Card border="danger" key={tcc.id}>
+              <Card.Body >
+                <Card.Header className="text-center text-text-info"> <b>{tcc.nome}</b></Card.Header>
+                <Card.Title></Card.Title>
+                <Card.Text> <b>Aluno(a): </b>
+                  {tcc.nome_aluno}
+                  <br></br>
+                  <br></br>
+                  <a className="text-danger" href={tcc.link}>
+                    <button type="button" className="button" onClick={() => delete_tcc(tcc.id)}>
+                      <FiExternalLink size={25} color="#e0293d" />
+                    </button>
+                  </a>
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          ))}
+        </CardDeck>
+      </div>}
+
       {props.atividadesAluno && <div>
-        <div  className="progresso">
-        <ProgressBar 
-          block
-          animated variant="danger" 
-          now={now} 
-          label={`${now}%`}
-          style={{ height: '30px', width:'700px'}} />
-          </div>
+        <div className="progresso">
+          <ProgressBar
+            block
+            animated variant="danger"
+            now={now}
+            label={`${now}%`}
+            style={{ height: '30px', width: '700px' }} />
+        </div>
         <Table striped hover >
           <thead>
             <tr>
@@ -169,47 +227,47 @@ export default function ExibirInformacoes(props) {
                 <td>
                   {atv.status}
                   <button type="button" className="buttontable" onClick={() => confirma_atv(atv.id)}>
-                    <FaRegCheckSquare size={20} color="#e0293d" />
+                    <FaRegCheckSquare size={25} color="#e0293d" />
                   </button>
-                  </td>
+                </td>
               </tr>
-             
+
             </tbody>
           ))}
         </Table>
       </div>}
-      
+
 
       {props.atividadesProfessor &&
-      <div>
-        <Table striped bordered hover >
-          <thead>
-            <tr>
-              <th>Atividade</th>
-              <th>Descrição</th>
-              <th>Data de Entrega</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          {Atvs.map(atv => (
-            <tbody key={atv.id}>
+        <div>
+          <Table striped bordered hover >
+            <thead>
               <tr>
-                <td>{atv.nome}</td>
-                <td>{atv.descricao}</td>
-                <td>
-                  {format(parseISO(atv.dataEntrega), "dd/MM/yyyy")}
-                </td>
-                <td>
-                  {atv.status}
-                  <button type="button" className="buttontable" onClick={() => delete_atv(atv.id)}>
-                    <FiTrash2 size={20} color="#e0293d" />
-                  </button>
-                </td>
+                <th>Atividade</th>
+                <th>Descrição</th>
+                <th>Data de Entrega</th>
+                <th>Status</th>
               </tr>
+            </thead>
+            {Atvs.map(atv => (
+              <tbody key={atv.id}>
+                <tr>
+                  <td>{atv.nome}</td>
+                  <td>{atv.descricao}</td>
+                  <td>
+                    {format(parseISO(atv.dataEntrega), "dd/MM/yyyy")}
+                  </td>
+                  <td>
+                    {atv.status}
+                    <button type="button" className="buttontable" onClick={() => delete_atv(atv.id)}>
+                      <FiTrash2 size={25} color="#e0293d" />
+                    </button>
+                  </td>
+                </tr>
 
-            </tbody>
-          ))}
-        </Table>
+              </tbody>
+            ))}
+          </Table>
         </div>}
 
     </div>

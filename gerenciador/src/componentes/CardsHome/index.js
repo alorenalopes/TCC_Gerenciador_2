@@ -5,6 +5,9 @@ import Button from 'react-bootstrap/Button'
 import './styles.css'
 import api from '../../servicos/api'
 import '../LoginUsuarios/styles.css'
+import { useNavigate } from 'react-router-dom'
+import { FiMail } from 'react-icons/fi'
+
 
 
 export default function CardsHome() {
@@ -12,6 +15,7 @@ export default function CardsHome() {
     const [Profs, setProfs] = useState([]);
     const [Page, setPage] = useState(1);
     const [TotalPage, setTotals] = useState(0);
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -21,11 +25,11 @@ export default function CardsHome() {
         })
     }, [Page]);
 
-    
+
     function ProxPag() {
         if (Page === Number(TotalPage)) {
             return;
-        }       
+        }
         setPage(Page + 1);
     }
 
@@ -38,11 +42,20 @@ export default function CardsHome() {
         setPage(Page - 1);
     }
 
+    function PropostasProf(matricula_prof) {
+        navigate(`/home/propostas/${matricula_prof}`);
+
+    }
+
+    function TccsOrientadosProf(matricula_prof) {
+        navigate(`/home/tccs_Orientados/${matricula_prof}`);
+    }
+
     return (
         <div className="border">
             <CardDeck className="division">
                 {Profs.map(prof => (
-                    <Card  border="danger" key={prof.matricula}>
+                    <Card border="danger" key={prof.matricula}>
                         <Card.Body >
                             <Card.Title>{prof.nome}</Card.Title>
                             <Card.Text>
@@ -50,13 +63,16 @@ export default function CardsHome() {
                                 <br></br>
                                 Disponibilidade para {prof.disponibilidade} orientandos.
                             </Card.Text>
-                            <Button variant="outline-danger" size="lg" block> Propostas de temas </Button>
-                            <Button variant="danger" size="lg" block> TCCs orientados </Button>
-                            <Button variant="outline-danger" size="lg" block> Contato </Button>
+                            <Button variant="outline-danger" size="lg" block onClick={() => PropostasProf(prof.matricula)}> Propostas de temas </Button>
+                            <Button variant="danger" size="lg" block onClick={() => TccsOrientadosProf(prof.matricula)}> TCCs orientados </Button>
+                            <button type="button" className="button">
+                                <FiMail size={30} color="#e0293d" />
+                            </button>
+                           
                         </Card.Body>
                     </Card>
                 ))}
-              
+
             </CardDeck>
 
             <div className="botoes">
