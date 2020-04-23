@@ -3,12 +3,14 @@ import api from '../../servicos/api'
 import './styles.css'
 import Card from 'react-bootstrap/Card'
 import CardDeck from 'react-bootstrap/CardDeck';
-import { FiTrash2, FiExternalLink, FiMail } from 'react-icons/fi'
+import { FiTrash2, FiExternalLink } from 'react-icons/fi'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import Table from 'react-bootstrap/Table'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { format, parseISO, isAfter } from 'date-fns'
-import { FaRegCheckSquare } from "react-icons/fa"
+import { FaRegCheckSquare, FaRegFilePdf } from "react-icons/fa"
+
+
 
 
 export default function ExibirInformacoes(props) {
@@ -24,6 +26,7 @@ export default function ExibirInformacoes(props) {
   const [AtvAluno, setAtvAluno] = useState([]);
   const [now, setNow] = useState('');
 
+  const navigate = useNavigate();
 
   useEffect(() => {
     api.get(`Atv/${codigo_tcc}`).then(response => {
@@ -48,7 +51,7 @@ export default function ExibirInformacoes(props) {
     api.get(`Proposta/${matricula_prof}`).then(response => {
       setPropostasHome(response.data);
     })
-  }, [PropostasHome]);
+  }, [PropostasHome, matricula_prof]);
 
 
   useEffect(() => {
@@ -61,7 +64,7 @@ export default function ExibirInformacoes(props) {
     api.get(`TccOrientado/${matricula_prof}`).then(response => {
       setTccsHome(response.data);
     })
-  }, [TccsHome]);
+  }, [TccsHome, matricula_prof]);
 
   useEffect(() => {
     api.get(`AlunoAtividades/${localStorage.matricula}`).then(response => {
@@ -113,6 +116,10 @@ export default function ExibirInformacoes(props) {
     }
   }
 
+  async function envio(idArquivo){
+      navigate(`/perfil_Inicial_Aluno/upload/${idArquivo}`);
+  }
+
 
   return (
     <div >
@@ -143,9 +150,6 @@ export default function ExibirInformacoes(props) {
                 <Card.Text className="text-black-50">
                   {propostas.descricao}
                 </Card.Text>
-                <button type="button" className="button">
-                  <FiMail size={25} color="#e0293d" />
-                </button>
               </Card.Body>
             </Card>
           ))}
@@ -225,10 +229,15 @@ export default function ExibirInformacoes(props) {
                 </td>
                 <td>
                   {atv.status}
+                  <button type="button" className="buttonpdf" onClick={() => envio(atv.id)}>
+                    <FaRegFilePdf size={25} color="#e0293d" />
+                  </button>  
                   <button type="button" className="buttontable" onClick={() => confirma_atv(atv.id)}>
                     <FaRegCheckSquare size={25} color="#e0293d" />
                   </button>
                 </td>
+                
+                        
               </tr>
 
             </tbody>
@@ -262,6 +271,23 @@ export default function ExibirInformacoes(props) {
                       <FiTrash2 size={25} color="#e0293d" />
                     </button>
                   </td>
+                </tr>
+
+              </tbody>
+            ))}
+          </Table>
+        </div>}
+
+        {props.envio &&
+        <div>
+          <Table striped bordered hover >
+            {AtvAluno.map(atv => (
+              <tbody key={atv.id}>
+                <tr>
+                  <td>{atv.arquivo}</td>
+                    <button type="button" className="buttontable" onClick={() => delete_atv(atv.id)}>
+                      <FiTrash2 size={25} color="#e0293d" />
+                    </button>
                 </tr>
 
               </tbody>

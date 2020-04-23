@@ -9,7 +9,7 @@ export default function PerfilInicialAluno() {
        <div>
             <BarraNavegacao homeHabilitado={false} loginHabilitado={false} perfil={true} perfilProfessor={false}/>
             <Titulo tituloHome={false} tituloProposta={false} tituloPerfil={true} tituloTcc={false}/>
-            <ExibirInformacoes propostas={false} tccOrientado={false} atividadesProfessor={false} atividadesAluno={true} />
+            <ExibirInformacoes propostas={false} tccOrientado={false} atividadesProfessor={false} atividadesAluno={true}/>
        </div>
     )
 }

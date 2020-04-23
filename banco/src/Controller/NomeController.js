@@ -10,6 +10,7 @@ module.exports = {
         .where('matricula', matricula)
         .select(['Pessoa.nome',
         'Pessoa.matricula',
+        'Pessoa.email'
         ]);
 
         return response.json(nomes);

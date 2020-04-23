@@ -1,5 +1,8 @@
-const express = require('express');
-const rotas = express.Router();
+const express = require('express')
+const rotas = express.Router()
+const multer = require('multer')
+const multerConfig = require('./config/multer')
+
 
 const PessoaController = require('./controller/PessoaController');
 rotas.get('/Pessoa/:matricula_aluno', PessoaController.exibir);
@@ -45,6 +48,9 @@ rotas.get('/Nome/:matricula', NomeController.exibir);
 
 const AlunoAtvController = require('./Controller/AlunoAtvController');
 rotas.get('/AlunoAtividades/:matricula_aluno', AlunoAtvController.exibir);
+rotas.post('/AlunoAtividades/upload/:id', multer(multerConfig).single('file'), AlunoAtvController.update);
+rotas.get('/AlunoAtividades/listar/:id', AlunoAtvController.listar);
+rotas.delete('/AlunoAtividades/delete/:id', AlunoAtvController.delete);
 
 const AlunosController = require('./Controller/AlunosController');
 rotas.get('/Alunos/:matricula_aluno', AlunosController.exibir);

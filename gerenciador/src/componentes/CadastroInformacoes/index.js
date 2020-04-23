@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
 import { FiFileText } from 'react-icons/fi'
-import { useParams } from 'react-router-dom'
+import { useParams} from 'react-router-dom'
 import { isPast , parseISO} from 'date-fns'
 
 export default function CadastroInformacoes(props) {
@@ -14,13 +14,13 @@ export default function CadastroInformacoes(props) {
   const codigo_tcc = useParams().id;
   const [Propostas, setPropostas] = useState([]);
   const [nome, setNome] = useState("");
+  const [file, setFile] = useState([]);
   const [descricao, setDescricao] = useState("");
   const [Tccs, setTccs] = useState([]);
   const [nome_aluno, setNomeAluno] = useState("");
   const [link, setLink] = useState("");
   const [dataEntrega, setDataEntrega] = useState("");
   const [Atvs, setAtvs] = useState([]);
-
 
   useEffect(() => {
     api.get(`Proposta/${localStorage.matricula}`).then(response => {
@@ -93,7 +93,11 @@ export default function CadastroInformacoes(props) {
         }
       } 
     }
+
+    async function envio_arquivo(e) {
+      e.preventDefault();
   
+      }
 
   return (
     <div >
@@ -201,6 +205,30 @@ export default function CadastroInformacoes(props) {
                     onChange={e => setDataEntrega(e.target.value)}
                   />
                   <Button className="button" type="submit" variant="danger" size="lg" block> Cadastrar </Button>
+                </div>
+              </form>
+            </Col>
+          </Row>
+        </Container>
+
+      </div>}
+
+      {props.envio && <div>
+        <Container className="container-form" >
+          <Row>
+            <Col md={{ span: 4, offset: 4 }}>
+              <FiFileText className="avatar" size={40} color="#e0293d" />
+              <form onSubmit={envio_arquivo}>
+                <div className="form-group">
+                  <label className="form"> Atividade: </label>
+                  <input
+                    className="form-control"
+                    size="lg"
+                    type="file"
+                    value={file}
+                    onChange={e => setFile(e.target.value)}
+                  />
+                  <Button className="button" type="submit" variant="danger" size="lg" block> Enviar </Button>
                 </div>
               </form>
             </Col>

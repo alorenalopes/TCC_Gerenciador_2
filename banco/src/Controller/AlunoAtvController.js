@@ -1,4 +1,5 @@
 const connection = require('../database/connection');
+const fs = require('fs');
 
 module.exports = {
 
@@ -26,12 +27,53 @@ module.exports = {
 
         response.header('X-Total', count['count(*)']);
         response.header('X-Total-Concluido', count_concluido['count(*)']);
-        response.header('X-Porcentagem', (count_concluido['count(*)']* 100)/count['count(*)']);
+        response.header('X-Porcentagem', (count_concluido['count(*)'] * 100) / count['count(*)']);
 
 
         return response.json(atvs);
-
     },
 
+    async update(request, response) {
+        const {id} = request.params;
+        const arquivo = request.file.path;
+        
+        await connection('Atv')
+        .where('id', id)
+        .update({
+            arquivo: arquivo,
+        })
 
+        return response.status(204).send();
+    },
+
+    async delete(request, response) {
+        const {id} = request.params;
+        const arquivo = "";
+        const arquivolocal = request.headers.arquivo;
+
+        await connection('Atv')
+        .where('id', id)
+        .update({
+            arquivo: arquivo,
+        })
+
+        fs.unlink(arquivolocal, (err) => {
+            if (err) throw err;
+            console.log('path/file.txt was deleted');
+          });
+
+        
+        return response.status(204).send();
+    },
+       
+    async listar(request, response) {
+
+        const { id } = request.params;
+
+        const arquivos = await connection('Atv')
+            .where('id', id)
+            .select('Atv.arquivo')
+
+        return response.json(arquivos);
+    }
 };

@@ -5,6 +5,7 @@ import "./styles.css"
 import api from '../../servicos/api'
 import '../LoginUsuarios/styles.css'
 import { useParams } from 'react-router-dom'
+import { FiMail } from 'react-icons/fi'
 
 
 export default function Titulo(props) {
@@ -24,7 +25,7 @@ export default function Titulo(props) {
         api.get(`Nome/${matricula_prof}`).then(response => {
             setNomeProfessor(response.data);
         })
-    }, [NomeProfessor]);
+    }, [NomeProfessor, matricula_prof]);
 
     return (
 
@@ -43,17 +44,19 @@ export default function Titulo(props) {
                 NomeProfessor.map(nomes => (
                     <Typography className="titulo" component="h2" variant="overline" gutterBottom key={nomes.matricula}>
                         <font className="nome"> Propostas do(a) Docente</font>  {(nomes.nome).split(' ')[0]}
+                        <br></br>
+                        <FiMail size={25} color="#e0293d" /> <font className="email"> {nomes.email}</font>
                     </Typography>
-            
-            ))}
+
+                ))}
 
             {props.tituloTcc &&
                 NomeProfessor.map(nomes => (
                     <Typography className="titulo" component="h2" variant="overline" gutterBottom key={nomes.matricula}>
-                        <font className="nome"> Tccs Orientados do(a) Docente</font>  {(nomes.nome).split(' ')[0]} 
+                        <font className="nome"> Tccs Orientados do(a) Docente</font>  {(nomes.nome).split(' ')[0]}
                     </Typography>
-            
-            ))}
+
+                ))}
 
         </Container>
 

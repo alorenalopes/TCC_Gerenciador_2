@@ -6,7 +6,6 @@ import './styles.css'
 import api from '../../servicos/api'
 import '../LoginUsuarios/styles.css'
 import { useNavigate, useParams } from 'react-router-dom'
-import { FiMail } from 'react-icons/fi'
 
 export default function CardsHome(props) {
 
@@ -75,9 +74,6 @@ export default function CardsHome(props) {
                             </Card.Text>
                                 <Button variant="outline-danger" size="lg" block onClick={() => PropostasProf(prof.matricula)}> Propostas de temas </Button>
                                 <Button variant="danger" size="lg" block onClick={() => TccsOrientadosProf(prof.matricula)}> TCCs orientados </Button>
-                                <button type="button" className="button">
-                                    <FiMail size={30} color="#e0293d" />
-                                </button>
 
                             </Card.Body>
                         </Card>
@@ -105,10 +101,6 @@ export default function CardsHome(props) {
                             </Card.Text>
                                 <Button variant="outline-danger" size="lg" block onClick={() => PropostasProf(prof.matricula)}> Propostas de temas </Button>
                                 <Button variant="danger" size="lg" block onClick={() => TccsOrientadosProf(prof.matricula)}> TCCs orientados </Button>
-                                <button type="button" className="button">
-                                    <FiMail size={30} color="#e0293d" />
-                                </button>
-
                             </Card.Body>
                         </Card>
                     ))}

@@ -9,7 +9,7 @@ export default function PropostasCadastro() {
     return (
         <div>
             <BarraNavegacao voltarHabilitado={true} voltarCaminho={"/perfil_Inicial_Professor/perfil"}/>
-            <CadastroInformacoes propostas={true} tccOrientado={false} atividades={false} />
+            <CadastroInformacoes propostas={true} tccOrientado={false} atividades={false} envio={false} />
             <ExibirInformacoes propostas={true} propostasHome={false} 
             tccOrientado={false} atividadesProfessor={false} atividadesAluno={false}
             tccOrientadoHome={false}/>

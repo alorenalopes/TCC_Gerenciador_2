@@ -21,23 +21,9 @@ margin-bottom: 0px;
     list-style: none;
 }
 
-.border .division .button{
-    border: 0;
-    position: absolute;
-    right: 24px;
-    top: 24px;
-}
-
 .border .divisionPesquisar{
     grid-template-columns: repeat(3, 1fr);
     display: grid;
     grid-gap: 24px;
     list-style: none;
-}
-
-.border .divisionPesquisar .button{
-    border: 0;
-    position: absolute;
-    right: 24px;
-    top: 24px;
 }

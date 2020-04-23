@@ -18,6 +18,7 @@ import TccsOrientadosCadastro from './View/TccsOrientadosCadastro';
 import TccsOrientadosHome from './View/TccsOrientadosHome';
 import Atividades from './View/Atividades'
 import PesquisarHome from './View/PesquisarHome'
+import UploadArquivos from './View/UploadArquivos'
 
 import Copyright from './componentes/Copyright'
 
@@ -31,6 +32,7 @@ function App() {
        
        <Route path = "/perfil_Inicial_Aluno" element = {<PerfilInicialAluno/>} />
        <Route path = "/perfil_Inicial_Aluno/perfil" element = {<PerfilAluno/>} />
+       <Route path = "/perfil_Inicial_Aluno/upload/:idArquivo" element = {<UploadArquivos/>} />
 
        <Route path = "/perfil_Inicial_Professor" element = {<PerfilInicialProf/>}/>
        <Route path = "/perfil_Inicial_Professor/atividades/:id" element = {<Atividades/>} />
