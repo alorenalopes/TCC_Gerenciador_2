@@ -54,5 +54,4 @@ rotas.delete('/AlunoAtividades/delete/:id', AlunoAtvController.delete);
 
 const AlunosController = require('./Controller/AlunosController');
 rotas.get('/Alunos/:matricula_aluno', AlunosController.exibir);
-
 module.exports = rotas;

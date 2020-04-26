@@ -12,15 +12,16 @@ import { isPast , parseISO} from 'date-fns'
 export default function CadastroInformacoes(props) {
 
   const codigo_tcc = useParams().id;
+  const id = useParams().idArquivo;
   const [Propostas, setPropostas] = useState([]);
   const [nome, setNome] = useState("");
-  const [file, setFile] = useState([]);
   const [descricao, setDescricao] = useState("");
   const [Tccs, setTccs] = useState([]);
   const [nome_aluno, setNomeAluno] = useState("");
   const [link, setLink] = useState("");
   const [dataEntrega, setDataEntrega] = useState("");
   const [Atvs, setAtvs] = useState([]);
+  const [file, setFile] = useState({})
 
   useEffect(() => {
     api.get(`Proposta/${localStorage.matricula}`).then(response => {
@@ -94,8 +95,16 @@ export default function CadastroInformacoes(props) {
       } 
     }
 
-    async function envio_arquivo(e) {
-      e.preventDefault();
+    async function envio_arquivo() {
+
+      const data = new FormData()
+      data.append('file', file)
+      
+      try {
+        await api.post(`/AlunoAtividades/upload/${id}`, data, {});
+      } catch (err) {
+        alert('Erro no cadastro, tente novamente');
+      }
   
       }
 
@@ -106,7 +115,7 @@ export default function CadastroInformacoes(props) {
           <Row>
             <Col md={{ span: 4, offset: 4 }}>
               <FiFileText className="avatar" size={40} color="#e0293d" />
-              <form onSubmit={create_proposta}>
+              <form onSubmit={create_proposta} encType="multipart/formData">
                 <div className="form-group">
                   <label className="form"> Nome da Proposta: </label>
                   <input
@@ -225,8 +234,8 @@ export default function CadastroInformacoes(props) {
                     className="form-control"
                     size="lg"
                     type="file"
-                    value={file}
-                    onChange={e => setFile(e.target.value)}
+                    id="file"
+                    onChange={(e) => { setFile(e.target.files[0]) }}
                   />
                   <Button className="button" type="submit" variant="danger" size="lg" block> Enviar </Button>
                 </div>

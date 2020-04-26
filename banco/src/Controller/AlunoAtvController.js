@@ -34,45 +34,51 @@ module.exports = {
     },
 
     async update(request, response) {
-        const {id} = request.params;
-        const arquivo = request.file.path;
-        
+        const { id } = request.params;
+        const arquivo_filename = request.file.filename;
+        const arquivo_path = request.file.path;
+
         await connection('Atv')
-        .where('id', id)
-        .update({
-            arquivo: arquivo,
-        })
+            .where('id', id)
+            .update({
+                arquivo_filename: arquivo_filename,
+                arquivo_path: arquivo_path,
+            })
 
         return response.status(204).send();
     },
 
     async delete(request, response) {
-        const {id} = request.params;
-        const arquivo = "";
-        const arquivolocal = request.headers.arquivo;
+        const { id } = request.params;
+        const arquivo_filename = "";
+        const arquivo_path = "";
+        const arquivo = request.headers.arquivo;
 
         await connection('Atv')
-        .where('id', id)
-        .update({
-            arquivo: arquivo,
-        })
+            .where('id', id)
+            .update({
+                arquivo_filename: arquivo_filename,
+                arquivo_path: arquivo_path,
+            })
 
-        fs.unlink(arquivolocal, (err) => {
+        fs.unlink(arquivo, (err) => {
             if (err) throw err;
-            console.log('path/file.txt was deleted');
-          });
+        });
 
-        
+
         return response.status(204).send();
     },
-       
+
     async listar(request, response) {
 
         const { id } = request.params;
 
         const arquivos = await connection('Atv')
             .where('id', id)
-            .select('Atv.arquivo')
+            .select(['Atv.arquivo_filename',
+                'Atv.arquivo_path',
+                'Atv.id',
+                'Atv.nome'])
 
         return response.json(arquivos);
     }

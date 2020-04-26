@@ -14,7 +14,7 @@ app.use(cors({
 app.use(express.json());
 /* app.use('/AlunoAtividades/upload/:id', express.static(path.resolve(__dirname, '..', 'files')));
  */
-app.use('/AlunoAtividades/upload/:id', express.static(path.resolve(__dirname, '.', 'tmp',)));
+app.use('/files', express.static(path.resolve(__dirname, 'tmp')));
 app.use(rotas);
 
 app.listen(3333);

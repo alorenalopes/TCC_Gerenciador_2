@@ -7,7 +7,8 @@ exports.up = function(knex) {
         table.date('dataEntrega').notNullable();
         table.string('status').notNullable();
         table.string('codigo_tcc').notNullable();
-        table.string('arquivo');
+        table.string('arquivo_path');
+        table.string('arquivo_filename');
 
         table.foreign('codigo_tcc').references('id').inTable('Tcc');
     });

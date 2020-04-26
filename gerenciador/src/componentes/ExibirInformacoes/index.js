@@ -6,11 +6,9 @@ import CardDeck from 'react-bootstrap/CardDeck';
 import { FiTrash2, FiExternalLink } from 'react-icons/fi'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import Table from 'react-bootstrap/Table'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate} from 'react-router-dom'
 import { format, parseISO, isAfter } from 'date-fns'
 import { FaRegCheckSquare, FaRegFilePdf } from "react-icons/fa"
-
-
 
 
 export default function ExibirInformacoes(props) {
@@ -18,14 +16,15 @@ export default function ExibirInformacoes(props) {
 
   const codigo_tcc = useParams().id;
   const matricula_prof = useParams().matricula_prof;
+  const id = useParams().idArquivo;
   const [Propostas, setPropostas] = useState([]);
   const [PropostasHome, setPropostasHome] = useState([]);
   const [Tccs, setTccs] = useState([]);
   const [TccsHome, setTccsHome] = useState([]);
   const [Atvs, setAtvs] = useState([]);
   const [AtvAluno, setAtvAluno] = useState([]);
+  const [Arquivo, setArquivo] = useState([]);
   const [now, setNow] = useState('');
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -79,6 +78,13 @@ export default function ExibirInformacoes(props) {
     })
   }, [AtvAluno]);
 
+  useEffect(() => {
+    api.get(`/AlunoAtividades/listar/${id}`).then(response => {
+      setArquivo(response.data);
+
+    })
+  }, [Arquivo, id]);
+
 
   async function delete_proposta(id) {
     try {
@@ -101,7 +107,7 @@ export default function ExibirInformacoes(props) {
   async function delete_atv(id) {
     try {
       await api.delete(`Atv/${id}`, {});
-      setTccs(Atvs.filter(atv => atv.id !== id));
+      setAtvs(Atvs.filter(atv => atv.id !== id));
     } catch (err) {
       alert('Erro ao deletar o caso, tente novamente');
     }
@@ -110,14 +116,27 @@ export default function ExibirInformacoes(props) {
   async function confirma_atv(id) {
     try {
       await api.put(`Atv/${id}`, {});
-      setTccs(Atvs.filter(atv => atv.id !== id));
+      setAtvs(Atvs.filter(atv => atv.id !== id));
     } catch (err) {
       alert('Erro ao deletar o caso, tente novamente');
     }
   }
 
-  async function envio(idArquivo){
-      navigate(`/perfil_Inicial_Aluno/upload/${idArquivo}`);
+  async function envio_pdf(idArquivo) {
+    navigate(`/perfil_Inicial_Aluno/upload/${idArquivo}`);
+  }
+
+  async function delete_arquivo(id, arquivo_path) {
+    try {
+      await api.delete(`/AlunoAtividades/delete/${id}`, {
+        headers: {
+          arquivo: arquivo_path
+        }
+      });
+      setArquivo(Arquivo.filter(arq => arq.arquivo_path !== arquivo_path));
+    } catch (err) {
+      alert('Erro ao deletar o caso, tente novamente');
+    }
   }
 
 
@@ -146,7 +165,7 @@ export default function ExibirInformacoes(props) {
           {PropostasHome.map(propostas => (
             <Card border="danger" key={propostas.id}>
               <Card.Body >
-              <Card.Header className="text-center"><b>{propostas.nome}</b> </Card.Header>
+                <Card.Header className="text-center"><b>{propostas.nome}</b> </Card.Header>
                 <Card.Text className="text-black-50">
                   {propostas.descricao}
                 </Card.Text>
@@ -229,15 +248,15 @@ export default function ExibirInformacoes(props) {
                 </td>
                 <td>
                   {atv.status}
-                  <button type="button" className="buttonpdf" onClick={() => envio(atv.id)}>
+                  <button type="button" className="buttonpdf" onClick={() => envio_pdf(atv.id)}>
                     <FaRegFilePdf size={25} color="#e0293d" />
-                  </button>  
+                  </button>
                   <button type="button" className="buttontable" onClick={() => confirma_atv(atv.id)}>
                     <FaRegCheckSquare size={25} color="#e0293d" />
                   </button>
                 </td>
-                
-                        
+
+
               </tr>
 
             </tbody>
@@ -278,16 +297,17 @@ export default function ExibirInformacoes(props) {
           </Table>
         </div>}
 
-        {props.envio &&
+      {props.envio &&
         <div>
           <Table striped bordered hover >
-            {AtvAluno.map(atv => (
-              <tbody key={atv.id}>
+            {Arquivo.map(arq => (
+              <tbody key={arq.id}>
                 <tr>
-                  <td>{atv.arquivo}</td>
-                    <button type="button" className="buttontable" onClick={() => delete_atv(atv.id)}>
+                  <td><a href={`http://localhost:3333/files/${arq.arquivo_filename}`} >hshshs</a>
+                    <button type="button" className="buttontable" onClick={() => delete_arquivo(arq.id, arq.arquivo_path)}>
                       <FiTrash2 size={25} color="#e0293d" />
                     </button>
+                  </td>
                 </tr>
 
               </tbody>
