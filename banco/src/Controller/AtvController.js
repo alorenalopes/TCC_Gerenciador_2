@@ -31,6 +31,15 @@ module.exports = {
         const status = "A fazer"
         const id = generateId()
 
+        const tcc = await connection('Tcc')
+        .select('nome_tcc')
+        .where('id', codigo_tcc)
+        .first();
+
+        if(!tcc){
+            return response.status(400).json('Tcc não cadastrado');
+        }
+
         await connection('Atv').insert({
             id,
             nome,

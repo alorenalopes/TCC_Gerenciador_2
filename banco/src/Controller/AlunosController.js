@@ -13,7 +13,5 @@ module.exports = {
 
         return response.json(alunos);
 
-    },
-
-    
+    },    
 };

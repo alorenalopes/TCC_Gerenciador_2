@@ -9,6 +9,7 @@ import { FiFileText } from 'react-icons/fi'
 import { useParams } from 'react-router-dom'
 import { isPast, parseISO } from 'date-fns'
 
+
 export default function CadastroInformacoes(props) {
 
   const codigo_tcc = useParams().id;
@@ -57,9 +58,9 @@ export default function CadastroInformacoes(props) {
     };
 
     try {
-      await api.post(`Proposta/${localStorage.matricula}`, data, {});
+      await api.post(`Proposta/${localStorage.matricul}`, data, {});
     } catch (err) {
-      alert('Erro no cadastro, tente novamente');
+      
     }
   }
 

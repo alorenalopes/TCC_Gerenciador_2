@@ -17,6 +17,15 @@ module.exports = {
         const { nome, descricao } = request.body;
         const { matricula_prof } = request.params;
 
+        const prof = await connection('Pessoa')
+        .select('nome')
+        .where('matricula', matricula_prof)
+        .first();
+
+        if(!prof){
+            return response.status(400).json('Professor não encontrado');
+        }
+
         await connection('Proposta').insert({
             nome,
             descricao,

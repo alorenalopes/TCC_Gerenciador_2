@@ -36,7 +36,18 @@ module.exports = {
     },
 
     async create(request, response) {
-        const { matricula_prof, area, disponibilidade } = request.body;
+        const { matricula_prof} = request.body;
+        const area = ""
+        const disponibilidade = ""
+
+        const prof = await connection('Pessoa')
+        .select('nome')
+        .where('matricula', matricula_prof)
+        .first();
+
+        if(!prof){
+            return response.status(400).json('Matrícula não cadastrada');
+        }
 
         await connection('Professor').insert({
             matricula_prof,

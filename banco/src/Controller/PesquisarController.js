@@ -5,8 +5,6 @@ module.exports = {
 
       const{nome} = request.params;
     
-      const {page = 1} = request.query;
-
       const profs = await connection('Pessoa')
       .select('*')
       .join('Professor', 'matricula', '=', 'Professor.matricula_prof')

@@ -23,10 +23,6 @@ export default function CardsHome(props) {
             setProfs(response.data);
             setTotals(response.headers['x-total-page']);
         })
-
-        return () => {setProfs([])
-        setTotals([])}
-
     }, [Page]);
 
     useEffect(() => {
@@ -39,6 +35,8 @@ export default function CardsHome(props) {
 
 
     function ProxPag() {
+        console.log(Page)
+        console.log(TotalPage)
         if (Page === Number(TotalPage)) {
             return;
         }

@@ -43,8 +43,6 @@ function App() {
           <Route path="/home/tccs_Orientados/:matricula_prof" element={<TccsOrientadosHome />} />
           <Route path="/home/propostas/:matricula_prof" element={<PropostasHome />} />
           <Route path="/home/pesquisa/:nome" element={<PesquisarHome />} />
-
-          <Route path="*" element={<h1>Não encontrado!!</h1>} />
         </Routes>
       </Router>
       <Copyright />
