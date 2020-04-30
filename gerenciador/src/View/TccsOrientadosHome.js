@@ -8,10 +8,8 @@ export default function TccsOrientadosHome() {
     return (
         <div>
             <BarraNavegacao voltarHabilitado={true} voltarCaminho={"/"}/>
-            <Titulo tituloHome={false} tituloProposta={false} tituloPerfil={false} tituloTcc={true}/>
-            <ExibirInformacoes propostas={false} propostasHome={false}  
-            TccOrientado={false} tccOrientadoHome={true} atividadesProfessor={false} 
-            atividadesAluno={false}/>
+            <Titulo tituloTcc={true}/>
+            <ExibirInformacoes tccOrientadoHome={true} />
         </div>
     );
 }

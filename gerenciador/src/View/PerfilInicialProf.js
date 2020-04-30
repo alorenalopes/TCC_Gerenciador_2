@@ -7,8 +7,8 @@ export default function PerfilInicialProf() {
 
     return (
         <div>
-            <BarraNavegacao homeHabilitado={false} loginHabilitado={false} perfil={true} perfilProfessor={true}/>
-            <Titulo tituloHome={false} tituloProposta={false} tituloPerfil={true} tituloTcc={false}/>
+            <BarraNavegacao perfil={true} perfilProfessor={true}/>
+            <Titulo tituloPerfil={true}/>
             <AlunosOrientados />
         </div>
     );

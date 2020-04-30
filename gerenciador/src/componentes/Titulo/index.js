@@ -20,17 +20,15 @@ export default function Titulo(props) {
             setNome(response.data);
         })
 
-        return () => {setNome([])}
-    }, [Nome]);
+    }, []);
 
     useEffect(() => {
         api.get(`Nome/${matricula_prof}`).then(response => {
             setNomeProfessor(response.data);
         })
 
-        return () => {setNomeProfessor([])}
 
-    }, [NomeProfessor, matricula_prof]);
+    }, [matricula_prof]);
 
     return (
 

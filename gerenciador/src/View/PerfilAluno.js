@@ -7,7 +7,7 @@ export default function PerfilAluno() {
     return (
         <div>
             <BarraNavegacao voltarHabilitado={true} voltarCaminho={"/perfil_Inicial_Aluno"}/>
-            <Perfil perfilProfessor={false}/>
+            <Perfil perfilAluno={true}/>
         </div>
     );
 }

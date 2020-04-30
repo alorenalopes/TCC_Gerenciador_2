@@ -26,7 +26,6 @@ export default function ExibirInformacoes(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const abortController = new AbortController()
 
     api.get(`Atv/${codigo_tcc}`).then(response => {
       var data = new Date();
@@ -38,63 +37,38 @@ export default function ExibirInformacoes(props) {
       setAtvs(response.data);
     })
 
-    return function cleanup() {
-      abortController.abort()
-    }
   }, [Atvs, codigo_tcc]);
 
 
   useEffect(() => {
-    const abortController = new AbortController()
 
     api.get(`Proposta/${localStorage.matricula}`).then(response => {
       setPropostas(response.data);
     })
 
-    return function cleanup() {
-      abortController.abort()
-    }
   }, [Propostas]);
 
   useEffect(() => {
-    const abortController = new AbortController()
-
     api.get(`Proposta/${matricula_prof}`).then(response => {
       setPropostasHome(response.data);
     })
-
-    return function cleanup() {
-      abortController.abort()
-    }
-  }, [PropostasHome, matricula_prof]);
+  }, [matricula_prof]);
 
 
   useEffect(() => {
-    const abortController = new AbortController()
-
     api.get(`TccOrientado/${localStorage.matricula}`).then(response => {
       setTccs(response.data);
     })
-
-    return function cleanup() {
-      abortController.abort()
-    }
   }, [Tccs]);
 
   useEffect(() => {
-    const abortController = new AbortController()
 
     api.get(`TccOrientado/${matricula_prof}`).then(response => {
       setTccsHome(response.data);
     })
-
-    return function cleanup() {
-      abortController.abort()
-    }
-  }, [TccsHome, matricula_prof]);
+  }, [matricula_prof]);
 
   useEffect(() => {
-    const abortController = new AbortController()
 
     api.get(`AlunoAtividades/${localStorage.matricula}`).then(response => {
       var data = new Date();
@@ -107,23 +81,13 @@ export default function ExibirInformacoes(props) {
       setNow(response.headers['x-porcentagem'])
     })
 
-    return function cleanup() {
-      abortController.abort()
-    }
-  }, [AtvAluno]);
+  }, []);
 
   useEffect(() => {
-    const abortController = new AbortController()
-
     api.get(`/AlunoAtividades/listar/${id}`).then(response => {
       setArquivo(response.data);
-
     })
-
-    return function cleanup() {
-      abortController.abort()
-    }
-  }, [Arquivo, id]);
+  }, [id, Arquivo]);
 
 
   async function delete_proposta(id) {
@@ -164,6 +128,14 @@ export default function ExibirInformacoes(props) {
 
   async function envio_pdf(idArquivo) {
     navigate(`/perfil_Inicial_Aluno/upload/${idArquivo}`);
+  }
+
+  async function baixar_pdf(idArquivo) {
+    navigate(`http://localhost:3333/files/${idArquivo}`)
+  }
+
+  async function alerta_pdf(idArquivo) {
+    alert('Nenhum arquivo recebido')
   }
 
   async function delete_arquivo(id, arquivo_path) {
@@ -263,7 +235,7 @@ export default function ExibirInformacoes(props) {
       {props.atividadesAluno && <div>
         <div className="progresso">
           <ProgressBar
-            block
+            block="true"
             animated variant="danger"
             now={now}
             label={`${now}%`}
@@ -295,10 +267,7 @@ export default function ExibirInformacoes(props) {
                     <FaRegCheckSquare size={25} color="#e0293d" />
                   </button>
                 </td>
-
-
               </tr>
-
             </tbody>
           ))}
         </Table>
@@ -326,12 +295,20 @@ export default function ExibirInformacoes(props) {
                   </td>
                   <td>
                     {atv.status}
+                    {atv.arquivo_filename &&
+                      <button type="button" className="buttonpdf" onClick={() => baixar_pdf(atv.arquivo_filename)}>
+                        <FaRegFilePdf size={25} color="#e0293d" />
+                      </button>}
+                    {!atv.arquivo_filename &&
+                      <button type="button" className="buttonpdf" onClick={() => alerta_pdf()}>
+                        <FaRegFilePdf size={25} color="#e0293d" />
+                      </button>
+                    }
                     <button type="button" className="buttontable" onClick={() => delete_atv(atv.id)}>
                       <FiTrash2 size={25} color="#e0293d" />
                     </button>
                   </td>
                 </tr>
-
               </tbody>
             ))}
           </Table>
@@ -342,14 +319,18 @@ export default function ExibirInformacoes(props) {
           <Table striped bordered hover >
             {Arquivo.map(arq => (
               <tbody key={arq.id}>
-                <tr>
-                  <td><a href={`http://localhost:3333/files/${arq.arquivo_filename}`} >hshshs</a>
-                    <button type="button" className="buttontable" onClick={() => delete_arquivo(arq.id, arq.arquivo_path)}>
-                      <FiTrash2 size={25} color="#e0293d" />
-                    </button>
-                  </td>
-                </tr>
-
+                {arq.arquivo_filename &&
+                  <tr>
+                    <td><a href={`http://localhost:3333/files/${arq.arquivo_filename}`} >{arq.nome}</a>
+                      <button type="button" className="buttontable" onClick={() => delete_arquivo(arq.id, arq.arquivo_path)}>
+                        <FiTrash2 size={25} color="#e0293d" />
+                      </button>
+                    </td>
+                  </tr>}
+                {!arq.arquivo_filename &&
+                  <tr>
+                    <td>Nenhum arquivo enviado</td>
+                  </tr>}
               </tbody>
             ))}
           </Table>

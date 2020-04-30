@@ -13,51 +13,38 @@ export default function CadastroInformacoes(props) {
 
   const codigo_tcc = useParams().id;
   const id = useParams().idArquivo;
-  const [Propostas, setPropostas] = useState([]);
+  const [, setPropostas] = useState([]);
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
-  const [Tccs, setTccs] = useState([]);
+  const [, setTccs] = useState([]);
   const [nome_aluno, setNomeAluno] = useState("");
   const [link, setLink] = useState("");
   const [dataEntrega, setDataEntrega] = useState("");
-  const [Atvs, setAtvs] = useState([]);
+  const [, setAtvs] = useState([]);
   const [file, setFile] = useState({})
 
   useEffect(() => {
-    const abortController = new AbortController()
 
     api.get(`Proposta/${localStorage.matricula}`).then(response => {
       setPropostas(response.data);
     })
 
-    return function cleanup() {
-      abortController.abort()
-    }
-  }, [Propostas]);
+
+  }, []);
 
   useEffect(() => {
-    const abortController = new AbortController()
 
     api.get(`TccOrientado/${localStorage.matricula}`).then(response => {
       setTccs(response.data);
     })
 
-    return function cleanup() {
-      abortController.abort()
-    }
-  }, [Tccs]);
+  }, []);
 
   useEffect(() => {
-    const abortController = new AbortController()
-
     api.get(`Atv/${codigo_tcc}`).then(response => {
       setAtvs(response.data);
     })
-
-    return function cleanup() {
-      abortController.abort()
-    }
-  }, [Atvs, codigo_tcc]);
+  }, [codigo_tcc]);
 
 
   async function create_proposta(e) {

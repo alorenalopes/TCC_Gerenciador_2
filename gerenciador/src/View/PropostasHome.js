@@ -9,10 +9,8 @@ export default function PropostasHome() {
     return (
         <div>
             <BarraNavegacao voltarHabilitado={true} voltarCaminho={"/"}/>
-            <Titulo tituloHome={false} tituloProposta={true} tituloPerfil={false} tituloTcc={false}/>
-            <ExibirInformacoes propostas={false} propostasHome={true} 
-            tccOrientado={false} atividadesProfessor={false} atividadesAluno={false}
-            tccOrientadoHome={false}/>
+            <Titulo tituloProposta={true}/>
+            <ExibirInformacoes propostasHome={true} />
         </div>
     );
 }

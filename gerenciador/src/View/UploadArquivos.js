@@ -8,10 +8,8 @@ export default function UploadArquivos() {
     return (
         <div>
             <BarraNavegacao voltarHabilitado={true} voltarCaminho={"/perfil_Inicial_Aluno/"} />
-            <CadastroInformacoes propostas={false} tccOrientado={false} atividades={false} envio={true} />
-            <ExibirInformacoes propostas={false} propostasHome={false}  
-            TccOrientado={false} tccOrientadoHome={false} atividadesProfessor={false} 
-            atividadesAluno={false} envio={true}/>
+            <CadastroInformacoes envio={true} />
+            <ExibirInformacoes envio={true}/>
         </div>
     );
 }

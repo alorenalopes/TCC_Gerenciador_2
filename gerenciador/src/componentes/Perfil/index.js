@@ -18,7 +18,6 @@ export default function Perfil(props) {
   const [aluno, setAluno] = useState([]);
 
   useEffect(() => {
-    const abortController = new AbortController()
 
     api.get(`Professor/${localStorage.matricula}`).then(response => {
       setProfs(response.data);
@@ -26,22 +25,14 @@ export default function Perfil(props) {
       setDisponibilidade(response.data.disponibilidade);
     })
 
-    return function cleanup() {
-      abortController.abort()
-    }
   }, []);
 
   useEffect(() => {
-    const abortController = new AbortController()
 
     api.get(`Pessoa/${localStorage.matricula}`).then(response => {
       setAluno(response.data);
     })
-
-    return function cleanup() {
-      abortController.abort()
-    }
-  }, [aluno]);
+  }, []);
 
 
   async function updateInfo(e) {
@@ -74,7 +65,7 @@ export default function Perfil(props) {
 
   return (
     <div >
-      {!props.perfilProfessor && <Container className="container-form" >
+      {props.perfilAluno && <Container className="container-form" >
         {aluno.map(aluno => (
           <Row key={aluno.matricula}>
             <Col md={{ span: 4, offset: 1 }} >

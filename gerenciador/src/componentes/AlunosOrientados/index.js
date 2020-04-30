@@ -14,16 +14,12 @@ export default function AlunosOrientados() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const abortController = new AbortController()
 
         api.get(`Alunos/${localStorage.matricula}`).then(response => {
             setAlunos(response.data);
         })
-
-        return function cleanup() {
-            abortController.abort()
-        }
-    }, [Alunos]);
+      
+    }, []);
 
     function atv(id) {
         navigate(`/perfil_Inicial_Professor/atividades/${id}`)

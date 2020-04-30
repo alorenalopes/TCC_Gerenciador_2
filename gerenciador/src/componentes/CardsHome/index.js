@@ -18,28 +18,23 @@ export default function CardsHome(props) {
 
 
     useEffect(() => {
-        const abortController = new AbortController()
 
         api.get(`Professor?page=${Page}`).then(response => {
             setProfs(response.data);
             setTotals(response.headers['x-total-page']);
         })
 
-        return function cleanup() {
-            abortController.abort()
-        }
+        return () => {setProfs([])
+        setTotals([])}
+
     }, [Page]);
 
     useEffect(() => {
-        const abortController = new AbortController()
 
         api.get(`pesquisar/${nome}`).then(response => {
             setProfsPesquisa(response.data);
         })
-
-        return function cleanup() {
-            abortController.abort()
-        }
+        
     }, [nome]);
 
 
@@ -51,7 +46,6 @@ export default function CardsHome(props) {
     }
 
     function PrevPag() {
-        console.log(Page);
         if (Page === 1) {
             return;
         }

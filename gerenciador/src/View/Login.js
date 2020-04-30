@@ -6,7 +6,7 @@ export default function Login() {
     
     return (
         <div>
-            <BarraNavegacao loginHabilitado= {false} homeHabilitado={true}/>
+            <BarraNavegacao homeHabilitado={true}/>
             <LoginUsuarios/>
         </div>
     );

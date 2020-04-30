@@ -10,8 +10,8 @@ export default function Home() {
     return (
         <Fragment>
             <BarraNavegacao loginHabilitado={true} homeHabilitado={true}/>
-            <Titulo tituloHome={true} tituloProposta={false} tituloPerfil={false} tituloTcc={false}/>
-            <CardsHome pesquisarHome={false} />
+            <Titulo tituloHome={true}/>
+            <CardsHome/>
         </Fragment>
     );
 

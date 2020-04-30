@@ -9,8 +9,7 @@ export default function Atividades() {
         <div>
             <BarraNavegacao voltarHabilitado={true} voltarCaminho={"/perfil_Inicial_Professor"}/>
             <CadastroInformacoes propostas={false} tccOrientado={false} atividades={true} />
-            <ExibirInformacoes propostas={false} tccOrientado={false} atividadesProfessor={true} 
-            atividadesAluno={false} envio={false}/>
+            <ExibirInformacoes atividadesProfessor={true}/>
         </div>
     );
 }

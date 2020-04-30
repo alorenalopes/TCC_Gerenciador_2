@@ -70,18 +70,16 @@ export default function BarraNavegacao(props) {
             </button>}
 
 
-          {props.homeHabilitado && props.loginHabilitado && (
+          {props.homeHabilitado && props.loginHabilitado && 
             <Form inline>
               <FormControl
                 type="text"
                 placeholder="Nome"
                 className="mr-sm-2"
                 value={nome}
-                onChange={e => setNome(e.target.value)}
-              />
+                onChange={e => setNome(e.target.value)}/>
               <Button type="submit" variant="outline-danger"onClick={() => Search(nome)}>Pesquisar</Button>
-            </Form>
-          )
+            </Form>   
           }
         </Navbar.Collapse>
       </Navbar>
