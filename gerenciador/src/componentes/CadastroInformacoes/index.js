@@ -6,8 +6,8 @@ import Row from 'react-bootstrap/Row'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
 import { FiFileText } from 'react-icons/fi'
-import { useParams} from 'react-router-dom'
-import { isPast , parseISO} from 'date-fns'
+import { useParams } from 'react-router-dom'
+import { isPast, parseISO } from 'date-fns'
 
 export default function CadastroInformacoes(props) {
 
@@ -24,21 +24,39 @@ export default function CadastroInformacoes(props) {
   const [file, setFile] = useState({})
 
   useEffect(() => {
+    const abortController = new AbortController()
+
     api.get(`Proposta/${localStorage.matricula}`).then(response => {
       setPropostas(response.data);
     })
+
+    return function cleanup() {
+      abortController.abort()
+    }
   }, [Propostas]);
 
   useEffect(() => {
+    const abortController = new AbortController()
+
     api.get(`TccOrientado/${localStorage.matricula}`).then(response => {
       setTccs(response.data);
     })
+
+    return function cleanup() {
+      abortController.abort()
+    }
   }, [Tccs]);
 
   useEffect(() => {
+    const abortController = new AbortController()
+
     api.get(`Atv/${codigo_tcc}`).then(response => {
       setAtvs(response.data);
     })
+
+    return function cleanup() {
+      abortController.abort()
+    }
   }, [Atvs, codigo_tcc]);
 
 
@@ -77,36 +95,36 @@ export default function CadastroInformacoes(props) {
   async function create_atv(e) {
     e.preventDefault();
 
-    if(isPast(parseISO(dataEntrega)) === true){
+    if (isPast(parseISO(dataEntrega)) === true) {
       alert('Data incoerente, tente novamente');
-    } else{
+    } else {
 
-        const data = {
-          nome,
-          descricao,
-          dataEntrega,
-        };
+      const data = {
+        nome,
+        descricao,
+        dataEntrega,
+      };
 
-        try {
-          await api.post(`Atv/${codigo_tcc}`, data, {});
-        } catch (err) {
-          alert('Erro no cadastro, tente novamente');
-        }
-      } 
-    }
-
-    async function envio_arquivo() {
-
-      const data = new FormData()
-      data.append('file', file)
-      
       try {
-        await api.post(`/AlunoAtividades/upload/${id}`, data, {});
+        await api.post(`Atv/${codigo_tcc}`, data, {});
       } catch (err) {
         alert('Erro no cadastro, tente novamente');
       }
-  
-      }
+    }
+  }
+
+  async function envio_arquivo() {
+
+    const data = new FormData()
+    data.append('file', file)
+
+    try {
+      await api.post(`/AlunoAtividades/upload/${id}`, data, {});
+    } catch (err) {
+      alert('Erro no cadastro, tente novamente');
+    }
+
+  }
 
   return (
     <div >

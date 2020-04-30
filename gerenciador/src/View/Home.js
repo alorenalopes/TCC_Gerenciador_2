@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import BarraNavegacao from '../componentes/BarraNavegacao';
 import Titulo from '../componentes/Titulo/';
 import CardsHome from '../componentes/CardsHome';
@@ -8,11 +8,11 @@ import CardsHome from '../componentes/CardsHome';
 export default function Home() {
 
     return (
-        <div>
+        <Fragment>
             <BarraNavegacao loginHabilitado={true} homeHabilitado={true}/>
             <Titulo tituloHome={true} tituloProposta={false} tituloPerfil={false} tituloTcc={false}/>
             <CardsHome pesquisarHome={false} />
-        </div>
+        </Fragment>
     );
 
 }

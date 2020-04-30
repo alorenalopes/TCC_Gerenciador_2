@@ -18,17 +18,29 @@ export default function Perfil(props) {
   const [aluno, setAluno] = useState([]);
 
   useEffect(() => {
+    const abortController = new AbortController()
+
     api.get(`Professor/${localStorage.matricula}`).then(response => {
       setProfs(response.data);
       setArea(response.data.area);
       setDisponibilidade(response.data.disponibilidade);
     })
+
+    return function cleanup() {
+      abortController.abort()
+    }
   }, []);
 
   useEffect(() => {
+    const abortController = new AbortController()
+
     api.get(`Pessoa/${localStorage.matricula}`).then(response => {
       setAluno(response.data);
     })
+
+    return function cleanup() {
+      abortController.abort()
+    }
   }, [aluno]);
 
 

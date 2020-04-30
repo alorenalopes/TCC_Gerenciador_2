@@ -51,8 +51,9 @@ export default function BarraNavegacao(props) {
             {props.homeHabilitado && props.loginHabilitado && <Nav.Link href="/login">Login</Nav.Link>}
           </Nav>
 
-          {props.perfil && <Dropdown style={{ marginRight: '25px', color: '#fafafa' }}>
-            <Dropdown.Toggle as="symbol" id="dropdown-basic">
+          {props.perfil && 
+          <Dropdown style={{ marginRight: '25px', color: '#fafafa' }}>
+            <Dropdown.Toggle className="bg-transparent  border-0 btn-outline-light">
               <FaUserCircle size={30} color="#e0293d"  />
             </Dropdown.Toggle>
             <Dropdown.Menu>

@@ -14,20 +14,32 @@ export default function CardsHome(props) {
     const [Page, setPage] = useState(1);
     const [TotalPage, setTotals] = useState(0);
     const navigate = useNavigate();
-    const nome= useParams().nome;
+    const nome = useParams().nome;
 
 
     useEffect(() => {
+        const abortController = new AbortController()
+
         api.get(`Professor?page=${Page}`).then(response => {
             setProfs(response.data);
             setTotals(response.headers['x-total-page']);
         })
+
+        return function cleanup() {
+            abortController.abort()
+        }
     }, [Page]);
 
     useEffect(() => {
+        const abortController = new AbortController()
+
         api.get(`pesquisar/${nome}`).then(response => {
             setProfsPesquisa(response.data);
         })
+
+        return function cleanup() {
+            abortController.abort()
+        }
     }, [nome]);
 
 
@@ -61,30 +73,30 @@ export default function CardsHome(props) {
 
         <div className="border">
             {!props.pesquisarHome &&
-            <div>
-                <CardDeck className="division">
-                    {Profs.map(prof => (
-                        <Card border="danger" key={prof.matricula}>
-                            <Card.Body >
-                                <Card.Title>{prof.nome}</Card.Title>
-                                <Card.Text>
-                                    Área de atuação: {prof.area}.
+                <div>
+                    <CardDeck className="division">
+                        {Profs.map(prof => (
+                            <Card border="danger" key={prof.matricula}>
+                                <Card.Body >
+                                    <Card.Title>{prof.nome}</Card.Title>
+                                    <Card.Text>
+                                        Área de atuação: {prof.area}.
                                 <br></br>
                                 Disponibilidade para {prof.disponibilidade} orientandos.
                             </Card.Text>
-                                <Button variant="outline-danger" size="lg" block onClick={() => PropostasProf(prof.matricula)}> Propostas de temas </Button>
-                                <Button variant="danger" size="lg" block onClick={() => TccsOrientadosProf(prof.matricula)}> TCCs orientados </Button>
+                                    <Button variant="outline-danger" size="lg" block onClick={() => PropostasProf(prof.matricula)}> Propostas de temas </Button>
+                                    <Button variant="danger" size="lg" block onClick={() => TccsOrientadosProf(prof.matricula)}> TCCs orientados </Button>
 
-                            </Card.Body>
-                        </Card>
-                    ))}
+                                </Card.Body>
+                            </Card>
+                        ))}
 
-                </CardDeck>
+                    </CardDeck>
 
-                 <div className="botoes">
-                 <Button variant="outline-danger" onClick={PrevPag}>Anterior</Button>
-                 <Button variant="outline-danger" onClick={ProxPag}>Próximo</Button>
-                </div>
+                    <div className="botoes">
+                        <Button variant="outline-danger" onClick={PrevPag}>Anterior</Button>
+                        <Button variant="outline-danger" onClick={ProxPag}>Próximo</Button>
+                    </div>
                 </div>
             }
 
@@ -108,7 +120,7 @@ export default function CardsHome(props) {
                 </CardDeck>
             }
 
-           
+
 
         </div>
 

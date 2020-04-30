@@ -6,13 +6,11 @@ import CardDeck from 'react-bootstrap/CardDeck';
 import { FiTrash2, FiExternalLink } from 'react-icons/fi'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import Table from 'react-bootstrap/Table'
-import { useParams, useNavigate} from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { format, parseISO, isAfter } from 'date-fns'
 import { FaRegCheckSquare, FaRegFilePdf } from "react-icons/fa"
 
-
 export default function ExibirInformacoes(props) {
-
 
   const codigo_tcc = useParams().id;
   const matricula_prof = useParams().matricula_prof;
@@ -28,6 +26,8 @@ export default function ExibirInformacoes(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const abortController = new AbortController()
+
     api.get(`Atv/${codigo_tcc}`).then(response => {
       var data = new Date();
       for (const a in response.data) {
@@ -37,35 +37,65 @@ export default function ExibirInformacoes(props) {
       }
       setAtvs(response.data);
     })
+
+    return function cleanup() {
+      abortController.abort()
+    }
   }, [Atvs, codigo_tcc]);
 
 
   useEffect(() => {
+    const abortController = new AbortController()
+
     api.get(`Proposta/${localStorage.matricula}`).then(response => {
       setPropostas(response.data);
     })
+
+    return function cleanup() {
+      abortController.abort()
+    }
   }, [Propostas]);
 
   useEffect(() => {
+    const abortController = new AbortController()
+
     api.get(`Proposta/${matricula_prof}`).then(response => {
       setPropostasHome(response.data);
     })
+
+    return function cleanup() {
+      abortController.abort()
+    }
   }, [PropostasHome, matricula_prof]);
 
 
   useEffect(() => {
+    const abortController = new AbortController()
+
     api.get(`TccOrientado/${localStorage.matricula}`).then(response => {
       setTccs(response.data);
     })
+
+    return function cleanup() {
+      abortController.abort()
+    }
   }, [Tccs]);
 
   useEffect(() => {
+    const abortController = new AbortController()
+
     api.get(`TccOrientado/${matricula_prof}`).then(response => {
       setTccsHome(response.data);
     })
+
+    return function cleanup() {
+      abortController.abort()
+    }
   }, [TccsHome, matricula_prof]);
 
   useEffect(() => {
+    const abortController = new AbortController()
+
     api.get(`AlunoAtividades/${localStorage.matricula}`).then(response => {
       var data = new Date();
       for (const a in response.data) {
@@ -76,13 +106,23 @@ export default function ExibirInformacoes(props) {
       setAtvAluno(response.data);
       setNow(response.headers['x-porcentagem'])
     })
+
+    return function cleanup() {
+      abortController.abort()
+    }
   }, [AtvAluno]);
 
   useEffect(() => {
+    const abortController = new AbortController()
+
     api.get(`/AlunoAtividades/listar/${id}`).then(response => {
       setArquivo(response.data);
 
     })
+
+    return function cleanup() {
+      abortController.abort()
+    }
   }, [Arquivo, id]);
 
 

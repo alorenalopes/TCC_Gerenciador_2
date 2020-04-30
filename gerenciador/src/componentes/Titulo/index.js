@@ -14,17 +14,22 @@ export default function Titulo(props) {
     const [NomeProfessor, setNomeProfessor] = useState([]);
     const matricula_prof = useParams().matricula_prof;
 
-
     useEffect(() => {
+
         api.get(`Nome/${localStorage.matricula}`).then(response => {
             setNome(response.data);
         })
+
+        return () => {setNome([])}
     }, [Nome]);
 
     useEffect(() => {
         api.get(`Nome/${matricula_prof}`).then(response => {
             setNomeProfessor(response.data);
         })
+
+        return () => {setNomeProfessor([])}
+
     }, [NomeProfessor, matricula_prof]);
 
     return (
