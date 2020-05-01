@@ -6,7 +6,7 @@ import CardDeck from 'react-bootstrap/CardDeck';
 import { FiTrash2, FiExternalLink } from 'react-icons/fi'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import Table from 'react-bootstrap/Table'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate} from 'react-router-dom'
 import { format, parseISO, isAfter } from 'date-fns'
 import { FaRegCheckSquare, FaRegFilePdf } from 'react-icons/fa'
 
@@ -82,7 +82,7 @@ export default function ExibirInformacoes(props) {
       setNow(response.headers['x-porcentagem'])
     })
 
-  }, []);
+  }, [AtvAluno]);
 
   useEffect(() => {
     api.get(`/AlunoAtividades/listar/${id}`).then(response => {
@@ -91,43 +91,49 @@ export default function ExibirInformacoes(props) {
   }, [id, Arquivo]);
 
 
+
   async function delete_proposta(id) {
     try {
       await api.delete(`Proposta/${id}`, {});
-      setPropostas(Propostas.filter(proposta => proposta.id !== id));
       setState(1)
+      setPropostas(Propostas.filter(proposta => proposta.id !== id));
+      setTimeout(() => { setState(3) }, 1500)
     } catch (err) {
       setState(0)
+      setTimeout(() => { setState(3) }, 1500)
     }
   }
 
   async function delete_tcc(id) {
     try {
       await api.delete(`TccOrientado/${id}`, {});
-      setTccs(Tccs.filter(tcc => tcc.id !== id));
       setState(1)
+      setTccs(Tccs.filter(tcc => tcc.id !== id));
+      setTimeout(() => { setState(3) }, 1500)
     } catch (err) {
       setState(0)
+      setTimeout(() => { setState(3) }, 1500)
     }
   }
 
   async function delete_atv(id) {
     try {
       await api.delete(`Atv/${id}`, {});
-      setAtvs(Atvs.filter(atv => atv.id !== id));
       setState(1)
+      setAtvs(Atvs.filter(atv => atv.id !== id));
+      setTimeout(() => { setState(3) }, 1500)
     } catch (err) {
       setState(0)
+      setTimeout(() => { setState(3) }, 1500)
     }
   }
 
   async function confirma_atv(id) {
     try {
       await api.put(`Atv/${id}`, {});
-      setAtvs(Atvs.filter(atv => atv.id !== id));
-      setState(1)
     } catch (err) {
-      setState(0)
+      setState(5)
+      setTimeout(() => { setState(3) }, 1500)
     }
   }
 
@@ -135,12 +141,9 @@ export default function ExibirInformacoes(props) {
     navigate(`/perfil_Inicial_Aluno/upload/${idArquivo}`);
   }
 
-  async function baixar_pdf(idArquivo) {
-    navigate(`http://localhost:3333/files/${idArquivo}`)
-  }
-
-  async function alerta_pdf(idArquivo) {
+  async function alerta_pdf() {
     setState(4)
+    setTimeout(() => { setState(3) }, 3000)
   }
 
   async function delete_arquivo(id, arquivo_path) {
@@ -150,25 +153,31 @@ export default function ExibirInformacoes(props) {
           arquivo: arquivo_path
         }
       });
-      setArquivo(Arquivo.filter(arq => arq.arquivo_path !== arquivo_path));
       setState(1)
+      setArquivo(Arquivo.filter(arq => arq.arquivo_path !== arquivo_path));
+      setTimeout(() => { setState(3) }, 1500)
     } catch (err) {
       setState(0)
+      setTimeout(() => { setState(3) }, 1500)
     }
   }
 
   function alerta() {
     if (state === 0) {
-      return (<div class="alert alert-danger" role="alert">
+      return (<div className="alert alert-danger" role="alert">
         Erro ao deletar, tente novamente!
       </div>)
     } else if (state === 1) {
-      return (<div class="alert alert-success" role="alert">
+      return (<div className="alert alert-success" role="alert">
         Deletado com sucesso!
       </div>)
     } else if (state === 4) {
-      return (<div class="alert alert-danger" role="alert">
+      return (<div className="alert alert-danger text-justify text-wrap" role="alert">
         Nenhum arquivo recebido
+      </div>)
+    } else if (state === 5) {
+      return (<div className="alert alert-danger text-black-50" role="alert">
+        Não foi possível confirmar, tente novamente!
       </div>)
     } else {
       return (<div></div>)
@@ -280,8 +289,9 @@ export default function ExibirInformacoes(props) {
               <tr>
                 <td>{atv.nome}</td>
                 <td>{atv.descricao}</td>
-                <td> {atv.dataEntrega}</td>
-
+                <td>
+                  {format(parseISO(atv.dataEntrega), "dd/MM/yyyy")}
+                </td>
                 <td>
                   {atv.status}
                   <button type="button" className="buttonpdf" onClick={() => envio_pdf(atv.id)}>
@@ -314,11 +324,13 @@ export default function ExibirInformacoes(props) {
                 <tr>
                   <td>{atv.nome}</td>
                   <td>{atv.descricao}</td>
-                  <td> {atv.dataEntrega}</td>    
+                  <td>
+                    {format(parseISO(atv.dataEntrega), "dd/MM/yyyy")}
+                  </td>
                   <td>
                     {atv.status}
-                    {atv.arquivo_filename &&
-                      <button type="button" className="buttonpdf" onClick={() => baixar_pdf(atv.arquivo_filename)}>
+                    {atv.arquivo_filename && 
+                      <button type="button" className="buttonpdf" onClick={() => window.location = `http://localhost:3333/files/${atv.arquivo_filename}` }>
                         <FaRegFilePdf size={25} color="#e0293d" />
                       </button>}
                     {!atv.arquivo_filename &&

@@ -6,10 +6,7 @@ const path = require('path')
 const app = express(); //Instanciando a aplicação
 
 app.use(cors({
-    exposedHeaders: ['X-Total-Page'],
-    exposedHeaders: ['X-Total-Count'],
-    exposedHeaders: ['matricula_prof'],
-    exposedHeaders: ['X-Porcentagem'],
+    exposedHeaders: ['X-Porcentagem', 'X-Total-Page', 'X-Total-Count','matricula_prof'],
   }));
 app.use(express.json());
 /* app.use('/AlunoAtividades/upload/:id', express.static(path.resolve(__dirname, '..', 'files')));

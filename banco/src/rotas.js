@@ -24,7 +24,7 @@ rotas.post('/Atv/:codigo_tcc', celebrate({
     [Segments.BODY]: Joi.object().keys({
         nome: Joi.string().required(),
         descricao: Joi.string().required(),
-        dataEntrega: Joi.date().required(),
+        dataEntrega: Joi.string().required(),
     }),
     [Segments.PARAMS]: Joi.object().keys({
         codigo_tcc: Joi.string().required()
@@ -44,8 +44,8 @@ rotas.post('/Professor', celebrate({
 rotas.delete('/Professor/:matricula_prof', ProfessorController.delete);
 rotas.put('/Professor',  celebrate({
     [Segments.BODY]: Joi.object().keys({
-        area: Joi.string().required(),
-        disponibilidade: Joi.string().min(1).max(1).required(),
+        area: Joi.string(),
+        disponibilidade: Joi.string().min(1).max(1),
     }),
     [Segments.HEADERS]: Joi.object().keys({
         matricula_prof: Joi.string().required(),

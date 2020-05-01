@@ -26,21 +26,17 @@ export default function CadastroInformacoes(props) {
   const [state, setState] = useState(3);
 
   useEffect(() => {
-
     api.get(`Proposta/${localStorage.matricula}`).then(response => {
       setPropostas(response.data);
-      setTimeout(()=>{setState(3)}, 5000)
     })
-  }, [state]);
+  }, []);
 
   useEffect(() => {
-
     api.get(`TccOrientado/${localStorage.matricula}`).then(response => {
       setTccs(response.data);
-      setTimeout(()=>{setState(3)}, 5000)
     })
 
-  }, [state]);
+  }, []);
 
   useEffect(() => {
     api.get(`Atv/${codigo_tcc}`).then(response => {
@@ -52,7 +48,6 @@ export default function CadastroInformacoes(props) {
   async function create_proposta(e) {
     e.preventDefault();
 
-
     const data = {
       nome,
       descricao,
@@ -61,8 +56,10 @@ export default function CadastroInformacoes(props) {
     try {
       await api.post(`Proposta/${localStorage.matricula}`, data, {});
       setState(1)
+      setTimeout(() => { setState(3) }, 3000)
     } catch (err) {
       setState(0)
+      setTimeout(() => { setState(3) }, 3000)
     }
   }
 
@@ -79,16 +76,19 @@ export default function CadastroInformacoes(props) {
     try {
       await api.post(`TccOrientado/${localStorage.matricula}`, data, {});
       setState(1)
+      setTimeout(() => { setState(3) }, 3000)
     } catch (err) {
       setState(0)
+      setTimeout(() => { setState(3) }, 3000)
     }
   }
 
   async function create_atv(e) {
     e.preventDefault();
 
-    if (isPast(dataEntrega) === true) {
+    if (isPast(parseISO(dataEntrega)) === true) {
       setState(4)
+      setTimeout(() => { setState(3) }, 3000)
     } else {
 
       const data = {
@@ -96,12 +96,13 @@ export default function CadastroInformacoes(props) {
         descricao,
         dataEntrega,
       };
-
       try {
         await api.post(`Atv/${codigo_tcc}`, data, {});
         setState(1)
+        setTimeout(() => { setState(3) }, 3000)
       } catch (err) {
         setState(0)
+        setTimeout(() => { setState(3) }, 3000)
       }
     }
   }
@@ -113,28 +114,38 @@ export default function CadastroInformacoes(props) {
 
     try {
       await api.post(`/AlunoAtividades/upload/${id}`, data, {});
-      setState(1)
+      setState(5)
+      setTimeout(() => { setState(3) }, 3000)
     } catch (err) {
-      setState(0)
+      setState(6)
+      setTimeout(() => { setState(3) }, 3000)
     }
 
   }
 
   function alerta() {
     if (state === 0) {
-      return (<div class="alert alert-danger" role="alert">
+      return (<div className="alert alert-danger" role="alert">
         Erro no cadastro, tente novamente!
       </div>)
     } else if (state === 1) {
-      return (<div class="alert alert-success" role="alert">
+      return (<div className="alert alert-success" role="alert">
         Cadastrado realizado com sucesso!
       </div>)
-    }else if (state === 4) {
-      return (<div class="alert alert-danger" role="alert">
+    } else if (state === 4) {
+      return (<div className="alert alert-danger" role="alert">
         Data incoerente, tente novamente!
       </div>)
-    } else{
-      return(<div></div>)
+    } else if (state === 5) {
+      return (<div className="alert alert-success" role="alert">
+        Arquivo carregado com sucesso!
+      </div>)
+    } else if (state === 6) {
+      return (<div className="alert alert-danger" role="alert">
+        Não foi possível carregar o arquivo, tente novamente!
+      </div>)
+    } else {
+      return (<div></div>)
     }
   }
 

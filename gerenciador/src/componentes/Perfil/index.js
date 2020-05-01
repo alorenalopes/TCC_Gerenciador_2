@@ -51,9 +51,9 @@ export default function Perfil(props) {
         }
       });
       navigate('/perfil_Inicial_Professor');
-      setState(1)
     } catch (err) {
       setState(0)
+      setTimeout(() => { setState(3) }, 3000)
     }
   }
 
