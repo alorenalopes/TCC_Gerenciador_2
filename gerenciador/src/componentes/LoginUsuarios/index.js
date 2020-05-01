@@ -16,6 +16,7 @@ export default function LoginUsuarios() {
 
     const [Matricula, setMatricula] = useState('');
     const [Senha, setSenha] = useState('');
+    const [state, setState] = useState(3);
 
     async function login(e) {
         e.preventDefault();
@@ -33,16 +34,26 @@ export default function LoginUsuarios() {
           }else if(response.data.tipo === "2"){
           navigate('/perfil_Inicial_Professor');}
           else{
-            alert('Erro no login, tente novamente');
+            setState(0)
           }
         }catch(err){
-          alert('Erro no login, tente novamente');
+          setState(0)
         }
     }
 
-    return (
+    function alerta() {
+        if (state === 0) {
+          return (<div class="alert alert-danger" role="alert">
+            Erro no login, tente novamente!
+          </div>)
+        } else{
+          return(<div></div>)
+        }
+      }
 
+    return (
         <Container component="main" maxWidth="xs">
+            {alerta()}
             <CssBaseline />
             <div id="paper">
             <FiUser className="avatar" size={40} color="#e0293d" />

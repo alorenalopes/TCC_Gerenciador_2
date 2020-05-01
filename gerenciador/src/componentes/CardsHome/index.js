@@ -35,8 +35,6 @@ export default function CardsHome(props) {
 
 
     function ProxPag() {
-        console.log(Page)
-        console.log(TotalPage)
         if (Page === Number(TotalPage)) {
             return;
         }

@@ -8,7 +8,7 @@ import ProgressBar from 'react-bootstrap/ProgressBar'
 import Table from 'react-bootstrap/Table'
 import { useParams, useNavigate } from 'react-router-dom'
 import { format, parseISO, isAfter } from 'date-fns'
-import { FaRegCheckSquare, FaRegFilePdf } from "react-icons/fa"
+import { FaRegCheckSquare, FaRegFilePdf } from 'react-icons/fa'
 
 export default function ExibirInformacoes(props) {
 
@@ -24,6 +24,7 @@ export default function ExibirInformacoes(props) {
   const [Arquivo, setArquivo] = useState([]);
   const [now, setNow] = useState('');
   const navigate = useNavigate();
+  const [state, setState] = useState(3);
 
   useEffect(() => {
 
@@ -94,8 +95,9 @@ export default function ExibirInformacoes(props) {
     try {
       await api.delete(`Proposta/${id}`, {});
       setPropostas(Propostas.filter(proposta => proposta.id !== id));
+      setState(1)
     } catch (err) {
-      alert('Erro ao deletar o caso, tente novamente');
+      setState(0)
     }
   }
 
@@ -103,8 +105,9 @@ export default function ExibirInformacoes(props) {
     try {
       await api.delete(`TccOrientado/${id}`, {});
       setTccs(Tccs.filter(tcc => tcc.id !== id));
+      setState(1)
     } catch (err) {
-      alert('Erro ao deletar o caso, tente novamente');
+      setState(0)
     }
   }
 
@@ -112,8 +115,9 @@ export default function ExibirInformacoes(props) {
     try {
       await api.delete(`Atv/${id}`, {});
       setAtvs(Atvs.filter(atv => atv.id !== id));
+      setState(1)
     } catch (err) {
-      alert('Erro ao deletar o caso, tente novamente');
+      setState(0)
     }
   }
 
@@ -121,8 +125,9 @@ export default function ExibirInformacoes(props) {
     try {
       await api.put(`Atv/${id}`, {});
       setAtvs(Atvs.filter(atv => atv.id !== id));
+      setState(1)
     } catch (err) {
-      alert('Erro ao deletar o caso, tente novamente');
+      setState(0)
     }
   }
 
@@ -135,7 +140,7 @@ export default function ExibirInformacoes(props) {
   }
 
   async function alerta_pdf(idArquivo) {
-    alert('Nenhum arquivo recebido')
+    setState(4)
   }
 
   async function delete_arquivo(id, arquivo_path) {
@@ -146,14 +151,34 @@ export default function ExibirInformacoes(props) {
         }
       });
       setArquivo(Arquivo.filter(arq => arq.arquivo_path !== arquivo_path));
+      setState(1)
     } catch (err) {
-      alert('Erro ao deletar o caso, tente novamente');
+      setState(0)
+    }
+  }
+
+  function alerta() {
+    if (state === 0) {
+      return (<div class="alert alert-danger" role="alert">
+        Erro ao deletar, tente novamente!
+      </div>)
+    } else if (state === 1) {
+      return (<div class="alert alert-success" role="alert">
+        Deletado com sucesso!
+      </div>)
+    } else if (state === 4) {
+      return (<div class="alert alert-danger" role="alert">
+        Nenhum arquivo recebido
+      </div>)
+    } else {
+      return (<div></div>)
     }
   }
 
 
   return (
     <div >
+      {alerta()}
       {props.propostas && <div>
         <CardDeck className="division">
           {Propostas.map(propostas => (
@@ -255,9 +280,8 @@ export default function ExibirInformacoes(props) {
               <tr>
                 <td>{atv.nome}</td>
                 <td>{atv.descricao}</td>
-                <td>
-                  {format(parseISO(atv.dataEntrega), "dd/MM/yyyy")}
-                </td>
+                <td> {atv.dataEntrega}</td>
+
                 <td>
                   {atv.status}
                   <button type="button" className="buttonpdf" onClick={() => envio_pdf(atv.id)}>
@@ -290,9 +314,7 @@ export default function ExibirInformacoes(props) {
                 <tr>
                   <td>{atv.nome}</td>
                   <td>{atv.descricao}</td>
-                  <td>
-                    {format(parseISO(atv.dataEntrega), "dd/MM/yyyy")}
-                  </td>
+                  <td> {atv.dataEntrega}</td>    
                   <td>
                     {atv.status}
                     {atv.arquivo_filename &&

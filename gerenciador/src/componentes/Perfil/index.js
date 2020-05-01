@@ -16,6 +16,7 @@ export default function Perfil(props) {
   const [disponibilidade, setDisponibilidade] = useState("");
   const navigate = useNavigate();
   const [aluno, setAluno] = useState([]);
+  const [state, setState] = useState(3);
 
   useEffect(() => {
 
@@ -50,8 +51,9 @@ export default function Perfil(props) {
         }
       });
       navigate('/perfil_Inicial_Professor');
+      setState(1)
     } catch (err) {
-      alert('Erro no cadastro, tente novamente');
+      setState(0)
     }
   }
 
@@ -63,8 +65,23 @@ export default function Perfil(props) {
     navigate('/perfil_Inicial_Professor/tccs');
   }
 
+  function alerta() {
+    if (state === 0) {
+      return (<div class="alert alert-danger" role="alert">
+        Erro ao alterar as informações, tente novamente!
+      </div>)
+    } else if (state === 1) {
+      return (<div class="alert alert-success" role="alert">
+        Informações alteradas com sucesso!
+      </div>)
+    } else{
+      return(<div></div>)
+    }
+  }
+
   return (
     <div >
+      {alerta()}
       {props.perfilAluno && <Container className="container-form" >
         {aluno.map(aluno => (
           <Row key={aluno.matricula}>

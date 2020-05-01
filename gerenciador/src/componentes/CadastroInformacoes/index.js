@@ -23,23 +23,24 @@ export default function CadastroInformacoes(props) {
   const [dataEntrega, setDataEntrega] = useState("");
   const [, setAtvs] = useState([]);
   const [file, setFile] = useState({})
+  const [state, setState] = useState(3);
 
   useEffect(() => {
 
     api.get(`Proposta/${localStorage.matricula}`).then(response => {
       setPropostas(response.data);
+      setTimeout(()=>{setState(3)}, 5000)
     })
-
-
-  }, []);
+  }, [state]);
 
   useEffect(() => {
 
     api.get(`TccOrientado/${localStorage.matricula}`).then(response => {
       setTccs(response.data);
+      setTimeout(()=>{setState(3)}, 5000)
     })
 
-  }, []);
+  }, [state]);
 
   useEffect(() => {
     api.get(`Atv/${codigo_tcc}`).then(response => {
@@ -58,11 +59,13 @@ export default function CadastroInformacoes(props) {
     };
 
     try {
-      await api.post(`Proposta/${localStorage.matricul}`, data, {});
+      await api.post(`Proposta/${localStorage.matricula}`, data, {});
+      setState(1)
     } catch (err) {
-      
+      setState(0)
     }
   }
+
 
   async function create_tcc(e) {
     e.preventDefault();
@@ -75,16 +78,17 @@ export default function CadastroInformacoes(props) {
 
     try {
       await api.post(`TccOrientado/${localStorage.matricula}`, data, {});
+      setState(1)
     } catch (err) {
-      alert('Erro no cadastro, tente novamente');
+      setState(0)
     }
   }
 
   async function create_atv(e) {
     e.preventDefault();
 
-    if (isPast(parseISO(dataEntrega)) === true) {
-      alert('Data incoerente, tente novamente');
+    if (isPast(dataEntrega) === true) {
+      setState(4)
     } else {
 
       const data = {
@@ -95,8 +99,9 @@ export default function CadastroInformacoes(props) {
 
       try {
         await api.post(`Atv/${codigo_tcc}`, data, {});
+        setState(1)
       } catch (err) {
-        alert('Erro no cadastro, tente novamente');
+        setState(0)
       }
     }
   }
@@ -108,14 +113,34 @@ export default function CadastroInformacoes(props) {
 
     try {
       await api.post(`/AlunoAtividades/upload/${id}`, data, {});
+      setState(1)
     } catch (err) {
-      alert('Erro no cadastro, tente novamente');
+      setState(0)
     }
 
   }
 
+  function alerta() {
+    if (state === 0) {
+      return (<div class="alert alert-danger" role="alert">
+        Erro no cadastro, tente novamente!
+      </div>)
+    } else if (state === 1) {
+      return (<div class="alert alert-success" role="alert">
+        Cadastrado realizado com sucesso!
+      </div>)
+    }else if (state === 4) {
+      return (<div class="alert alert-danger" role="alert">
+        Data incoerente, tente novamente!
+      </div>)
+    } else{
+      return(<div></div>)
+    }
+  }
+
   return (
     <div >
+      {alerta()}
       {props.propostas && <div>
         <Container className="container-form" >
           <Row>
