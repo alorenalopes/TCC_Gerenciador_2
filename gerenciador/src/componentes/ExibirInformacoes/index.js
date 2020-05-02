@@ -6,9 +6,9 @@ import CardDeck from 'react-bootstrap/CardDeck';
 import { FiTrash2, FiExternalLink } from 'react-icons/fi'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import Table from 'react-bootstrap/Table'
-import { useParams, useNavigate} from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { format, parseISO, isAfter } from 'date-fns'
-import { FaRegCheckSquare, FaRegFilePdf } from 'react-icons/fa'
+import { FaRegCheckSquare, FaRegFilePdf, FaRegSquare } from 'react-icons/fa'
 
 export default function ExibirInformacoes(props) {
 
@@ -172,11 +172,11 @@ export default function ExibirInformacoes(props) {
         Deletado com sucesso!
       </div>)
     } else if (state === 4) {
-      return (<div className="alert alert-danger text-justify text-wrap" role="alert">
+      return (<div className="alert alert-danger" role="alert">
         Nenhum arquivo recebido
       </div>)
     } else if (state === 5) {
-      return (<div className="alert alert-danger text-black-50" role="alert">
+      return (<div className="alert alert-danger" role="alert">
         Não foi possível confirmar, tente novamente!
       </div>)
     } else {
@@ -272,16 +272,15 @@ export default function ExibirInformacoes(props) {
             block="true"
             animated variant="danger"
             now={now}
-            label={`${now}%`}
-            style={{ height: '30px', width: '700px' }} />
+            label={`${Math.round(now)}%`}
+            style={{ height: '30px', width: '700px', backgroundColor: '#ef9a9a' }} />
         </div>
-        <Table striped hover >
+        <Table borderless hover >
           <thead>
             <tr>
               <th>Atividade</th>
               <th>Descrição</th>
               <th>Data de Entrega</th>
-              <th>Status</th>
             </tr>
           </thead>
           {AtvAluno.map(atv => (
@@ -293,13 +292,21 @@ export default function ExibirInformacoes(props) {
                   {format(parseISO(atv.dataEntrega), "dd/MM/yyyy")}
                 </td>
                 <td>
-                  {atv.status}
+                {atv.status === 'Concluído' &&
+                    <button type="button" className="buttontable" onClick={() => confirma_atv(atv.id)}>
+                      <FaRegCheckSquare size={25} color="#e0293d" />
+                    </button>
+                  }
+                  {atv.status === 'A fazer' &&
+                    <button type="button" className="buttontable" onClick={() => confirma_atv(atv.id)}>
+                      <FaRegSquare size={25} color="#e0293d" />
+                    </button>
+                  }
+
                   <button type="button" className="buttonpdf" onClick={() => envio_pdf(atv.id)}>
                     <FaRegFilePdf size={25} color="#e0293d" />
                   </button>
-                  <button type="button" className="buttontable" onClick={() => confirma_atv(atv.id)}>
-                    <FaRegCheckSquare size={25} color="#e0293d" />
-                  </button>
+                 
                 </td>
               </tr>
             </tbody>
@@ -310,7 +317,7 @@ export default function ExibirInformacoes(props) {
 
       {props.atividadesProfessor &&
         <div>
-          <Table striped bordered hover >
+          <Table borderless hover style={{ marginRight: '100px', marginLeft: '100px' }} >
             <thead>
               <tr>
                 <th>Atividade</th>
@@ -329,16 +336,16 @@ export default function ExibirInformacoes(props) {
                   </td>
                   <td>
                     {atv.status}
-                    {atv.arquivo_filename && 
-                      <button type="button" className="buttonpdf" onClick={() => window.location = `http://localhost:3333/files/${atv.arquivo_filename}` }>
+                    {atv.arquivo_filename &&
+                      <button type="button" className="buttonpdfprof" onClick={() => window.location = `http://localhost:3333/files/${atv.arquivo_filename}`}>
                         <FaRegFilePdf size={25} color="#e0293d" />
                       </button>}
                     {!atv.arquivo_filename &&
-                      <button type="button" className="buttonpdf" onClick={() => alerta_pdf()}>
+                      <button type="button" className="buttonpdfprof" onClick={() => alerta_pdf()}>
                         <FaRegFilePdf size={25} color="#e0293d" />
                       </button>
                     }
-                    <button type="button" className="buttontable" onClick={() => delete_atv(atv.id)}>
+                    <button type="button" className="buttontableprof" onClick={() => delete_atv(atv.id)}>
                       <FiTrash2 size={25} color="#e0293d" />
                     </button>
                   </td>
@@ -368,6 +375,9 @@ export default function ExibirInformacoes(props) {
               </tbody>
             ))}
           </Table>
+          <div className="alert alert-danger" role="alert">
+            Após enviar o arquivo, confirme o status da atividade!
+      </div>
         </div>}
 
     </div>

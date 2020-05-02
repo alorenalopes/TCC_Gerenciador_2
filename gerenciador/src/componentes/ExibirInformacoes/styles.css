@@ -39,16 +39,18 @@
         top: 24px;
     }
 
-    .buttontable{
-        border: 0;
-        position: absolute;
-        right: 24px;
-    }
-
     .buttonpdf{
         border: 0;
         position: absolute;
-        right: 80px;
+        right: 250px;
+        background-color: #fafafa;
+    }
+
+    .buttontable{
+        border: 0;
+        position: absolute;
+        right: 200px;
+        background-color: #fafafa;
     }
 
     .progresso{
@@ -56,4 +58,18 @@
         align-items: center;
         justify-content: center;
         margin-bottom: 40px; 
+    }
+
+    .buttonpdfprof{
+        border: 0;
+        position: absolute;
+        right: 40px;
+        background-color: #fafafa;
+    }
+
+    .buttontableprof{
+        border: 0;
+        position: absolute;
+        right: 80px;
+        background-color: #fafafa;
     }

@@ -31,12 +31,12 @@ module.exports = {
         const status = "A fazer"
         const id = generateId()
 
-        const tcc = await connection('Tcc')
-        .select('nome_tcc')
-        .where('id', codigo_tcc)
-        .first();
+        const tcc = await connection('Tcc')
+            .select('nome_tcc')
+            .where('id', codigo_tcc)
+            .first();
 
-        if(!tcc){
+        if (!tcc) {
             return response.status(400).json('Tcc não cadastrado');
         }
 
@@ -54,7 +54,18 @@ module.exports = {
 
     async update(request, response) {
         const { id } = request.params;
-        const status = "Concluído"
+        let status = ""
+
+        const status_atual = await connection('Atv')
+            .where('id', id)
+            .select('status')
+            .first()
+
+        if (status_atual.status === "A fazer") {
+            status = "Concluído"
+        } else if (status_atual.status === "Concluído") {
+            status = "A fazer"
+        }
 
         await connection('Atv')
             .where('id', id)
@@ -63,5 +74,6 @@ module.exports = {
             })
 
         return response.status(204).send();
+
     },
 };
