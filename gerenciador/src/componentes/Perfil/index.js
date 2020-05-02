@@ -85,7 +85,7 @@ export default function Perfil(props) {
       {props.perfilAluno && <Container className="container-form" >
         {aluno.map(aluno => (
           <Row key={aluno.matricula}>
-            <Col md={{ span: 4, offset: 1 }} >
+            <Col md={{ span: 5, offset: 0 }} >
               <Form.Label className="form"> Nome: </Form.Label>
               <Form.Control size="lg" type="text" disabled placeholder={aluno.nome_aluno} />
               <Form.Label className="form"> Matrícula: </Form.Label>
@@ -95,7 +95,7 @@ export default function Perfil(props) {
               <Form.Label className="form"> CPF: </Form.Label>
               <Form.Control size="lg" type="text" disabled placeholder={aluno.cpf} />
             </Col>
-            <Col md={{ span: 4, offset: 2 }}>
+            <Col md={{ span: 5, offset: 2 }}>
               <Form.Label className="form"> Trabalho de Conclusão de Curso: </Form.Label>
               <Form.Control size="lg" type="text" disabled placeholder={aluno.nome_tcc} />
               <Form.Label className="form"> Orientador: </Form.Label>
@@ -109,7 +109,7 @@ export default function Perfil(props) {
         <Container className="container-form" >
           {Profs.map(prof => (
             <Row key={prof.matricula}>
-              <Col md={{ span: 4, offset: 1 }} >
+              <Col md={{ span: 5, offset: 0 }} >
                 <Form.Label className="form"> Nome: </Form.Label>
                 <Form.Control size="lg" type="text" disabled placeholder={prof.nome} />
                 <Form.Label className="form"> Matrícula: </Form.Label>
@@ -119,7 +119,7 @@ export default function Perfil(props) {
                 <Form.Label className="form"> CPF: </Form.Label>
                 <Form.Control size="lg" type="text" disabled placeholder={prof.cpf} />
               </Col>
-              <Col md={{ span: 4, offset: 2 }}>
+              <Col md={{ span: 5, offset: 1 }}>
                 <Form onSubmit={updateInfo}>
                   <Form.Label className="form"> Área de atuação: </Form.Label>
                   <Form.Control

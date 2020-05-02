@@ -76,7 +76,7 @@ export default function ExibirInformacoes(props) {
       for (const a in response.data) {
         if (isAfter(data, parseISO(response.data[a].dataEntrega)) === true && response.data[a].status !== "Concluído") {
           response.data[a].status = "Atrasado"
-        }
+        } 
       }
       setAtvAluno(response.data);
       setNow(response.headers['x-porcentagem'])
@@ -275,7 +275,7 @@ export default function ExibirInformacoes(props) {
             label={`${Math.round(now)}%`}
             style={{ height: '30px', width: '700px', backgroundColor: '#ef9a9a' }} />
         </div>
-        <Table borderless hover >
+        <Table borderless style={{marginRight: '100px', marginLeft: '100px'}} >
           <thead>
             <tr>
               <th>Atividade</th>
@@ -317,13 +317,13 @@ export default function ExibirInformacoes(props) {
 
       {props.atividadesProfessor &&
         <div>
-          <Table borderless hover style={{ marginRight: '100px', marginLeft: '100px' }} >
+          <Table borderless>
             <thead>
               <tr>
-                <th>Atividade</th>
-                <th>Descrição</th>
-                <th>Data de Entrega</th>
-                <th>Status</th>
+                <th width="25%">Atividade</th>
+                <th width="25%">Descrição</th>
+                <th width="25%">Data de Entrega</th>
+                <th width="25%">Status</th>
               </tr>
             </thead>
             {Atvs.map(atv => (
@@ -331,12 +331,9 @@ export default function ExibirInformacoes(props) {
                 <tr>
                   <td>{atv.nome}</td>
                   <td>{atv.descricao}</td>
-                  <td>
-                    {format(parseISO(atv.dataEntrega), "dd/MM/yyyy")}
-                  </td>
-                  <td>
-                    {atv.status}
-                    {atv.arquivo_filename &&
+                  <td >{format(parseISO(atv.dataEntrega), "dd/MM/yyyy")}</td>
+                  <td>{atv.status}
+                   {atv.arquivo_filename &&
                       <button type="button" className="buttonpdfprof" onClick={() => window.location = `http://localhost:3333/files/${atv.arquivo_filename}`}>
                         <FaRegFilePdf size={25} color="#e0293d" />
                       </button>}
@@ -363,7 +360,7 @@ export default function ExibirInformacoes(props) {
                 {arq.arquivo_filename &&
                   <tr>
                     <td><a href={`http://localhost:3333/files/${arq.arquivo_filename}`} >{arq.nome}</a>
-                      <button type="button" className="buttontable" onClick={() => delete_arquivo(arq.id, arq.arquivo_path)}>
+                      <button type="button" className="buttontableprof" onClick={() => delete_arquivo(arq.id, arq.arquivo_path)}>
                         <FiTrash2 size={25} color="#e0293d" />
                       </button>
                     </td>
@@ -375,9 +372,6 @@ export default function ExibirInformacoes(props) {
               </tbody>
             ))}
           </Table>
-          <div className="alert alert-danger" role="alert">
-            Após enviar o arquivo, confirme o status da atividade!
-      </div>
         </div>}
 
     </div>

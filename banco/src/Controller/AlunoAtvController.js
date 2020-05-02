@@ -37,12 +37,14 @@ module.exports = {
         const { id } = request.params;
         const arquivo_filename = request.file.filename;
         const arquivo_path = request.file.path;
+        const status = 'Concluído'
 
         await connection('Atv')
             .where('id', id)
             .update({
                 arquivo_filename: arquivo_filename,
                 arquivo_path: arquivo_path,
+                status: status
             })
 
         return response.status(204).send();
@@ -53,12 +55,14 @@ module.exports = {
         const arquivo_filename = "";
         const arquivo_path = "";
         const arquivo = request.headers.arquivo;
+        const status = 'A fazer'
 
         await connection('Atv')
             .where('id', id)
             .update({
                 arquivo_filename: arquivo_filename,
                 arquivo_path: arquivo_path,
+                status: status
             })
 
         fs.unlink(arquivo, (err) => {

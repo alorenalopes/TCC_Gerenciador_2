@@ -1,12 +1,11 @@
-.border{
-margin: 40px;
-margin-top: 0px;
-margin-bottom: 0px;
-outline: none;
-border-color: #fafafa;
+.borda{
+    margin: 40px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    border: none;
 }
 
-.border .botoes{
+.borda .botoes{
     margin-top: 0px;
     display: flex;
     justify-content: space-between;
@@ -15,14 +14,14 @@ border-color: #fafafa;
 
 }
 
-.border .division{
+.borda .divisao{
     grid-template-columns: repeat(3, 1fr);
     display: grid;
     grid-gap: 24px;
     list-style: none;
 }
 
-.border .divisionPesquisar{
+.borda .divisaoPesquisar{
     grid-template-columns: repeat(3, 1fr);
     display: grid;
     grid-gap: 24px;

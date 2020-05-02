@@ -60,11 +60,10 @@ export default function CardsHome(props) {
 
     return (
 
-
-        <div className="border">
+        <div className="borda">
             {!props.pesquisarHome &&
                 <div>
-                    <CardDeck className="division">
+                    <CardDeck className="divisao">
                         {Profs.map(prof => (
                             <Card border="danger" key={prof.matricula}>
                                 <Card.Body >
@@ -91,7 +90,7 @@ export default function CardsHome(props) {
             }
 
             {props.pesquisarHome &&
-                <CardDeck className="divisionPesquisar">
+                <CardDeck className="divisaoPesquisar">
                     {ProfsPesquisa.map(prof => (
                         <Card border="danger" key={prof.matricula}>
                             <Card.Body >
