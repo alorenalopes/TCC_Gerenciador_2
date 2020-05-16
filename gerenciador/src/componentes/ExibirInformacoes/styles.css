@@ -42,15 +42,15 @@
     .buttonpdf{
         border: 0;
         position: absolute;
-        right: 250px;
-        background-color: #fafafa;
+        right: 100px;
+        background-color: #ffffff;
     }
 
     .buttontable{
         border: 0;
         position: absolute;
-        right: 200px;
-        background-color: #fafafa;
+        right: 70px;
+        background-color: #ffffff;
     }
 
     .progresso{
@@ -63,13 +63,36 @@
     .buttonpdfprof{
         border: 0;
         position: absolute;
-        right: 40px;
-        background-color: #fafafa;
+        right: 50px;
+        background-color: #ffffff;
+    }
+
+    .buttonfeedback{
+        border: 0;
+        position: absolute;
+        right: 20px;
+        background-color: #ffffff;
     }
 
     .buttontableprof{
         border: 0;
         position: absolute;
         right: 80px;
-        background-color: #fafafa;
+        background-color: #ffffff;
+    }
+
+    .buttontablep{
+        border: 0;
+        position: absolute;
+        right: 0px;
+        background-color: #ffffff;
+    }
+
+    .modal-atv{
+        margin-bottom: 20px;
+    }
+
+    .colorcard{
+    border-color: #ef9a9a; 
+    background-color: #ffffff;       
     }

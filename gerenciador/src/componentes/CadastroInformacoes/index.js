@@ -271,9 +271,8 @@ export default function CadastroInformacoes(props) {
               <FiFileText className="avatar" size={40} color="#e0293d" />
               <form onSubmit={envio_arquivo}>
                 <div className="form-group">
-                  <label className="form"> Atividade: </label>
                   <input
-                    className="form-control"
+                    className="form-control button"
                     size="lg"
                     type="file"
                     id="file"

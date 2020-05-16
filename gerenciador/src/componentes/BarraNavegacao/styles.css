@@ -4,7 +4,7 @@
 }
 
 .Navbar{
-    background-color: #fafafa;
+    background-color: #ffffff;
     border-bottom-style:solid;
     border-bottom-width: 1px;
     border-bottom-color:#ef9a9a;
@@ -15,4 +15,5 @@
 
 .simbolos{
     border: 0; 
+    background-color: #ffffff;
 }

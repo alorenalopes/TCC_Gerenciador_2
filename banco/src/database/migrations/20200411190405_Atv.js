@@ -9,6 +9,7 @@ exports.up = function(knex) {
         table.string('codigo_tcc').notNullable();
         table.string('arquivo_path');
         table.string('arquivo_filename');
+        table.string('feedback')
 
         table.foreign('codigo_tcc').references('id').inTable('Tcc');
     });

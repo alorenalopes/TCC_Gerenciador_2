@@ -30,6 +30,14 @@ rotas.post('/Atv/:codigo_tcc', celebrate({
         codigo_tcc: Joi.string().required()
     })
 }), AtvController.create);
+rotas.put('/Atv/feedback/:id', celebrate({
+    [Segments.BODY]: Joi.object().keys({
+        feedback: Joi.string().required(),
+    }),
+    [Segments.PARAMS]: Joi.object().keys({
+        id: Joi.string().required()
+    })
+}), AtvController.feedback);
 rotas.delete('/Atv/:id', AtvController.delete);
 rotas.put('/Atv/:id', AtvController.update);
 

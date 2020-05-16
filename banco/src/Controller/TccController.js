@@ -20,7 +20,7 @@ module.exports = {
             .where('matricula_aluno', matricula_aluno)
             .first();
 
-        if (matricula_aluno) {
+        if (aluno) {
             return response.status(400).json('Aluno com TCC em andamento');
         }
 

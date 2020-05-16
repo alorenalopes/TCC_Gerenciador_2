@@ -76,4 +76,27 @@ module.exports = {
         return response.status(204).send();
 
     },
+
+    async feedback(request, response) {
+        const { id } = request.params;
+        const {feedback} = request.body;
+
+        const atv = await connection('Atv')
+            .where('id', id)
+            .select('nome')
+            .first()
+
+        if (!atv) {
+            return response.status(400).json('Atividade não cadastrada');
+        } 
+
+        await connection('Atv')
+            .where('id', id)
+            .update({
+                feedback: feedback,
+            })
+
+        return response.status(204).send();
+
+    },
 };

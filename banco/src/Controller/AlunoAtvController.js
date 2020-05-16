@@ -82,7 +82,8 @@ module.exports = {
             .select(['Atv.arquivo_filename',
                 'Atv.arquivo_path',
                 'Atv.id',
-                'Atv.nome'])
+                'Atv.nome',
+                'Atv.feedback'])
 
         return response.json(arquivos);
     }
