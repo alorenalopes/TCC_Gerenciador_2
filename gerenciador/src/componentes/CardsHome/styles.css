@@ -28,3 +28,18 @@
     list-style: none;
     margin-bottom: 20px;
 }
+
+.borda .divisao .cardtext{
+    height: 80px; 
+}
+
+.borda::after{
+    content: "";
+    position: fixed;
+    background: #F8E0E0;
+    top: 260px;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+}

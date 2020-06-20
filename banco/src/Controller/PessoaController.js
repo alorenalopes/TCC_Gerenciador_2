@@ -5,14 +5,29 @@ module.exports = {
 
         const { matricula_aluno } = request.params;
 
+        const tcc = await connection('Tcc')
+        .select('nome_tcc')
+        .where('matricula_aluno', matricula_aluno)
+        .first();
+
+        if(tcc){
+
         const infos = await connection({ P: 'Pessoa' })
             .where('P.matricula', matricula_aluno)
             .select({ nome_aluno: 'P.nome' }, { nome_prof: 'Prof.nome' }, 'P.email', 'P.cpf', 'T.nome_tcc', 'T.matricula_prof')
             .innerJoin({ T: 'Tcc' }, 'T.matricula_aluno', '=', 'P.matricula')
             .innerJoin({ Prof: 'Pessoa' }, 'T.matricula_prof', '=', 'Prof.matricula');
 
-        return response.json(infos);
+            return response.json(infos);
+        
+        } else{
+            const infos = await connection('Pessoa')
+            .select({nome_aluno: 'Pessoa.nome'}, 'Pessoa.email', 'Pessoa.cpf', 'Pessoa.matricula')
+            .where('matricula', matricula_aluno)
 
+            return response.json(infos);
+
+        }
     },
 
     async create(request, response) {

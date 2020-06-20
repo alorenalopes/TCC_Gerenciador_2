@@ -16,7 +16,7 @@ import '../LoginUsuarios/styles.css'
 export default function BarraNavegacao(props) {
 
   const navigate = useNavigate();
-  const [nome, setNome] = useState("");
+  const [nome, setNome] = useState('');
 
   function Sair() {
     localStorage.clear();
@@ -27,7 +27,7 @@ export default function BarraNavegacao(props) {
     navigate(props.voltarCaminho);
   }
 
-  function Search(nome) {
+  function Search() {
     navigate(`/home/pesquisa/${nome}`);
   }
 
@@ -71,14 +71,15 @@ export default function BarraNavegacao(props) {
 
 
           {props.homeHabilitado && props.loginHabilitado && 
-            <Form inline>
+            <Form inline onSubmit={Search}>
               <FormControl
                 type="text"
                 placeholder="Nome"
                 className="mr-sm-2"
+                required
                 value={nome}
                 onChange={e => setNome(e.target.value)}/>
-              <Button type="submit" variant="outline-danger"onClick={() => Search(nome)}>Pesquisar</Button>
+              <Button type="submit" variant="outline-danger">Pesquisar</Button>
             </Form>   
           }
         </Navbar.Collapse>

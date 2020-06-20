@@ -68,7 +68,7 @@ export default function CardsHome(props) {
                             <Card border="danger" key={prof.matricula}>
                                 <Card.Body >
                                     <Card.Title>{prof.nome}</Card.Title>
-                                    <Card.Text>
+                                    <Card.Text className="cardtext">
                                         Área de atuação: {prof.area}.
                                 <br></br>
                                 Disponibilidade para {prof.disponibilidade} orientandos.

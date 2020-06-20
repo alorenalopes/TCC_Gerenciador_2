@@ -1,8 +1,12 @@
 .paper{
     display: flex;
-    flex-direction: column;
+    flex: 1;
+    justify-items: center;
     align-items: center;
+    justify-content: center;
+    height: 10000px;
 }
+
 .avatar{
     border: 0;
     left: 175px;

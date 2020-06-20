@@ -29,7 +29,7 @@ export default function ExibirInformacoes(props) {
   const [Atvs, setAtvs] = useState([]);
   const [AtvAluno, setAtvAluno] = useState([]);
   const [Arquivo, setArquivo] = useState([]);
-  const [now, setNow] = useState('');
+  const [now, setNow] = useState(0);
   const navigate = useNavigate();
   const [state, setState] = useState(3);
   const [show, setShow] = useState(false);
@@ -92,7 +92,7 @@ export default function ExibirInformacoes(props) {
       setNow(response.headers['x-porcentagem'])
     })
 
-  }, [AtvAluno]);
+  }, []);
 
   useEffect(() => {
     api.get(`/AlunoAtividades/listar/${id}`).then(response => {
@@ -360,17 +360,15 @@ export default function ExibirInformacoes(props) {
           <Table borderless style={{marginLeft: '30px' }}>
             <thead>
               <tr>
-                <th width="25%">Atividade</th>
-                <th width="25%">Descrição</th>
-                <th width="25%">Data de Entrega</th>
-                <th width="25%">Status</th>
+                <th width="33%">Atividade</th>
+                <th width="33%">Data de Entrega</th>
+                <th width="34%">Status</th>
               </tr>
             </thead>
             {Atvs.map(atv => (
               <tbody key={atv.id}>
                 <tr>
                   <td>{atv.nome}</td>
-                  <td>{atv.descricao}</td>
                   <td >{format(parseISO(atv.dataEntrega), "dd/MM/yyyy")}</td>
                   <td>{atv.status}
                     {atv.arquivo_filename &&

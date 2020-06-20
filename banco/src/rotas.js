@@ -99,7 +99,11 @@ rotas.post('/Proposta/:matricula_prof',  celebrate({
 rotas.delete('/Proposta/:id', PropostasController.delete);
 
 const PesquisarController = require('./Controller/PesquisarController');
-rotas.get('/Pesquisar/:nome', PesquisarController.exibir);
+rotas.get('/Pesquisar/:nome',  celebrate({
+    [Segments.PARAMS]: Joi.object().keys({
+        nome: Joi.string().required()
+    })
+}), PesquisarController.exibir);
 
 const LoginController = require('./Controller/LoginController');
 rotas.get('/Login', LoginController.login);

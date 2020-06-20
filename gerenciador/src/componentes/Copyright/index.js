@@ -5,7 +5,7 @@ import './styles.css'
 
 export default function Copyright() {
     return (
-        <div>
+        <div className="copyright">
       <Typography className="typography" variant="body2">
         {'Copyright © '}
         <Link className="link">

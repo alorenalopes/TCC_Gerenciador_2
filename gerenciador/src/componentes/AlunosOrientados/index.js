@@ -32,8 +32,8 @@ export default function AlunosOrientados() {
                     {Alunos.map(aluno => (
                         <Card border="danger" key={aluno.matricula_aluno}>
                             <Card.Body >
-                                <Card.Title>{aluno.nome_tcc}</Card.Title>
-                                <Card.Text>
+                                <Card.Title className="title">{aluno.nome_tcc}</Card.Title>
+                                <Card.Text className="text">
                                     Aluno: {aluno.nome}
                                 </Card.Text>
                                 <Button variant="danger" size="lg" onClick={() => atv(aluno.id)} block> Atividades </Button>

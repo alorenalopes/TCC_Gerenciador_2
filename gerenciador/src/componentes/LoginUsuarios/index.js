@@ -52,9 +52,8 @@ export default function LoginUsuarios() {
       }
 
     return (
-        <Container component="main" maxWidth="xs">
+        <Container maxWidth="xs">
             {alerta()}
-            <CssBaseline />
             <div id="paper">
             <FiUser className="avatar" size={40} color="#e0293d" />
                 <form onSubmit={login}>
@@ -91,8 +90,6 @@ export default function LoginUsuarios() {
                     </Button>
                 </form>
             </div>
-            <Box mt={8}>
-            </Box>
         </Container>
     );
 }

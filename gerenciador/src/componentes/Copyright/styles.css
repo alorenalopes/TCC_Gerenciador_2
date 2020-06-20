@@ -1,9 +1,14 @@
-.typography{
-    color: #A9A9A9;
-    text-align:center;
-
+.copyright{
+    position:absolute;
+    bottom: 1;
+    width:100%;
 }
 
-.typography .link{
+.copyright .typography{
+    color: #A9A9A9;
+    text-align:center;
+}
+
+.copyright .typography .link{
     color: inherit;
 }

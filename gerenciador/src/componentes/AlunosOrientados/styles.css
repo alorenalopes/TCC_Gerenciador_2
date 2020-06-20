@@ -15,9 +15,15 @@
     }
     
     .borderAluno .division{
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         display: grid;
         grid-gap: 24px;
         list-style: none;
         margin-bottom: 100px;
     }
+
+    .borderAluno .division .title{
+        height: 40px;
+    }
+    
+    

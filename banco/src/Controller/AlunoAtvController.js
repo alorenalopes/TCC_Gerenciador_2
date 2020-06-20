@@ -27,8 +27,12 @@ module.exports = {
 
         response.header('X-Total', count['count(*)']);
         response.header('X-Total-Concluido', count_concluido['count(*)']);
-        response.header('X-Porcentagem', (count_concluido['count(*)'] * 100) / count['count(*)']);
 
+        if (count['count(*)'] === 0) {
+            response.header('X-Porcentagem', (0));
+        } else {
+            response.header('X-Porcentagem', (count_concluido['count(*)'] * 100) / count['count(*)']);
+        }
 
         return response.json(atvs);
     },
