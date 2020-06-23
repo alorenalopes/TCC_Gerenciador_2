@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import Button from 'react-bootstrap/Button'
-import CssBaseline from '@material-ui/core/CssBaseline'
 import TextField from '@material-ui/core/TextField'
-import Box from '@material-ui/core/Box'
 import Container from '@material-ui/core/Container'
 import api from '../../servicos/api'
 import {useNavigate} from 'react-router-dom'

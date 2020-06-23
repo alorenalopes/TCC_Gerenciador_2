@@ -15,7 +15,7 @@ export default function Copyright() {
         {'.'}
       </Typography>
       <Typography variant="body2" className="typography">
-        <Link className="Link">
+        <Link className="link">
           Desenvolvido para trabalho de conclusão de curso para Universidade Federal de Ouro Preto
         </Link>{' '}
       </Typography>

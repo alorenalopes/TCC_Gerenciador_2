@@ -1,20 +1,19 @@
-   .container-form{
-        margin-bottom: 20px;
-        margin-top: 10px;
-    }
+   .container-form {
+       margin-bottom: 20px;
+       margin-top: 10px;
+   }
 
-    .container-form .form{
-        margin-top: 10px;
-        color: gray;
-    }
-    
-    .container-form .button{
-        margin-top: 10px;
-    }
-    
-    .container-form .avatar{
-        border: 0;
-        left: 150px;
-        position: relative;
-    }
+   .container-form .form {
+       margin-top: 10px;
+       color: gray;
+   }
 
+   .container-form .button {
+       margin-top: 10px;
+   }
+
+   .container-form .avatar {
+       border: 0;
+       left: 150px;
+       position: relative;
+   }

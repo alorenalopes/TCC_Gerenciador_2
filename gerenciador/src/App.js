@@ -20,8 +20,6 @@ import Atividades from './View/Atividades'
 import PesquisarHome from './View/PesquisarHome'
 import UploadArquivos from './View/UploadArquivos'
 
-import Copyright from './componentes/Copyright'
-
 function App() {
   return (
     <Fragment>
@@ -45,7 +43,6 @@ function App() {
           <Route path="/home/pesquisa/:nome" element={<PesquisarHome />} />
         </Routes>
       </Router>
-      <Copyright />
     </Fragment>
   );
 }

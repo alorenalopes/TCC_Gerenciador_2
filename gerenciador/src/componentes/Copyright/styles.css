@@ -1,11 +1,16 @@
 .copyright{
-    position:absolute;
-    bottom: 1;
-    width:100%;
+    position: fixed;
+    bottom:0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
 }
 
 .copyright .typography{
-    color: #A9A9A9;
+    color: #909090;
     text-align:center;
 }
 

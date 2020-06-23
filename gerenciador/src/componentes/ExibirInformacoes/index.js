@@ -8,14 +8,12 @@ import ProgressBar from 'react-bootstrap/ProgressBar'
 import Table from 'react-bootstrap/Table'
 import { useParams, useNavigate } from 'react-router-dom'
 import { format, parseISO, isAfter } from 'date-fns'
-import { FaRegCheckSquare, FaRegFilePdf, FaRegSquare } from 'react-icons/fa'
+import { FaRegCheckSquare, FaRegFilePdf, FaRegSquare} from 'react-icons/fa'
 import { RiFeedbackLine } from 'react-icons/ri'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
-
-
 
 export default function ExibirInformacoes(props) {
 
@@ -33,8 +31,11 @@ export default function ExibirInformacoes(props) {
   const navigate = useNavigate();
   const [state, setState] = useState(3);
   const [show, setShow] = useState(false);
+  const [showDescription, setShowDescription] = useState(false);
   const [feedback, setFeedback] = useState('');
+  const [descricao, setDescricao] = useState('');
   const [atvid, setAtvId] = useState('');
+  const [showFeedback, setShowFeedback] = useState(false);
 
 
   useEffect(() => {
@@ -92,7 +93,7 @@ export default function ExibirInformacoes(props) {
       setNow(response.headers['x-porcentagem'])
     })
 
-  }, []);
+  }, [AtvAluno]);
 
   useEffect(() => {
     api.get(`/AlunoAtividades/listar/${id}`).then(response => {
@@ -156,12 +157,20 @@ export default function ExibirInformacoes(props) {
     setTimeout(() => { setState(3) }, 3000)
   }
 
-  function setfeed(id) {
+  function setfeed(id, feedback) {
     setShow(true)
+    setFeedback(feedback)
+    setAtvId(id)
+  }
+
+  function setDescription(id, descricao) {
+    setShowDescription(true)
+    setDescricao(descricao)
     setAtvId(id)
   }
 
   async function feedback_pdf(e) {
+    setShow(false)
     e.preventDefault();
 
     const data = {
@@ -170,11 +179,21 @@ export default function ExibirInformacoes(props) {
 
     try {
       await api.put(`Atv/feedback/${atvid}`, data, {});
-      setState(6)
-      setTimeout(() => { setState(3) }, 3000)
     } catch (err) {
-      setState(7)
-      setTimeout(() => { setState(3) }, 3000)
+    }
+  }
+
+  async function descricao_atv(e) {
+    setShowDescription(false)
+    e.preventDefault();
+
+    const data = {
+      descricao,
+    };
+
+    try {
+      await api.put(`Atv/descricao/${atvid}`, data, {});
+    } catch (err) {
     }
   }
 
@@ -210,14 +229,6 @@ export default function ExibirInformacoes(props) {
     } else if (state === 5) {
       return (<div className="alert alert-danger" role="alert">
         Não foi possível confirmar, tente novamente!
-      </div>)
-    } else if (state === 6) {
-      return (<div className="alert alert-sucess" role="alert">
-        Feedback enviado com sucesso!
-      </div>)
-    } else if (state === 7) {
-      return (<div className="alert alert-danger" role="alert">
-        Não foi possível enviar feedback, tente novamente!
       </div>)
     } else {
       return (<div></div>)
@@ -306,85 +317,115 @@ export default function ExibirInformacoes(props) {
         </CardDeck>
       </div>}
 
-      {props.atividadesAluno && <div>
-        <div className="progresso">
-          <ProgressBar
-            block="true"
-            animated variant="danger"
-            now={now}
-            label={`${Math.round(now)}%`}
-            style={{ height: '30px', width: '700px', backgroundColor: '#ef9a9a' }} />
-        </div>
-        <Table borderless style={{marginLeft: '30px' }} >
-          <thead>
-            <tr>
-              <th width="33%">Atividade</th>
-              <th width="33%">Descrição</th>
-              <th width="33%">Data de Entrega</th>
-            </tr>
-          </thead>
-          {AtvAluno.map(atv => (
-            <tbody key={atv.id}>
-              <tr>
-                <td>{atv.nome}</td>
-                <td>{atv.descricao}</td>
-                <td>
-                  {format(parseISO(atv.dataEntrega), "dd/MM/yyyy")}
-                </td>
-                <td>
-                  {atv.status === 'Concluído' &&
-                    <button type="button" className="buttontable" onClick={() => confirma_atv(atv.id)}>
-                      <FaRegCheckSquare size={25} color="#e0293d" />
-                    </button>
-                  }
-                  {atv.status === 'A fazer' &&
-                    <button type="button" className="buttontable" onClick={() => confirma_atv(atv.id)}>
-                      <FaRegSquare size={25} color="#e0293d" />
-                    </button>
-                  }
+      {props.atividadesAluno &&
+        <div>
+          <div className="progresso">
+            <ProgressBar
+              block="true"
+              animated variant="danger"
+              now={now}
+              label={`${Math.round(now)}%`}
+              style={{ height: '30px', width: '700px', backgroundColor: '#ef9a9a' }} />
+          </div>
+          <div className="table_atv">
+            <Table borderless style={{ marginLeft: '30px' }} className="tabela" >
+              <thead>
+                <tr>
+                  <th width="40%">Atividade</th>
+                  <th width="20%">Data de Entrega</th>
+                  <th width="20%">Status</th>
+                  <th width="20%"></th>
+                </tr>
+              </thead>
+              {AtvAluno.map(atv => (
+                <tbody key={atv.id}>
+                  <tr>
+                    <td><button className="link-button" onClick={() => setDescription(atv.id, atv.descricao)}>{atv.nome}</button></td>
+                    <td>
+                      {format(parseISO(atv.dataEntrega), "dd/MM/yyyy")}
+                    </td>
+                    <td>{atv.status}</td>
+                    <td>
+                      {atv.status === 'Concluído' &&
+                        <button type="button" className="button_table" onClick={() => confirma_atv(atv.id)}>
+                          <FaRegCheckSquare size={25} color="#e0293d" />
+                        </button>
+                      }
+                      {atv.status === 'A fazer' &&
+                        <button type="button" className="button_table" onClick={() => confirma_atv(atv.id)}>
+                          <FaRegSquare size={25} color="#e0293d" />
+                        </button>
+                      }
 
-                  <button type="button" className="buttonpdf" onClick={() => envio_pdf(atv.id)}>
-                    <FaRegFilePdf size={25} color="#e0293d" />
-                  </button>
+                      <button type="button" className="button_table" onClick={() => envio_pdf(atv.id)}>
+                        <FaRegFilePdf size={25} color="#e0293d" />
+                      </button>
 
-                </td>
-              </tr>
-            </tbody>
-          ))}
-        </Table>
-      </div>}
+                      {showDescription &&
+                        <Modal
+                          show={showDescription}
+                          onHide={() => setShowDescription(false)}>
+                          <Modal.Header closeButton>
+                            <Modal.Title>
+                              Descrição    </Modal.Title>
+                          </Modal.Header>
+                          <Modal.Body >
+                            <form>
+                              <div className="form-group">
+                                <textarea
+                                  disabled
+                                  className="form-control modal-atv"
+                                  style={{ height: '200px' }}
+                                  size="lg"
+                                  type="text"
+                                  value={descricao}
+                                />
+                              </div>
+                            </form>
+                          </Modal.Body>
+                        </Modal>
+                      }
+                    </td>
+                  </tr>
+                </tbody>
+              ))}
+            </Table>
+          </div>
+        </div>}
 
 
       {props.atividadesProfessor &&
-        <div>
-          <Table borderless style={{marginLeft: '30px' }}>
+        <div className="table_atv">
+          <Table borderless style={{ marginLeft: '30px' }} >
             <thead>
               <tr>
-                <th width="33%">Atividade</th>
-                <th width="33%">Data de Entrega</th>
-                <th width="34%">Status</th>
+                <th width="35%">Atividade</th>
+                <th width="25%">Data de Entrega</th>
+                <th width="20%">Status</th>
+                <th width="20%"></th>
               </tr>
             </thead>
             {Atvs.map(atv => (
               <tbody key={atv.id}>
                 <tr>
-                  <td>{atv.nome}</td>
+                  <td><button className="link-button" onClick={() => setDescription(atv.id, atv.descricao)}>{atv.nome}</button></td>
                   <td >{format(parseISO(atv.dataEntrega), "dd/MM/yyyy")}</td>
-                  <td>{atv.status}
+                  <td>{atv.status} </td>
+                  <td>
                     {atv.arquivo_filename &&
-                      <button type="button" className="buttonpdfprof" onClick={() => window.location = `http://localhost:3333/files/${atv.arquivo_filename}`}>
+                      <button type="button" className="button_table" onClick={() => window.location = `http://localhost:3333/files/${atv.arquivo_filename}`}>
                         <FaRegFilePdf size={25} color="#e0293d" />
                       </button>
                     }
                     {!atv.arquivo_filename &&
-                      <button type="button" className="buttonpdfprof" onClick={() => alerta_pdf()}>
+                      <button type="button" className="button_table" onClick={() => alerta_pdf()}>
                         <FaRegFilePdf size={25} color="#e0293d" />
                       </button>
                     }
-                    <button type="button" className="buttontableprof" onClick={() => delete_atv(atv.id)}>
+                    <button type="button" className="button_table" onClick={() => delete_atv(atv.id)}>
                       <FiTrash2 size={25} color="#e0293d" />
                     </button>
-                    <button type="button" className="buttonfeedback" onClick={() => setfeed(atv.id)}>
+                    <button type="button" className="button_table" onClick={() => setfeed(atv.id)}>
                       <RiFeedbackLine size={25} color="#e0293d" />
                     </button>
                     {show &&
@@ -403,8 +444,34 @@ export default function ExibirInformacoes(props) {
                                 style={{ height: '100px' }}
                                 size="lg"
                                 type="text"
+                                required
                                 value={feedback}
                                 onChange={e => setFeedback(e.target.value)}
+                              />
+                              <Button className="button" type="submit" variant="danger" size="lg" block> Enviar </Button>
+                            </div>
+                          </form>
+                        </Modal.Body>
+                      </Modal>
+                    }
+                    {showDescription &&
+                      <Modal
+                        show={showDescription}
+                        onHide={() => setShowDescription(false)}>
+                        <Modal.Header closeButton>
+                          <Modal.Title>
+                            Descrição    </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body >
+                          <form onSubmit={descricao_atv}>
+                            <div className="form-group">
+                              <textarea
+                                className="form-control modal-atv"
+                                style={{ height: '200px' }}
+                                size="lg"
+                                type="text"
+                                value={descricao}
+                                onChange={e => setDescricao(e.target.value)}
                               />
                               <Button className="button" type="submit" variant="danger" size="lg" block> Enviar </Button>
                             </div>
@@ -427,34 +494,47 @@ export default function ExibirInformacoes(props) {
               {Arquivo.map(arq => (
                 <div key={arq.id}>
                   {arq.arquivo_filename &&
-                      <div class="card colorcard card-header"><a href={`http://localhost:3333/files/${arq.arquivo_filename}`} style={{color:'000000'}}>{arq.nome}</a>
-                        <button type="button" className="buttontablep" onClick={() => delete_arquivo(arq.id, arq.arquivo_path)}>
-                          <FiTrash2 size={25} color="#e0293d" />
-                        </button>
-                      </div>
-                    }
+                    <div class="card colorcard card-header"><a href={`http://localhost:3333/files/${arq.arquivo_filename}`} style={{ color: '000000' }}>{arq.nome}</a>
+                      <button type="button" className="button_pdf" onClick={() => delete_arquivo(arq.id, arq.arquivo_path)}>
+                        <FiTrash2 size={25} color="#e0293d" />
+                      </button>
+                      <button type="button" className="button_feedback" onClick={() => setShowFeedback(true)}>
+                        <RiFeedbackLine size={25} color="#e0293d" />
+                      </button>
+                    </div>
+                  }
                   {!arq.arquivo_filename &&
-                      <div class="card colorcard card-header">Nenhum arquivo enviado</div>
+                    <div class="card colorcard card-header">Nenhum arquivo enviado</div>
+                  }
+
+                  {showFeedback &&
+                    <Modal
+                      show={showFeedback}
+                      onHide={() => setShowFeedback(false)}>
+                      <Modal.Header closeButton>
+                        <Modal.Title>
+                          Feedback   </Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body >
+                        <form>
+                          <div className="form-group">
+                            <textarea
+                              disabled
+                              className="form-control modal-atv"
+                              style={{ height: '200px' }}
+                              size="lg"
+                              type="text"
+                              value={arq.feedback}
+                            />
+                          </div>
+                        </form>
+                      </Modal.Body>
+                    </Modal>
                   }
                 </div>
               ))}
             </Col>
           </Container>
-
-          {Arquivo.map(arq => (
-            <Container className="container-form " style={{marginTop:40}} >
-              <Col md={{ span: 6, offset: 3 }}>
-                <div class="card text-center colorcard">
-                  <div class="card-header colorcard">
-                    <b>Feedback</b>
-                </div>
-                  <div class="card-body">
-                    <p class="card-text ">{arq.feedback}</p>
-                  </div>
-                </div>
-              </Col>
-            </Container>
-          ))}
         </div>
       }
 

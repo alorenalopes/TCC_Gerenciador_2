@@ -38,6 +38,14 @@ rotas.put('/Atv/feedback/:id', celebrate({
         id: Joi.string().required()
     })
 }), AtvController.feedback);
+rotas.put('/Atv/descricao/:id', celebrate({
+    [Segments.BODY]: Joi.object().keys({
+        descricao: Joi.string().required(),
+    }),
+    [Segments.PARAMS]: Joi.object().keys({
+        id: Joi.string().required()
+    })
+}), AtvController.descricao);
 rotas.delete('/Atv/:id', AtvController.delete);
 rotas.put('/Atv/:id', AtvController.update);
 
